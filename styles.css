@@ -327,3 +327,36 @@ body.pen-on .penbar{display:flex}
 .sumline{color:#b8c8d7;font-size:13.5px;margin:0 0 6px;padding-left:15px;position:relative;line-height:1.6}
 .sumline:last-child{margin-bottom:0}
 .sumline::before{content:"›";position:absolute;left:0;color:var(--dim)}
+
+/* ---------------- two-track week summary ---------------- */
+.wk-sum.two{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0}
+.wk-sum.two .track{padding:20px 22px 22px;display:flex;flex-direction:column;gap:14px}
+.wk-sum.two .track:first-child{border-right:1px solid var(--line)}
+.track-h{display:flex;align-items:baseline;gap:10px;font-size:13px;font-weight:650;letter-spacing:.3px;
+  color:#d6e4f1;text-transform:uppercase;font-family:var(--mono);font-size:11px;letter-spacing:1.2px}
+.track-h .tnum{color:var(--accent);font-weight:700}
+.trow{display:grid;grid-template-columns:84px 1fr;gap:14px;align-items:start}
+.trow .sum-v.plain{font-size:13px;color:#b8c8d7;line-height:1.65}
+.trow .sum-v{display:flex;flex-wrap:wrap;gap:7px}
+.trow .vid,.trow a{font-size:13px}
+.trow a{color:#cfe3f5;border-bottom:1px solid #2f4155}
+.trow a:hover{color:var(--accent)}
+.sumcount{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--accent);
+  border:1px solid rgba(61,220,151,.3);background:rgba(61,220,151,.07);
+  padding:3px 9px;border-radius:7px;align-self:center}
+
+/* ---------------- faang steps ---------------- */
+.steps{display:flex;flex-direction:column;gap:10px}
+.step{display:grid;grid-template-columns:40px 1fr;gap:14px;align-items:start;
+  border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:15px 17px}
+.step .stnum{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--accent);
+  border:1px solid rgba(61,220,151,.35);border-radius:8px;width:30px;height:30px;
+  display:grid;place-items:center}
+.step h4{margin:0 0 3px;font-size:13.5px}
+.step p{margin:0;font-size:13px;color:var(--muted);line-height:1.65}
+
+@media (max-width:860px){
+  .wk-sum.two{grid-template-columns:1fr}
+  .wk-sum.two .track:first-child{border-right:none;border-bottom:1px solid var(--line)}
+  .trow{grid-template-columns:1fr;gap:4px}
+}

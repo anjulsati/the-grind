@@ -184,6 +184,8 @@
     /* ---------------- EXAM WINDOW ---------------- */
     {
       n: 1, mode: "exam", theme: "Exam window · arrays without pressure",
+      pattern: "Arrays — the language of every interview",
+      pre: { url: "https://www.youtube.com/watch?v=n60Dn0UsbEk", vtitle: "Introduction to Arrays and ArrayList in Java", vauthor: "Kunal Kushwaha" },
       goal: "Stay warm, not productive. 40 min a day, nothing more.",
       note: "Endsems are on. One easy problem, one short concept, one tiny AI task. If a paper is tomorrow, skip everything except the last line.",
       cs: "Java collections & complexity",
@@ -217,6 +219,8 @@
     },
     {
       n: 2, mode: "exam", theme: "Exam window · strings and recursion intuition",
+      pattern: "Strings and two pointers",
+      pre: { url: "https://www.youtube.com/watch?v=QzZ7nmouLTI", vtitle: "Two Pointers in 7 minutes | LeetCode Pattern", vauthor: "AlgoMasterIO" },
       goal: "Still 40 min. The streak is the deliverable.",
       note: "Same deal. Exams first. If you do nothing else, do the easy problem so week 4 doesn't feel like starting over.",
       cs: "Strings, recursion & complexity",
@@ -250,6 +254,8 @@
     },
     {
       n: 3, mode: "exam", theme: "Exam window · bits and SQL basics",
+      pattern: "Bits, arrays and clean traversal",
+      pre: { url: "https://www.youtube.com/watch?v=qQd-ViW7bfk", vtitle: "L1. Introduction to Bit Manipulation | 1's 2's Compliment | Bit Operators", vauthor: "take U forward" },
       goal: "Last exam week. Then the real thing starts.",
       note: "Last exam is Dec 7. Keep it at 40 min — do not start the full plan early, you'll burn the exam.",
       cs: "SQL basics & OS intuition",
@@ -285,6 +291,8 @@
     /* ---------------- FULL PLAN ---------------- */
     {
       n: 4, mode: "transition", theme: "Arrays II · the real plan starts",
+      pattern: "Arrays II — the patterns that repeat",
+      pre: { url: "https://www.youtube.com/watch?v=mV3wrLBbuuE", vtitle: "Time and Space Complexity COMPLETE Tutorial - What is Big O?", vauthor: "Kunal Kushwaha" },
       goal: "Dec 7 is your last paper. Dec 8 you start for real.",
       note: "Monday is your last exam — do only the light task. From Tuesday the full 2h 45m block begins. This is the week the rest of the plan depends on.",
       cs: "DBMS core",
@@ -309,7 +317,7 @@
         P("3Sum", "3sum", "M"),
         P("Group Anagrams", "group-anagrams", "M")
       ],
-      stretch: P("Subarray Sum Equals K", "subarray-sum-equals-k", "M"),
+      stretch: [P("Subarray Sum Equals K", "subarray-sum-equals-k", "M"), P("Majority Element II", "majority-element-ii", "M")],
       ai: [
         "Python for AI: project layout, type hints, one async function.",
         "Install the SDK you picked (openai / anthropic / google-genai).",
@@ -323,6 +331,8 @@
     },
     {
       n: 5, mode: "normal", theme: "Hashing · prefix sums · sliding window",
+      pattern: "Hashing, prefix sums, sliding window",
+      pre: { url: "https://www.youtube.com/watch?v=9kdHxplyl5I", vtitle: "L1. Introduction to Sliding Window and 2 Pointers | Templates | Patterns", vauthor: "take U forward" },
       goal: "Prefix sums and hash maps stop being tricks and become habits.",
       cs: "DBMS: transactions & queries",
       csTopics: [
@@ -347,7 +357,7 @@
         P("Valid Palindrome II", "valid-palindrome-ii", "E"),
         P("Reverse Words in a String", "reverse-words-in-a-string", "M")
       ],
-      stretch: P("Minimum Window Substring", "minimum-window-substring", "H"),
+      stretch: [P("Minimum Window Substring", "minimum-window-substring", "H"), P("Count Number of Nice Subarrays", "count-number-of-nice-subarrays", "M")],
       ai: [
         "LLM API properly: streaming responses to the terminal.",
         "Add retries + timeouts + a token/cost counter.",
@@ -361,6 +371,8 @@
     },
     {
       n: 6, mode: "normal", theme: "Strings, matrices, and clean traversal",
+      pattern: "Strings and matrix traversal",
+      pre: { url: "https://www.youtube.com/watch?v=18Zt5I4S45o", vtitle: "2D Arrays | Java Complete Placement Course | Lecture 11", vauthor: "Apna College" },
       goal: "Matrix problems stop scaring you.",
       cs: "SQL practice",
       csTopics: [
@@ -385,7 +397,7 @@
         P("Search a 2D Matrix", "search-a-2d-matrix", "M"),
         P("Search a 2D Matrix II", "search-a-2d-matrix-ii", "M")
       ],
-      stretch: P("Spiral Matrix II", "spiral-matrix-ii", "M"),
+      stretch: [P("Spiral Matrix II", "spiral-matrix-ii", "M"), P("Diagonal Traverse", "diagonal-traverse", "M")],
       ai: [
         "Structured output: force JSON with a Pydantic schema.",
         "Tool schemas: define 3 tools your agent will own.",
@@ -399,6 +411,8 @@
     },
     {
       n: 7, mode: "normal", theme: "Sorting & binary search",
+      pattern: "Sorting and binary search",
+      pre: { url: "https://www.youtube.com/watch?v=f6UU7V3szVw", vtitle: "Binary Search Algorithm - Theory + Code", vauthor: "Kunal Kushwaha" },
       goal: "You can write binary search without thinking about off-by-one.",
       cs: "SQL: plans and indexes",
       csTopics: [
@@ -423,7 +437,7 @@
         P("Find First and Last Position of Element in Sorted Array", "find-first-and-last-position-of-element-in-sorted-array", "M"),
         P("Single Element in a Sorted Array", "single-element-in-a-sorted-array", "M")
       ],
-      stretch: P("Median of Two Sorted Arrays", "median-of-two-sorted-arrays", "H"),
+      stretch: [P("Median of Two Sorted Arrays", "median-of-two-sorted-arrays", "H"), P("Successful Pairs of Spells and Potions", "successful-pairs-of-spells-and-potions", "M")],
       ai: [
         "Embeddings: build a small pipeline, not a one-liner.",
         "Store vectors with metadata in one function.",
@@ -437,6 +451,8 @@
     },
     {
       n: 8, mode: "normal", theme: "Binary search on answer",
+      pattern: "Binary search on the answer space",
+      pre: { url: "https://www.youtube.com/watch?v=qyfekrNni90", vtitle: "BS-12. Koko Eating Bananas", vauthor: "take U forward" },
       goal: "You can spot 'binary search on the answer' in under 2 minutes.",
       cs: "Operating Systems I",
       csTopics: [
@@ -461,7 +477,7 @@
         P("Intersection of Two Arrays II", "intersection-of-two-arrays-ii", "E"),
         P("Two Sum Less Than K", "two-sum-less-than-k", "E")
       ],
-      stretch: P("Kth Smallest Element in a Sorted Matrix", "kth-smallest-element-in-a-sorted-matrix", "M"),
+      stretch: [P("Kth Smallest Element in a Sorted Matrix", "kth-smallest-element-in-a-sorted-matrix", "M"), P("Minimum Number of Days to Make m Bouquets", "minimum-number-of-days-to-make-m-bouquets", "M")],
       ai: [
         "Vector DB: Chroma or pgvector, insert + query with filters.",
         "Metadata filtering: only search the docs that matter.",
@@ -475,6 +491,8 @@
     },
     {
       n: 9, mode: "normal", theme: "Recursion & backtracking",
+      pattern: "Recursion and backtracking",
+      pre: { url: "https://www.youtube.com/watch?v=kHi1DUhp9kM", vtitle: "Recursion Introduction and Identification", vauthor: "Aditya Verma" },
       goal: "You can write the backtracking template from memory.",
       cs: "Operating Systems II",
       csTopics: [
@@ -499,7 +517,7 @@
         P("Restore IP Addresses", "restore-ip-addresses", "M"),
         P("N-Queens", "n-queens", "H")
       ],
-      stretch: P("Word Search II", "word-search-ii", "H"),
+      stretch: [P("Word Search II", "word-search-ii", "H"), P("Sudoku Solver", "sudoku-solver", "H")],
       ai: [
         "Retrieval quality: add reranking and citations.",
         "Hybrid search: keyword + vector, then merge.",
@@ -513,6 +531,8 @@
     },
     {
       n: 10, mode: "normal", theme: "Linked lists",
+      pattern: "Linked lists and pointers",
+      pre: { url: "https://www.youtube.com/watch?v=58YbpRDc4yw", vtitle: "Linked List Tutorial - Singly + Doubly + Circular (Theory + Code + Implementation)", vauthor: "Kunal Kushwaha" },
       goal: "Pointers stop being scary. Floyd's algorithm is yours.",
       cs: "Computer Networks I",
       csTopics: [
@@ -537,7 +557,7 @@
         P("Copy List with Random Pointer", "copy-list-with-random-pointer", "M"),
         P("LRU Cache", "lru-cache", "M")
       ],
-      stretch: P("Merge k Sorted Lists", "merge-k-sorted-lists", "H"),
+      stretch: [P("Merge k Sorted Lists", "merge-k-sorted-lists", "H"), P("Remove Duplicates from Sorted List", "remove-duplicates-from-sorted-list", "E")],
       ai: [
         "Tool calling for real: 2 tools that hit live data.",
         "Build the ReAct loop by hand — think, act, observe, stop.",
@@ -551,6 +571,8 @@
     },
     {
       n: 11, mode: "normal", theme: "Stacks & queues",
+      pattern: "Stacks, queues and the monotonic stack",
+      pre: { url: "https://www.youtube.com/watch?v=P1bAPZg5uaE", vtitle: "1 Stack Introduction And Identification", vauthor: "Aditya Verma" },
       goal: "Monotonic stack becomes an obvious tool, not a trick.",
       cs: "Computer Networks II",
       csTopics: [
@@ -575,7 +597,7 @@
         P("Decode String", "decode-string", "M"),
         P("Largest Rectangle in Histogram", "largest-rectangle-in-histogram", "H")
       ],
-      stretch: P("Sum of Subarray Minimums", "sum-of-subarray-minimums", "M"),
+      stretch: [P("Sum of Subarray Minimums", "sum-of-subarray-minimums", "M"), P("Trapping Rain Water", "trapping-rain-water", "H")],
       ai: [
         "LangGraph: rebuild the same agent as a graph.",
         "Add a conditional edge and a checkpoint/memory.",
@@ -589,6 +611,8 @@
     },
     {
       n: 12, mode: "normal", theme: "Trees I",
+      pattern: "Trees and recursion on trees",
+      pre: { url: "https://www.youtube.com/watch?v=_ANrF3FJm7I", vtitle: "L1. Introduction to Trees | Types of Trees", vauthor: "take U forward" },
       goal: "Recursion on trees feels natural.",
       cs: "OOP + Java",
       csTopics: [
@@ -613,7 +637,7 @@
         P("Path Sum", "path-sum", "E"),
         P("Symmetric Tree", "symmetric-tree", "E")
       ],
-      stretch: P("Serialize and Deserialize Binary Tree", "serialize-and-deserialize-binary-tree", "H"),
+      stretch: [P("Serialize and Deserialize Binary Tree", "serialize-and-deserialize-binary-tree", "H"), P("Binary Tree Postorder Traversal", "binary-tree-postorder-traversal", "E")],
       ai: [
         "Memory + human-in-the-loop: pause before a risky action.",
         "Add a confirmation step before any tool that writes.",
@@ -627,6 +651,8 @@
     },
     {
       n: 13, mode: "normal", theme: "Trees II & BST",
+      pattern: "BSTs and tree invariants",
+      pre: { url: "https://www.youtube.com/watch?v=qAeitQWjNNg", vtitle: "Binary Search Trees | BST in One Video | Java Placement Course | Data Structures & Algorithms", vauthor: "Apna College" },
       goal: "BST invariants and LCA are automatic.",
       cs: "Java internals",
       csTopics: [
@@ -651,7 +677,7 @@
         P("Insert into a Binary Search Tree", "insert-into-a-binary-search-tree", "M"),
         P("Convert Sorted Array to Binary Search Tree", "convert-sorted-array-to-binary-search-tree", "E")
       ],
-      stretch: P("Binary Tree Cameras", "binary-tree-cameras", "H"),
+      stretch: [P("Binary Tree Cameras", "binary-tree-cameras", "H"), P("Two Sum IV — Input is a BST", "two-sum-iv-input-is-a-bst", "E")],
       ai: [
         "FastAPI in production shape: async, streaming, background tasks.",
         "Return streaming responses from the agent to the client.",
@@ -665,6 +691,8 @@
     },
     {
       n: 14, mode: "normal", theme: "Heaps & priority queues",
+      pattern: "Heaps and priority queues",
+      pre: { url: "https://www.youtube.com/watch?v=HqPJF2L5h9U", vtitle: "2.6.3 Heap - Heap Sort - Heapify - Priority Queues", vauthor: "Abdul Bari" },
       goal: "You reach for a heap without hesitating.",
       cs: "DBMS advanced",
       csTopics: [
@@ -689,7 +717,7 @@
         P("Kth Largest Element in a Stream", "kth-largest-element-in-a-stream", "E"),
         P("Seat Reservation Manager", "seat-reservation-manager", "M")
       ],
-      stretch: P("IPO", "ipo", "H"),
+      stretch: [P("IPO", "ipo", "H"), P("Sliding Window Maximum", "sliding-window-maximum", "H")],
       ai: [
         "Evals: write 20 golden Q&A pairs.",
         "LLM-as-judge: score answers against the golden set.",
@@ -703,6 +731,8 @@
     },
     {
       n: 15, mode: "normal", theme: "Greedy",
+      pattern: "Greedy and interval problems",
+      pre: { url: "https://www.youtube.com/watch?v=DIX2p7vb9co", vtitle: "L1. Assign Cookies | Greedy Algorithm Playlist", vauthor: "take U forward" },
       goal: "You can argue why greedy is valid, not just code it.",
       cs: "Linux & systems in practice",
       csTopics: [
@@ -727,7 +757,7 @@
         P("Can Place Flowers", "can-place-flowers", "E"),
         P("Lemonade Change", "lemonade-change", "E")
       ],
-      stretch: P("Assign Cookies", "assign-cookies", "E"),
+      stretch: [P("Assign Cookies", "assign-cookies", "E"), P("Two City Scheduling", "two-city-scheduling", "M")],
       ai: [
         "Guardrails: block prompt injection with 3 test attacks.",
         "PII redaction before anything hits the model.",
@@ -741,6 +771,8 @@
     },
     {
       n: 16, mode: "normal", theme: "Graphs I",
+      pattern: "Graphs: BFS, DFS, grids",
+      pre: { url: "https://www.youtube.com/watch?v=M3_pLsDdeuU", vtitle: "G-1. Introduction to Graph | Types | Different Conventions Used", vauthor: "take U forward" },
       goal: "BFS/DFS on a grid or a graph is reflex.",
       cs: "Backend networking",
       csTopics: [
@@ -765,7 +797,7 @@
         P("Redundant Connection", "redundant-connection", "M"),
         P("Network Delay Time", "network-delay-time", "M")
       ],
-      stretch: P("Word Ladder", "word-ladder", "H"),
+      stretch: [P("Word Ladder", "word-ladder", "H"), P("Flood Fill", "flood-fill", "E")],
       ai: [
         "Docker: Dockerfile for the agent + one command to run.",
         "docker-compose: app + vector DB together.",
@@ -779,6 +811,8 @@
     },
     {
       n: 17, mode: "normal", theme: "Graphs II",
+      pattern: "Graphs: topo sort, union-find, shortest path",
+      pre: { url: "https://www.youtube.com/watch?v=5lZ0iJMrUMk", vtitle: "G-21. Topological Sort Algorithm | DFS", vauthor: "take U forward" },
       goal: "Topological order, union-find and shortest path are familiar.",
       cs: "AI / LLM fundamentals",
       csTopics: [
@@ -803,7 +837,7 @@
         P("Path with Maximum Probability", "path-with-maximum-probability", "M"),
         P("Critical Connections in a Network", "critical-connections-in-a-network", "H")
       ],
-      stretch: P("Word Ladder II", "word-ladder-ii", "H"),
+      stretch: [P("Word Ladder II", "word-ladder-ii", "H"), P("Island Perimeter", "island-perimeter", "E")],
       ai: [
         "P2: pick a narrow domain, write the spec in 30 minutes.",
         "P2: build the core loop and deploy the skeleton early.",
@@ -817,6 +851,8 @@
     },
     {
       n: 18, mode: "normal", theme: "Dynamic programming I",
+      pattern: "Dynamic programming I",
+      pre: { url: "https://www.youtube.com/watch?v=nqowUJzG-iM", vtitle: "Dynamic Programming | Introduction", vauthor: "Aditya Verma" },
       goal: "You stop being afraid of DP and start recognising states.",
       cs: "Low-level design",
       csTopics: [
@@ -841,7 +877,7 @@
         P("Decode Ways", "decode-ways", "M"),
         P("Partition Equal Subset Sum", "partition-equal-subset-sum", "M")
       ],
-      stretch: P("Target Sum", "target-sum", "M"),
+      stretch: [P("Target Sum", "target-sum", "M"), P("Delete and Earn", "delete-and-earn", "M")],
       ai: [
         "P2: finish the features.",
         "P2: run the eval set, fix the 3 worst failures.",
@@ -855,6 +891,8 @@
     },
     {
       n: 19, mode: "normal", theme: "Dynamic programming II, tries & bits",
+      pattern: "Dynamic programming II, tries, bits",
+      pre: { url: "https://www.youtube.com/watch?v=tyB0ztf0DNY", vtitle: "DP 1. Introduction to Dynamic Programming | Memoization | Tabulation | Space Optimization Techniques", vauthor: "take U forward" },
       goal: "DP patterns (knapsack, LCS, grid) are all one family now.",
       cs: "High-level design basics",
       csTopics: [
@@ -879,7 +917,7 @@
         P("Implement Trie (Prefix Tree)", "implement-trie-prefix-tree", "M"),
         P("Design Add and Search Words Data Structure", "design-add-and-search-words-data-structure", "M")
       ],
-      stretch: P("Regular Expression Matching", "regular-expression-matching", "H"),
+      stretch: [P("Regular Expression Matching", "regular-expression-matching", "H"), P("Concatenated Words", "concatenated-words", "H")],
       ai: [
         "Red-team your own agent: 15 adversarial prompts.",
         "Patch the 5 that worked; document each fix.",
@@ -1002,8 +1040,18 @@
   var DAYS = [];
   var dayN = 0;
 
+  function watchItem(w, hint) {
+    return {
+      type: "watch",
+      title: "Watch first — " + w.pre.vtitle,
+      url: w.pre.url, vauthor: w.pre.vauthor,
+      hint: hint || "Pattern primer for the week. Watch it before the problems, then code along later if needed."
+    };
+  }
+
   WEEKS.forEach(function (w) {
     var start = addDaysISO(WEEK1, (w.n - 1) * 7);
+    var timedWeek = w.n >= 10;
 
     for (var d = 0; d < 7; d++) {
       var date = addDaysISO(start, d);
@@ -1011,29 +1059,28 @@
       var items = [];
       var meta = { n: dayN, week: w.n, date: date, idx: d };
 
+      function prob(i, hint) {
+        var p = w.problems[i];
+        return { id: date + "-p" + i, type: "dsa", title: p.title, url: p.url, diff: p.diff, hint: hint };
+      }
+      function csItem(i, hint) {
+        var c = w.csTopics[i];
+        return { type: "theory", title: w.cs + " — " + c.label, url: c.url, vtitle: c.vtitle, vauthor: c.vauthor, hint: hint };
+      }
+      var FULL = "45 min alone, 20 min learning, then rewrite it with the editor closed.";
+      var FULL2 = "Second problem. Past 45 minutes, read the solution — don't burn the day.";
+
       if (w.mode === "exam") {
-        var p = w.problems[d];
-        var c = w.csTopics[d];
-        items.push({
-          id: date + "-p", type: "dsa",
-          title: p.title, url: p.url, diff: p.diff,
-          hint: "10 minutes. Can't crack it? Read the solution, write it once from memory, move on."
-        });
-        items.push({
-          id: date + "-c", type: "theory",
-          title: w.cs + " — " + c.label, url: c.url, vtitle: c.vtitle, vauthor: c.vauthor,
-          hint: "10 minutes at 1.5x, then 3 lines in your notes."
-        });
-        items.push({
-          id: date + "-ai", type: "ai",
-          title: w.ai[d],
-          hint: "15 minutes. Setup and first steps only — no rabbit holes during exams."
-        });
-        items.push({
-          id: date + "-ex", type: "review",
-          title: "One page of revision for tomorrow's paper",
-          hint: "Exams come first. Blank day? Do this one and let the rest go."
-        });
+        var ep = w.problems[d], ec = w.csTopics[d];
+        items.push({ id: date + "-p", type: "dsa", title: ep.title, url: ep.url, diff: ep.diff,
+          hint: "10 minutes. Can't crack it? Read the solution, write it once from memory, move on." });
+        items.push({ id: date + "-c", type: "theory", title: w.cs + " — " + ec.label, url: ec.url,
+          vtitle: ec.vtitle, vauthor: ec.vauthor,
+          hint: "10 minutes at 1.5x, then 3 lines in your notes." });
+        items.push({ id: date + "-ai", type: "ai", title: w.ai[d],
+          hint: "15 minutes. Setup and first steps only — no rabbit holes during exams." });
+        items.push({ id: date + "-ex", type: "review", title: "One page of revision for tomorrow's paper",
+          hint: "Exams come first. Blank day? Do this one and let the rest go." });
         meta.title = "Day " + (d + 1) + " · light";
         meta.time = "40 min";
         meta.light = true;
@@ -1041,97 +1088,60 @@
 
       else if (w.mode === "transition") {
         if (d === 0) {
-          items.push({
-            id: date + "-exam", type: "review",
-            title: "Last exam today — nothing else is required",
-            hint: "Come back tomorrow. The 5-month block starts Dec 8."
-          });
-          items.push({
-            id: date + "-p", type: "dsa",
-            title: w.problems[0].title, url: w.problems[0].url, diff: w.problems[0].diff,
-            hint: "Only if you have the energy. 10 minutes."
-          });
-          meta.title = "Last exam · optional";
-          meta.time = "10 min";
-          meta.light = true;
+          items.push({ id: date + "-exam", type: "review", title: "Last exam today — nothing else is required",
+            hint: "Come back tomorrow. The FAANG block starts Dec 8." });
+          items.push(prob(0, "Only if you have the energy. 10 minutes."));
+          meta.title = "Last exam · optional"; meta.time = "10 min"; meta.light = true;
         } else if (d < 6) {
-          var i0 = 1 + (d - 1) * 2;
-          items.push({
-            id: date + "-p1", type: "dsa",
-            title: w.problems[i0].title, url: w.problems[i0].url, diff: w.problems[i0].diff,
-            hint: "45 min alone, 20 min learning, then rewrite it with the editor closed."
-          });
-          items.push({
-            id: date + "-p2", type: "dsa",
-            title: w.problems[i0 + 1].title, url: w.problems[i0 + 1].url, diff: w.problems[i0 + 1].diff,
-            hint: "Second one. Past 45 minutes, read the solution."
-          });
-          var ct0 = w.csTopics[(d - 1) % w.csTopics.length];
-          items.push({
-            id: date + "-cs", type: "theory",
-            title: w.cs + " — " + ct0.label, url: ct0.url, vtitle: ct0.vtitle, vauthor: ct0.vauthor,
-            hint: "30 minutes, then 5 lines in your own words."
-          });
-          if (d === 2) items.push({ id: date + "-proj", type: "project", title: w.project, hint: "60-90 min." });
-          if (d === 1) items.push({ id: date + "-car", type: "career", title: w.career[0] });
-          if (d === 5) items.push({ id: date + "-car2", type: "career", title: w.career[1] });
-          meta.title = "Day " + d + " · full block";
-          meta.time = "2h 45m";
+          var ti = 1 + (d - 1) * 2;
+          items.push(prob(ti, FULL)); items.push(prob(ti + 1, FULL2));
+          items.push(csItem((d - 1) % w.csTopics.length, "30 minutes, then 5 lines in your own words."));
+          if (d === 1) items.push(watchItem(w, "Week 1 of the real plan. This is the video the whole DSA track assumes."));
+          if (d === 2) items.push({ id: date + "-c1", type: "career", title: w.career[0] });
+          if (d === 3) items.push({ id: date + "-a1", type: "dev", title: w.ai[0], hint: "45 min. Commit and push before you sleep." });
+          if (d === 4) items.push({ id: date + "-proj", type: "project", title: w.project, hint: "60-90 min." });
+          if (d === 5) items.push({ id: date + "-c2", type: "career", title: w.career[1] });
+          meta.title = "Day " + d; meta.time = "2h 45m";
         } else {
-          items.push({
-            id: date + "-r1", type: "review",
-            title: "Re-solve 3 of this week's problems — cold",
-            hint: w.problems.slice(0, 3).map(function (x) { return x.title; }).join(" · ")
+          items.push({ id: date + "-r1", type: "review", title: "Re-solve 3 of this week's problems — cold",
+            hint: w.problems.slice(0, 3).map(function (x) { return x.title; }).join(" · ") });
+          (w.stretch || []).forEach(function (sp, k) {
+            items.push({ id: date + "-st" + k, type: "stretch", title: sp.title, url: sp.url, diff: sp.diff, hint: "Optional. 30 minutes of struggle beats 3 easy wins." });
           });
-          if (w.stretch) items.push({
-            id: date + "-st", type: "stretch", title: w.stretch.title, url: w.stretch.url, diff: w.stretch.diff,
-            hint: "Optional. 30 minutes of struggle beats 3 easy wins."
-          });
+          items.push({ id: date + "-a2", type: "dev", title: w.ai[1], hint: "45 min." });
+          items.push({ id: date + "-a3", type: "dev", title: w.ai[2], hint: "45 min." });
           items.push({ id: date + "-r2", type: "review", title: "Weekly review: 3 lines in plan.md" });
-          meta.title = "Revision day";
-          meta.time = "~2h";
-          meta.revision = true;
+          meta.title = "Revision day"; meta.time = "~3h"; meta.revision = true;
         }
       }
 
       else if (w.mode === "normal") {
         if (d < 6) {
-          var a = w.problems[d * 2], b = w.problems[d * 2 + 1];
-          items.push({
-            id: date + "-p1", type: "dsa", title: a.title, url: a.url, diff: a.diff,
-            hint: "45 min alone, 20 min learning, rewrite with the editor closed."
-          });
-          items.push({
-            id: date + "-p2", type: "dsa", title: b.title, url: b.url, diff: b.diff,
-            hint: "Second one. Don't burn the day on one problem."
-          });
-          var ct = w.csTopics[d];
-          items.push({
-            id: date + "-cs", type: "theory", title: w.cs + " — " + ct.label, url: ct.url, vtitle: ct.vtitle, vauthor: ct.vauthor,
-            hint: "30 min. Then close the tab and say it out loud in 60 seconds."
-          });
-          if (d === 0 || d === 2 || d === 4) {
-            items.push({ id: date + "-ai", type: "dev", title: w.ai[Math.floor(d / 2)], hint: "45 min. Commit and push before you sleep." });
-          }
-          if (d === 3) items.push({ id: date + "-proj", type: "project", title: w.project, hint: "60-90 min." });
+          items.push(prob(d * 2, FULL)); items.push(prob(d * 2 + 1, FULL2));
+          items.push(csItem(d, "30 min. Then close the tab and say it out loud in 60 seconds."));
+          if (d === 0) items.push(watchItem(w));
           if (d === 1) items.push({ id: date + "-c1", type: "career", title: w.career[0] });
+          if (d === 2) items.push({ id: date + "-a1", type: "dev", title: w.ai[0], hint: "45 min. Commit and push before you sleep." });
+          if (d === 3) items.push({ id: date + "-proj", type: "project", title: w.project, hint: "60-90 min." });
+          if (d === 4) items.push({ id: date + "-a2", type: "dev", title: w.ai[1], hint: "45 min." });
           if (d === 5) items.push({ id: date + "-c2", type: "career", title: w.career[1] });
-          meta.title = "Day " + (d + 1);
-          meta.time = "2h 45m";
+          meta.title = "Day " + (d + 1); meta.time = "2h 45m";
         } else {
           items.push({
             id: date + "-r1", type: "review",
-            title: "Re-solve 3 problems from this week — cold, no hints",
-            hint: w.problems.slice(0, 3).map(function (x) { return x.title; }).join(" · ")
+            title: timedWeek ? "OA simulation — 2 unseen mediums, 60 min, no help" : "Re-solve 3 problems from this week — cold, no hints",
+            hint: timedWeek
+              ? "This is the FAANG online-assessment format. Timer on, editor bare, talk out loud. Then re-solve 2 old ones."
+              : w.problems.slice(0, 3).map(function (x) { return x.title; }).join(" · ")
           });
-          if (w.stretch) items.push({
-            id: date + "-st", type: "stretch", title: w.stretch.title, url: w.stretch.url, diff: w.stretch.diff,
-            hint: "Optional but recommended."
+          (w.stretch || []).forEach(function (sp, k) {
+            items.push({ id: date + "-st" + k, type: "stretch", title: sp.title, url: sp.url, diff: sp.diff,
+              hint: k === 0 ? "Optional FAANG-level stretch." : "Optional. Attempt, don't solve." });
           });
+          items.push({ id: date + "-a3", type: "dev", title: w.ai[2], hint: "45 min." });
           items.push({ id: date + "-r2", type: "review", title: "Weekly review: 3 lines in plan.md — what clicked, what didn't, what I redo" });
-          meta.title = "Revision day";
-          meta.time = "~2h";
-          meta.revision = true;
+          meta.title = timedWeek ? "Revision + timed set" : "Revision day";
+          meta.time = "~3h"; meta.revision = true;
         }
       }
 
@@ -1140,8 +1150,7 @@
         items = day.items.map(function (it, k) {
           return { id: date + "-s" + k, type: it.type, title: it.title, url: it.url || null, diff: it.diff || null, hint: it.hint || null };
         });
-        meta.title = day.t;
-        meta.time = "~3h";
+        meta.title = day.t; meta.time = "~3h";
       }
 
       meta.items = items;
@@ -1194,6 +1203,41 @@
     projects: [
       { name: "P1 · agentic RAG assistant (W5-12)", d: "Documents in, retrieval with citations, 3 tools, guardrails, an eval suite, FastAPI + UI, deployed. Your 30-minute interview." },
       { name: "P2 · domain agent + eval report (W17-18)", d: "A narrow agent for one job, 30-case eval set, a score you can quote. Proves P1 wasn't luck." }
+    ]
+  };
+
+
+  /* ============================================================
+     THE FAANG BAR
+     ============================================================ */
+  var FAANG = {
+    thesis: "At FAANG/MAANG level the interview is roughly <b>90% problem solving</b>. One round on CS fundamentals, one on design, one on you. So the weights in this plan are deliberately lopsided: DSA first, CS second, AI/dev as the differentiator that also gets you into AI teams.",
+    route: [
+      ["Summer 2028 internship", "Applications open Aug-Nov 2027", "The highest-probability route in. Intern, perform, return offer, full-time. You must be interview-ready by July 2027."],
+      ["On-campus placement", "Aug-Dec 2027", "MAANG and product companies visiting CU. Your batch is the filter — the online assessment is what separates you from 500 others."],
+      ["Off-campus full-time", "2028", "Referrals and LinkedIn. Same preparation, longer timeline, more patience."]
+    ],
+    loop: [
+      ["Online assessment", "2 problems, 90-120 min, proctored. Most people die here. This is why every week from W10 has a timed set."],
+      ["Screen", "1-2 problems, live, while you talk. Practise speaking your approach out loud — that's what the mock weeks are for."],
+      ["Onsite: 2 DSA rounds", "Mediums and hards. Depth of follow-up questions, not new topics."],
+      ["Onsite: design round", "LLD for freshers (parking lot, LRU, rate limiter). HLD appears at some companies."],
+      ["Behavioral", "Amazon asks Leadership Principles to freshers. Google asks Googliness. 6 STAR stories, written, not improvised."]
+    ],
+    bar: [
+      "Every easy in under 15 minutes, cold.",
+      "Every medium in under 30 minutes, cold, talking out loud.",
+      "2 hards a week — attempted, not solved. Attempting is the skill.",
+      "By April: 240+ problems, 60+ re-solved cold, 15+ timed sets.",
+      "30 minutes about your project: design, tradeoffs, evals, what you'd change.",
+      "One page of STAR stories before August 2027."
+    ],
+    star: [
+      ["Situation", "One line of context. No backstory."],
+      ["Task", "What you specifically owned."],
+      ["Action", "What you did, in order, with decisions you made."],
+      ["Result", "A number. Even an estimate is better than nothing."],
+      ["Learning", "What you'd do differently. This is the part most people skip."]
     ]
   };
 
@@ -1252,29 +1296,31 @@
   ];
 
   var RULES = [
-    "One sheet, one language, one stack. Switching plans is the #1 killer.",
+    "One sheet, one language, one stack. Striver A2Z to learn, NeetCode 150 to revise.",
     "45 min alone → 20 min learning → rewrite from scratch. Every problem.",
-    "After week 8, revision beats new problems.",
-    "Deploy P1 in week 12, not week 22.",
-    "Exam weeks are 40 minutes. That's the whole promise — no guilt, no catching up later.",
+    "FAANG bar: easy under 15 min, medium under 30 min, cold, out loud.",
+    "Attempt 2 hards a week. Not solve. Attempt.",
+    "From week 10, every week ends with a timed set. It is the OA, rehearsed.",
+    "Deploy P1 in week 12. A live URL with an eval score beats a notebook.",
+    "Exam weeks are 40 minutes. That's the whole promise — no guilt, no backlog.",
     "A collapsed day = one easy problem. Never zero.",
     "CGPA floor 7.5, zero backlogs. You have 7.65 — don't waste it.",
-    "Every problem in this plan appears once. Repeats are labelled 're-solve' on purpose.",
-    "Speak English out loud 10 min/day. Good coders fail HR rounds here constantly."
+    "Every problem appears once. Repeats are labelled re-solve, on purpose.",
+    "Don't buy a course. Everything here is free and better."
   ];
 
   var MILESTONES = [
     { when: "Week 3 · Dec 6", checks: ["21 easy problems done", "Python + first LLM call working", "Exams still passed", "Zero burnout"] },
-    { when: "Week 9 · Jan 10", checks: ["~90 problems", "DBMS + SQL solid", "P1 retrieval working with a hit-rate number", "Resume v2 live", "First mock done"] },
-    { when: "Week 14 · Feb 21", checks: ["~150 problems", "OS + CN done", "P1 deployed with an eval suite", "10 applications/week", "3 mocks"] },
-    { when: "Week 19 · Mar 21", checks: ["~215 problems", "DP + graphs + tries done", "P2 deployed + eval report", "Docker + CI", "4 checkpoints passed"] },
-    { when: "Week 22 · Apr 18", checks: ["5 mocks done", "Portfolio + demo video", "40+ applications", "HR answers written", "Phase 3 plan ready"] }
+    { when: "Week 9 · Jan 10", checks: ["~90 problems", "Easy in under 20 min", "DBMS + SQL solid", "P1 retrieval working with a hit-rate number", "Resume v2", "First mock done"] },
+    { when: "Week 14 · Feb 21", checks: ["~150 problems", "Easy under 15 min, medium under 30", "OS + CN done", "P1 deployed with an eval score", "3 timed sets done", "3 mocks"] },
+    { when: "Week 19 · Mar 21", checks: ["~215 problems", "DP + graphs + tries done", "10 hards attempted", "P2 deployed + eval report", "Docker + CI", "6 timed sets"] },
+    { when: "Week 22 · Apr 18", checks: ["244 problems total", "5 mocks done", "60+ re-solved cold", "Portfolio + demo video", "45+ applications", "6 STAR stories written"] }
   ];
 
   window.CUDATA = {
     WEEK1: WEEK1, PLACEMENT_SEASON: PLACEMENT_SEASON,
     WEEKS: WEEKS, DAYS: DAYS,
-    CS: CS, AI: AI, RESOURCES: RESOURCES, RULES: RULES, MILESTONES: MILESTONES,
+    CS: CS, AI: AI, FAANG: FAANG, RESOURCES: RESOURCES, RULES: RULES, MILESTONES: MILESTONES,
     addDaysISO: addDaysISO, diffDays: diffDays, monthOf: monthOf
   };
 })();

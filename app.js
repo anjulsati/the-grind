@@ -1,5 +1,5 @@
 /* ============================================================
-   Placement Prep OS — single page, no tabs
+   The Offer — single page, no tabs
    ============================================================ */
 (function () {
   "use strict";
@@ -46,7 +46,7 @@
     return new Date(s + "T00:00:00").toLocaleDateString("en-IN", { day: "numeric", month: "short" });
   }
   function typeLabel(t) {
-    return { dsa: "DSA", stretch: "STRETCH", theory: "STUDY", dev: "AI", project: "BUILD", career: "CAREER", review: "REVIEW", ai: "AI" }[t] || t;
+    return { dsa: "DSA", stretch: "STRETCH", theory: "STUDY", dev: "AI", project: "BUILD", career: "CAREER", review: "REVIEW", ai: "AI", watch: "WATCH" }[t] || t;
   }
   function diffLabel(d) { return { E: "easy", M: "med", H: "hard" }[d] || d; }
 
@@ -113,23 +113,41 @@
   function cchip(c) { return '<span class="cchip">' + esc(c.label) + "</span>"; }
 
   function weekSummaryHTML(w) {
-    var rows = [];
+    var watchLink = w.pre
+      ? '<a href="' + w.pre.url + '" target="_blank" rel="noopener">' + esc(w.pre.vtitle) + '</a><span class="a"> · ' + esc(w.pre.vauthor) + "</span>"
+      : "—";
 
-    if (w.mode === "sprint") {
-      rows.push(["Focus", '<div class="sum-v"><span class="cchip">' + esc(w.days.map(function (d) { return d.t; }).join(" · ")) + "</span></div>"]);
-      rows.push(["Type", '<div class="sum-v plain">Revision, mocks and applications. No new topics this week.</div>']);
+    var isSprint = w.mode === "sprint";
+    var t1 = '<div class="track">' +
+      '<div class="track-h"><span class="tnum">01</span> DSA</div>' +
+      (isSprint
+        ? '<div class="trow"><span class="sum-k">Pattern</span><div class="sum-v plain">No new patterns this week — you are consolidating everything from W4 to W19.</div></div>' +
+          '<div class="trow"><span class="sum-k">Problems</span><div class="sum-v plain">Re-solving only. Cold, timed, out loud.</div></div>' +
+          '<div class="trow"><span class="sum-k">Bar</span><div class="sum-v plain">Medium under 30 min, easy under 15 min. Every round.</div></div>'
+        : '<div class="trow"><span class="sum-k">Pattern</span><div class="sum-v plain">' + esc(w.pattern) + "</div></div>" +
+          '<div class="trow"><span class="sum-k">Watch first</span><div class="sum-v plain">' + watchLink + "</div></div>" +
+          '<div class="trow"><span class="sum-k">Problems</span><div class="sum-v">' +
+            '<span class="sumcount">' + (w.problems ? w.problems.length : 0) + "</span>" +
+            (w.problems || []).map(pchip).join("") + "</div></div>" +
+          '<div class="trow"><span class="sum-k">Day 7</span><div class="sum-v plain">' +
+            (w.n >= 10 ? "Timed set: 2 unseen mediums in 60 min + re-solve" : "Re-solve 3 of this week cold") + "</div></div>") +
+      "</div>";
+
+    var t2;
+    if (isSprint) {
+      t2 = '<div class="track"><div class="track-h"><span class="tnum">02</span> CS + Development</div>' +
+        '<div class="trow"><span class="sum-k">Focus</span><div class="sum-v plain">' + esc(w.days.map(function (d) { return d.t; }).join(" · ")) + "</div></div>" +
+        '<div class="trow"><span class="sum-k">Type</span><div class="sum-v plain">Revision, mocks, applications. No new topics.</div></div></div>';
     } else {
-      rows.push(["DSA", '<div class="sum-v"><span class="sumcount">' + w.problems.length + "</span>" + w.problems.map(pchip).join("") + "</div>"]);
-      rows.push(["Study", '<div class="sum-v">' + w.csTopics.map(cchip).join("") + "</div>"]);
-      if (w.ai) rows.push(["AI", '<div class="sum-v plain">' + w.ai.map(function (a) { return '<div class="sumline">' + esc(a) + "</div>"; }).join("") + "</div>"]);
-      if (w.career) rows.push(["Career", '<div class="sum-v plain">' + w.career.map(function (a) { return '<div class="sumline">' + esc(a) + "</div>"; }).join("") + "</div>"]);
-      if (w.project) rows.push(["Deliver", '<div class="sum-v plain"><span class="cchip" style="border-color:rgba(245,181,69,.3);color:#e8cf9e">' + esc(w.project) + "</span></div>"]);
-      if (w.stretch) rows.push(["Stretch", '<div class="sum-v"><span class="pchip ' + w.stretch.diff + '">' + esc(w.stretch.title) + '<span class="d">optional</span></span></div>']);
+      t2 = '<div class="track"><div class="track-h"><span class="tnum">02</span> CS + Development</div>' +
+        '<div class="trow"><span class="sum-k">Study</span><div class="sum-v">' + w.csTopics.map(cchip).join("") + "</div></div>" +
+        (w.ai ? '<div class="trow"><span class="sum-k">AI</span><div class="sum-v plain">' + w.ai.map(function (a) { return '<div class="sumline">' + esc(a) + "</div>"; }).join("") + "</div></div>" : "") +
+        (w.career ? '<div class="trow"><span class="sum-k">Career</span><div class="sum-v plain">' + w.career.map(function (a) { return '<div class="sumline">' + esc(a) + "</div>"; }).join("") + "</div></div>" : "") +
+        (w.project ? '<div class="trow"><span class="sum-k">Deliver</span><div class="sum-v"><span class="cchip" style="border-color:rgba(245,181,69,.3);color:#e8cf9e">' + esc(w.project) + "</span></div></div>" : "") +
+        "</div>";
     }
 
-    return '<div class="wk-sum">' + rows.map(function (r) {
-      return '<div class="sum-row"><span class="sum-k">' + esc(r[0]) + "</span>" + r[1] + "</div>";
-    }).join("") + "</div>";
+    return '<div class="wk-sum two">' + t1 + t2 + "</div>";
   }
 
   function weekHTML(w) {
@@ -211,6 +229,22 @@
     return html;
   }
 
+  function faangHTML() {
+    var html = '<section id="faang"><h2>The FAANG bar</h2>' +
+      '<p class="lead">' + D.FAANG.thesis + "</p>";
+    html += '<h3>Three routes in</h3><div class="grid">' + D.FAANG.route.map(function (r) {
+      return '<div class="card"><h4>' + esc(r[0]) + '</h4><p class="dim tiny">' + esc(r[1]) + "</p><p>" + esc(r[2]) + "</p></div>";
+    }).join("") + "</div>";
+    html += '<h3>The interview loop, honestly</h3><div class="steps">' + D.FAANG.loop.map(function (l, i) {
+      return '<div class="step"><span class="stnum">' + (i + 1) + '</span><div><h4>' + esc(l[0]) + "</h4><p>" + esc(l[1]) + "</p></div></div>";
+    }).join("") + "</div>";
+    html += '<h3>The bar you are training for</h3><div class="callout">' + D.FAANG.bar.map(function (b) { return "• " + esc(b); }).join("<br>") + "</div>";
+    html += '<h3>STAR — for the round everyone underestimates</h3><div class="grid">' + D.FAANG.star.map(function (x) {
+      return '<div class="card tight"><h4>' + esc(x[0]) + "</h4><p>" + esc(x[1]) + "</p></div>";
+    }).join("") + "</div></section>";
+    return html;
+  }
+
   function csHTML() {
     return '<section id="cs"><h2>CS fundamentals</h2>' +
       '<p class="lead">Coding gets you shortlisted. These get you the offer. Thirty minutes a day, one topic at a time, in your own words.</p>' +
@@ -267,7 +301,7 @@
 
   function reviewMarkdown() {
     var L = [];
-    L.push("# Placement Prep OS — review");
+    L.push("# The Offer — review");
     L.push("");
     L.push("**Reviewer:** " + (state.review.name || "(unnamed)"));
     L.push("**Date:** " + iso(new Date()));
@@ -284,7 +318,7 @@
       var c = rv("w", String(w.n));
       if (c) L.push("| W" + w.n + " | " + w.theme + " | " + c.replace(/\|/g, "/").replace(/\n/g, " ") + " |");
     });
-    L.push(""); L.push("---"); L.push("Generated from Placement Prep OS.");
+    L.push(""); L.push("---"); L.push("Generated from The Offer.");
     return L.join("\n");
   }
 
@@ -330,6 +364,7 @@
     D.WEEKS.forEach(function (w) {
       parts.push('<a href="#w' + w.n + '" class="navchip' + (w.n === ACTIVE_WEEK ? " on" : "") + '" data-nav="' + w.n + '">W' + w.n + "</a>");
     });
+    parts.push('<a href="#faang" class="navchip">FAANG</a>');
     parts.push('<a href="#cs" class="navchip">CS</a>');
     parts.push('<a href="#ai" class="navchip">AI</a>');
     parts.push('<a href="#links" class="navchip">Links</a>');
@@ -345,6 +380,7 @@
       '<button id="collapseAll" class="btn">Collapse all</button></div></div>' +
       '<p class="lead">Every week opens with what you study that week. Click the header for the seven days.</p>' +
       D.WEEKS.map(weekHTML).join("") + "</section>";
+    html += faangHTML();
     html += csHTML();
     html += aiHTML();
     html += resourcesHTML();
@@ -439,7 +475,7 @@
 
     if (e.target.id === "rvDownload") {
       var text = reviewMarkdown();
-      var name = "placement-prep-review-" + iso(new Date()) + ".md";
+      var name = "the-offer-review-" + iso(new Date()) + ".md";
       var blob = new Blob([text], { type: "text/markdown;charset=utf-8" });
       var url = URL.createObjectURL(blob);
       var a = document.createElement("a");
