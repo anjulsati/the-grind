@@ -2,15 +2,16 @@
 
 **Live: https://anjulsati.github.io/the-grind/**
 
-One page. 22 weeks. Three projects. Built for a **FAANG/MAANG-level offer**.
+A dynamic, single-page 22-week plan by **Anjul Sati**, built for one goal: a **FAANG/MAANG-level offer**.
 
-Every week is three boxes, and every day is three boxes:
+Every week and every day is **two boxes**:
 
 | | |
 |---|---|
-| **01 DSA** | pattern of the week · watch-first video · problems · the day-7 test |
-| **02 CS Fundamentals** | one CS topic a day: DBMS, OS, CN, OOP, SQL, LLD, HLD |
-| **03 DEV** | agentic AI build tasks · career tasks · the weekly deliverable |
+| **01 DSA** | pattern of the week · watch-first video · problems · the day-7 timed test |
+| **02 DEV** | CS Fundamentals study · agentic AI build tasks · career tasks · the weekly deliverable |
+
+CS Fundamentals lives at the **top** — "what to cover" — as an editable reference, and shows up daily inside the DEV box.
 
 ```
 W1-3   16 Nov - 6 Dec    EXAMS        45 min/day
@@ -19,21 +20,43 @@ W5-19  14 Dec - 21 Mar    FULL PLAN    2h 45m/day
 W20-22 22 Mar - 18 Apr    SPRINT       repair, 5 mocks, portfolio, 45+ applications
 ```
 
-593 tasks · 244 unique problems · 0 repeats. DSA videos live in the DSA box, CS videos in CS Fundamentals.
-
 ---
 
-## FAANG calibration
+## Dynamic — the plan is a database
 
-- Striver A2Z to learn, NeetCode 150 to revise, Aditya Verma for DP/recursion/stacks, Gate Smashers for OS/DBMS/CN, Shrayansh Jain for LLD, Gaurav Sen for HLD.
-- Every week opens with the **video to watch first**.
-- From W10, every week ends with a **timed set**: 2 unseen mediums, 60 minutes.
-- **The FAANG bar** section: three routes in, the interview loop, the difficulty bar, STAR.
+The whole plan is stored in your browser as an editable database, seeded once from the original.
 
-## Pen mode
+**Edit plan** (or press `E`) turns on edit mode:
 
-`✎ Pen` or `P`. Draw over the page; strokes fade (10s/30s/60s/keep). `C` clears, `Esc` exits.
+- **＋** on any DSA or DEV box — add a task
+- **✎ / ✕** on any item — edit or delete it (title, link, box, type, difficulty, video, hint)
+- **✎** on a week — rename theme, goal, note
+- **✎** on a day — rename it, change the time
+- **CS Fundamentals** cards at the top — add/edit/delete topics and areas
+
+Everything saves instantly. The week summaries and the "All the weeks" table **re-derive from your edits**, so nothing goes stale.
+
+- **Restore original** — put the plan back to factory state (checkmarks stay)
+- **Export plan** — download the whole database as JSON
+- **Import plan** — load a JSON backup
+
+## Also
+
+- **✎ Pen** (`P`) — draw over the page, strokes fade (10s/30s/60s/keep). `C` clears, `Esc` exits.
+- **Review** — for an auditor: verdicts, comments, exportable markdown.
+- Progress, edits and review notes all live in this browser only.
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `P` | pen mode |
+| `E` | edit mode |
+| `C` | clear strokes |
+| `Esc` | exit pen/edit |
 
 ---
 
 Local: double-click `index.html`. Preview a date: `index.html?date=2027-01-15`
+
+Deployed on **GitHub Pages** — push to `main` and it's live.

@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Grind</title>
-<meta name="description" content="A personal 22-week placement plan: DSA, CS and agentic AI, week by week.">
-<link rel="stylesheet" href="styles.css?v=13">
+<title>The Grind — 22 weeks to the offer</title>
+<meta name="description" content="A personal 22-week plan by Anjul Sati: DSA, CS Fundamentals and agentic AI.">
+<link rel="stylesheet" href="styles.css?v=14">
 </head>
 <body>
 
@@ -19,9 +19,23 @@
     <div class="bar"><div id="overallbar"></div></div>
     <div class="tb-line tiny"><span id="overallcount">0 / 0</span><span class="sep">·</span><span id="countdown">—</span></div>
   </div>
-  <button id="jumpToday" class="btn">Jump to today</button>
-  <button id="penToggle" class="btn" title="Pen mode (P)">✎ Pen</button>
+  <div class="actions">
+    <button id="jumpToday" class="btn">Jump to today</button>
+    <button id="penToggle" class="btn" title="Pen mode (P)">✎ Pen</button>
+    <button id="editBtn" class="btn" title="Edit the plan (E)">Edit plan</button>
+  </div>
 </header>
+
+<div class="editbar" id="editbar" style="display:none">
+  <span class="eb-tag">EDIT MODE</span>
+  <span class="eb-msg">Every change saves to this browser instantly.</span>
+  <span class="eb-actions">
+    <button id="restoreBtn" class="btn">Restore original</button>
+    <button id="exportBtn" class="btn">Export plan</button>
+    <button id="importBtn" class="btn">Import plan</button>
+    <input type="file" id="importFile" accept="application/json" style="display:none">
+  </span>
+</div>
 
 <div class="navwrap">
   <nav id="navchips" class="navchips"></nav>
@@ -30,13 +44,12 @@
 <main id="app"></main>
 
 <footer>
-  <span>Private to this browser. Progress and notes are stored locally, never uploaded.</span>
-  <button id="resetBtn" class="btn">Reset everything</button>
+  <span>Built by <b>Anjul Sati</b> · private to this browser — nothing is uploaded anywhere</span>
+  <button id="resetBtn" class="btn">Reset progress</button>
 </footer>
 
 <button id="topBtn" class="btn fab" title="Back to top">↑</button>
 
-<!-- pen layer -->
 <canvas id="penCanvas"></canvas>
 <div class="penbar" id="penbar">
   <span class="penlbl">Pen</span>
@@ -48,22 +61,21 @@
     <button class="sw" data-color="#ffffff" style="background:#ffffff"></button>
   </div>
   <select id="penSize">
-    <option value="2">thin</option>
-    <option value="4" selected>medium</option>
-    <option value="8">thick</option>
-    <option value="14">marker</option>
+    <option value="2">thin</option><option value="4" selected>medium</option>
+    <option value="8">thick</option><option value="14">marker</option>
   </select>
   <select id="penFade">
-    <option value="10">fade 10s</option>
-    <option value="30" selected>fade 30s</option>
-    <option value="60">fade 60s</option>
-    <option value="0">keep forever</option>
+    <option value="10">fade 10s</option><option value="30" selected>fade 30s</option>
+    <option value="60">fade 60s</option><option value="0">keep forever</option>
   </select>
   <button id="penClear" class="btn">Clear</button>
   <button id="penExit" class="btn solid">Done</button>
 </div>
 
-<script src="data.js?v=13"></script>
-<script src="app.js?v=13"></script>
+<div class="modal-wrap" id="modal"></div>
+<div class="toast" id="toast"></div>
+
+<script src="data.js?v=14"></script>
+<script src="app.js?v=14"></script>
 </body>
 </html>
