@@ -1,11 +1,11 @@
 /* ============================================================
-   The Offer — single page, no tabs
+   Zero to Offer — single page, no tabs
    ============================================================ */
 (function () {
   "use strict";
 
   var D = window.CUDATA;
-  var LS = "placement-prep-os-v1";
+  var LS = "zero-to-offer-v1";
   var root = document.getElementById("app");
 
   /* ---------- state ---------- */
@@ -91,9 +91,19 @@
       '<div class="body"><div class="title"><span class="badge ' + item.type + '">' + typeLabel(item.type) + "</span>" + title + diff + "</div>" + vid + hint + "</div>" + go + "</li>";
   }
 
+  function colBox(num, name, cls, items) {
+    return '<div class="dcol ' + cls + '">' +
+      '<div class="dcol-h"><span class="dnum">' + num + "</span>" + name + "</div>" +
+      (items.length ? '<ul class="items">' + items.join("") + "</ul>" : '<div class="dempty">—</div>') +
+      "</div>";
+  }
+
   function dayHTML(day) {
     var isToday = day.date === TODAY;
     var isNext = !TODAY_DAY && day.date === D.WEEK1;
+    var cols = { dsa: [], cs: [], dev: [] };
+    day.items.forEach(function (it) { (cols[it.track] || cols.dev).push(itemHTML(it)); });
+
     var cls = "day" + (isToday ? " is-today" : "") + (isNext ? " is-next" : "") + (day.revision ? " revision" : "") + (day.light ? " light" : "");
     return '<article class="' + cls + '" id="d-' + day.date + '">' +
       '<div class="day-head"><div class="left">' +
@@ -103,7 +113,11 @@
       (isNext ? '<span class="pill" style="color:var(--accent);border-color:rgba(61,220,151,.35)">STARTS TOMORROW</span>' : "") +
       (day.time ? '<span class="day-date">· ' + day.time + "</span>" : "") +
       '</div><span class="day-count">' + dayDone(day) + "/" + day.items.length + "</span></div>" +
-      '<ul class="items">' + day.items.map(itemHTML).join("") + "</ul></article>";
+      '<div class="day-cols">' +
+      colBox("01", "DSA", "dsa", cols.dsa) +
+      colBox("02", "CS", "cs", cols.cs) +
+      colBox("03", "DEV", "dev", cols.dev) +
+      "</div></article>";
   }
 
   /* ---------- week summary ---------- */
@@ -117,37 +131,42 @@
       ? '<a href="' + w.pre.url + '" target="_blank" rel="noopener">' + esc(w.pre.vtitle) + '</a><span class="a"> · ' + esc(w.pre.vauthor) + "</span>"
       : "—";
 
-    var isSprint = w.mode === "sprint";
-    var t1 = '<div class="track">' +
-      '<div class="track-h"><span class="tnum">01</span> DSA</div>' +
-      (isSprint
-        ? '<div class="trow"><span class="sum-k">Pattern</span><div class="sum-v plain">No new patterns this week — you are consolidating everything from W4 to W19.</div></div>' +
-          '<div class="trow"><span class="sum-k">Problems</span><div class="sum-v plain">Re-solving only. Cold, timed, out loud.</div></div>' +
-          '<div class="trow"><span class="sum-k">Bar</span><div class="sum-v plain">Medium under 30 min, easy under 15 min. Every round.</div></div>'
-        : '<div class="trow"><span class="sum-k">Pattern</span><div class="sum-v plain">' + esc(w.pattern) + "</div></div>" +
-          '<div class="trow"><span class="sum-k">Watch first</span><div class="sum-v plain">' + watchLink + "</div></div>" +
-          '<div class="trow"><span class="sum-k">Problems</span><div class="sum-v">' +
-            '<span class="sumcount">' + (w.problems ? w.problems.length : 0) + "</span>" +
-            (w.problems || []).map(pchip).join("") + "</div></div>" +
-          '<div class="trow"><span class="sum-k">Day 7</span><div class="sum-v plain">' +
-            (w.n >= 10 ? "Timed set: 2 unseen mediums in 60 min + re-solve" : "Re-solve 3 of this week cold") + "</div></div>") +
-      "</div>";
-
-    var t2;
-    if (isSprint) {
-      t2 = '<div class="track"><div class="track-h"><span class="tnum">02</span> CS + Development</div>' +
-        '<div class="trow"><span class="sum-k">Focus</span><div class="sum-v plain">' + esc(w.days.map(function (d) { return d.t; }).join(" · ")) + "</div></div>" +
-        '<div class="trow"><span class="sum-k">Type</span><div class="sum-v plain">Revision, mocks, applications. No new topics.</div></div></div>';
-    } else {
-      t2 = '<div class="track"><div class="track-h"><span class="tnum">02</span> CS + Development</div>' +
-        '<div class="trow"><span class="sum-k">Study</span><div class="sum-v">' + w.csTopics.map(cchip).join("") + "</div></div>" +
-        (w.ai ? '<div class="trow"><span class="sum-k">AI</span><div class="sum-v plain">' + w.ai.map(function (a) { return '<div class="sumline">' + esc(a) + "</div>"; }).join("") + "</div></div>" : "") +
-        (w.career ? '<div class="trow"><span class="sum-k">Career</span><div class="sum-v plain">' + w.career.map(function (a) { return '<div class="sumline">' + esc(a) + "</div>"; }).join("") + "</div></div>" : "") +
-        (w.project ? '<div class="trow"><span class="sum-k">Deliver</span><div class="sum-v"><span class="cchip" style="border-color:rgba(245,181,69,.3);color:#e8cf9e">' + esc(w.project) + "</span></div></div>" : "") +
+    if (w.mode === "sprint") {
+      var by = { dsa: [], cs: [], dev: [] };
+      var seen = {};
+      w.days.forEach(function (d) {
+        d.items.forEach(function (it) {
+          var key = it.type + "|" + it.title;
+          if (seen[key]) return; seen[key] = 1;
+          var tr = it.type === "theory" ? "cs" : (it.type === "review" ? "dsa" : "dev");
+          by[tr].push(esc(it.title));
+        });
+      });
+      return '<div class="wk-sum three">' +
+        '<div class="wbox dsa"><div class="wbox-h">01 · DSA</div><div class="wbox-b"><div class="sumline">Re-solving only — cold, timed, out loud.</div><div class="sumline">Bar: medium under 30 min, easy under 15.</div></div></div>' +
+        '<div class="wbox cs"><div class="wbox-h">02 · CS</div><div class="wbox-b">' + (by.cs.length ? by.cs.map(function (x) { return '<div class="sumline">' + x + "</div>"; }).join("") : '<div class="dim">—</div>') + "</div></div>" +
+        '<div class="wbox dev"><div class="wbox-h">03 · DEV</div><div class="wbox-b">' + (by.dev.length ? by.dev.map(function (x) { return '<div class="sumline">' + x + "</div>"; }).join("") : '<div class="dim">—</div>') + "</div></div>" +
         "</div>";
     }
 
-    return '<div class="wk-sum two">' + t1 + t2 + "</div>";
+    var b1 = '<div class="wbox dsa"><div class="wbox-h">01 · DSA</div><div class="wbox-b">' +
+      '<div class="trow"><span class="sum-k">Pattern</span><div class="sum-v plain">' + esc(w.pattern) + "</div></div>" +
+      '<div class="trow"><span class="sum-k">Watch 1st</span><div class="sum-v plain">' + watchLink + "</div></div>" +
+      '<div class="trow"><span class="sum-k">Problems</span><div class="sum-v">' +
+        '<span class="sumcount">' + w.problems.length + "</span>" + w.problems.map(pchip).join("") + "</div></div>" +
+      '<div class="trow"><span class="sum-k">Day 7</span><div class="sum-v plain">' +
+        (w.n >= 10 ? "Timed set: 2 unseen mediums, 60 min" : "Re-solve 3 cold") + "</div></div></div></div>";
+
+    var b2 = '<div class="wbox cs"><div class="wbox-h">02 · CS</div><div class="wbox-b">' +
+      '<div class="sum-v">' + w.csTopics.map(cchip).join("") + "</div></div></div>";
+
+    var b3 = '<div class="wbox dev"><div class="wbox-h">03 · DEV</div><div class="wbox-b">' +
+      (w.ai ? '<div class="trow"><span class="sum-k">Build</span><div class="sum-v plain">' + w.ai.map(function (a) { return '<div class="sumline">' + esc(a) + "</div>"; }).join("") + "</div></div>" : "") +
+      (w.career ? '<div class="trow"><span class="sum-k">Career</span><div class="sum-v plain">' + w.career.map(function (a) { return '<div class="sumline">' + esc(a) + "</div>"; }).join("") + "</div></div>" : "") +
+      (w.project ? '<div class="trow"><span class="sum-k">Ship</span><div class="sum-v"><span class="cchip" style="border-color:rgba(245,181,69,.3);color:#e8cf9e">' + esc(w.project) + "</span></div></div>" : "") +
+      "</div></div>";
+
+    return '<div class="wk-sum three">' + b1 + b2 + b3 + "</div>";
   }
 
   function weekHTML(w) {
@@ -174,44 +193,21 @@
 
   /* ---------- overview ---------- */
   function overviewHTML() {
-    var o = overall();
     var html = '<section id="overview">';
 
-    html += '<div class="hero">' +
-      '<div class="kicker">16 Nov 2026 → 18 Apr 2027</div>' +
-      "<h1>Everything, on one page</h1>" +
-      '<p class="lead">22 weeks. Weeks 1–3 are your endsems, so they stay at 40 minutes a day. Week 4 opens with your last paper and the full block starts 8 December. Every problem appears once — the only repeats are the revision days, on purpose.</p>' +
-      '<div class="meta"><span class="chip accent">' + PROBLEM_COUNT + " new problems</span>" +
-      '<span class="chip">22 weeks</span><span class="chip">6 CS areas</span>' +
-      '<span class="chip info">2 deployed AI projects</span></div></div>';
-
-    html += '<div class="callout warn"><b>During exams, nothing more than 40 minutes.</b> Do not start the full plan early. Week 4 is built to begin at day one, not at a backlog.</div>';
-
-    html += '<h2>The shape of it</h2><div class="phases">' +
-      [["W1–3", "Exams", "21 easy problems · Python · first LLM call", "40 min/day"],
-       ["W4–9", "Foundations", "Arrays to backtracking · DBMS · embeddings and RAG", "2h 45m/day"],
-       ["W10–15", "Depth", "Linked lists to greedy · OS, CN, OOP · agents, evals, guardrails", "2h 45m/day"],
-       ["W16–19", "Hard part", "Graphs, DP, tries · LLD, HLD · deploy, red-team", "2h 45m/day"],
-       ["W20–22", "Proof", "Repair, 5 mocks, portfolio, 45+ applications", "~3h/day"]].map(function (p) {
-        return '<div class="phase"><div class="ph-w">' + p[0] + '</div><h4>' + esc(p[1]) + "</h4><p>" + esc(p[2]) + '</p><span class="ph-t">' + esc(p[3]) + "</span></div>";
-      }).join("") + "</div>";
-
-    html += '<h2>What you cover</h2><div class="grid">' +
-      '<div class="card"><h4>DSA</h4><p>' + PROBLEM_COUNT + ' problems, two a day.</p><ul>' +
-      ["Arrays, hashing, prefix sums", "Two pointers, sliding window", "Strings, matrices", "Sorting, binary search",
-       "Recursion, backtracking", "Linked lists, stacks, queues", "Trees, BST", "Heaps, greedy",
-       "Graphs and DP", "Tries, bits"].map(function (x) { return "<li>" + x + "</li>"; }).join("") +
+    html += "<h2>The three projects</h2>";
+    html += '<div class="grid three">' +
+      '<div class="card proj"><div class="proj-n">01</div><h4>DSA</h4><p class="proj-tag">The gate. 90% of the interview.</p><ul>' +
+      [PROBLEM_COUNT + " problems, two a day", "Striver A2Z to learn · NeetCode 150 to revise", "Aditya Verma for DP, recursion, stacks",
+       "Timed set every week from W10", "Bar: easy under 15 min, medium under 30"].map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") +
       "</ul></div>" +
-      '<div class="card"><h4>CS</h4><p>30 minutes a day, rotated.</p><ul>' +
-      D.CS.map(function (c) { return "<li><b>" + esc(c.name) + "</b><br><span class=\"dim\">" + esc(c.weeks) + "</span></li>"; }).join("") +
+      '<div class="card proj"><div class="proj-n">02</div><h4>CS</h4><p class="proj-tag">One round of the loop.</p><ul>' +
+      ["6 areas, 30 minutes a day", "Gate Smashers for OS, DBMS, CN", "LeetCode SQL 50 for queries",
+       "Java internals and OOP", "AI fundamentals for AI interviews"].map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") +
       "</ul></div>" +
-      '<div class="card"><h4>AI</h4><p>Three sessions a week, in parallel.</p><ul>' +
-      ["Python for AI", "LLM APIs, streaming, cost", "Embeddings and vector DBs", "Retrieval quality",
-       "Tool calling and agents", "Evals and guardrails", "Deploy + CI"].map(function (x) { return "<li>" + x + "</li>"; }).join("") +
-      "</ul></div>" +
-      '<div class="card"><h4>What you own in April</h4><p>Proof, not promises.</p><ul>' +
-      ["Two deployed AI projects", "Eval score you can quote", "Demo video", "Resume v5",
-       "45+ applications", "5 mock interviews"].map(function (x) { return "<li>" + x + "</li>"; }).join("") +
+      '<div class="card proj"><div class="proj-n">03</div><h4>DEV</h4><p class="proj-tag">The differentiator.</p><ul>' +
+      ["Agentic AI: RAG, agents, evals", "Two deployed projects with eval scores", "LLD and HLD",
+       "Java for DSA, Python for AI", "Applications from week 8"].map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") +
       "</ul></div></div>";
 
     html += "<h2>All 22 weeks</h2>";
@@ -225,7 +221,7 @@
           '<td class="num">' + (w.problems ? w.problems.length : "—") + "</td></tr>";
       }).join("") + "</tbody></table></div>";
 
-    html += '</section>';
+    html += "</section>";
     return html;
   }
 
@@ -301,7 +297,7 @@
 
   function reviewMarkdown() {
     var L = [];
-    L.push("# The Offer — review");
+    L.push("# Zero to Offer — review");
     L.push("");
     L.push("**Reviewer:** " + (state.review.name || "(unnamed)"));
     L.push("**Date:** " + iso(new Date()));
@@ -318,7 +314,7 @@
       var c = rv("w", String(w.n));
       if (c) L.push("| W" + w.n + " | " + w.theme + " | " + c.replace(/\|/g, "/").replace(/\n/g, " ") + " |");
     });
-    L.push(""); L.push("---"); L.push("Generated from The Offer.");
+    L.push(""); L.push("---"); L.push("Generated from Zero to Offer.");
     return L.join("\n");
   }
 
@@ -475,7 +471,7 @@
 
     if (e.target.id === "rvDownload") {
       var text = reviewMarkdown();
-      var name = "the-offer-review-" + iso(new Date()) + ".md";
+      var name = "zero-to-offer-review-" + iso(new Date()) + ".md";
       var blob = new Blob([text], { type: "text/markdown;charset=utf-8" });
       var url = URL.createObjectURL(blob);
       var a = document.createElement("a");

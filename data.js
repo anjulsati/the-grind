@@ -1040,9 +1040,24 @@
   var DAYS = [];
   var dayN = 0;
 
+  function trackFor(it) {
+    var t = it.type, t2 = (it.title || "").toLowerCase();
+    if (t === "dsa" || t === "stretch" || t === "watch") return "dsa";
+    if (t === "theory") return "cs";
+    if (t === "dev" || t === "ai" || t === "project" || t === "career") return "dev";
+    if (t === "review") {
+      if (t2.indexOf("re-solve") >= 0 || t2.indexOf("timed") >= 0 || t2.indexOf("mock test") >= 0 ||
+          t2.indexOf("contest") >= 0 || t2.indexOf("upsolve") >= 0) return "dsa";
+      if (t2.indexOf("revision for tomorrow") >= 0 || t2.indexOf("answers in your own words") >= 0 ||
+          t2.indexOf("cheat sheet") >= 0 || t2.indexOf("answer bank") >= 0 || t2.indexOf("rapid-fire") >= 0) return "cs";
+      return "dev";
+    }
+    return "dev";
+  }
+
   function watchItem(w, hint) {
     return {
-      type: "watch",
+      type: "watch", track: "dsa",
       title: "Watch first — " + w.pre.vtitle,
       url: w.pre.url, vauthor: w.pre.vauthor,
       hint: hint || "Pattern primer for the week. Watch it before the problems, then code along later if needed."
@@ -1061,11 +1076,11 @@
 
       function prob(i, hint) {
         var p = w.problems[i];
-        return { id: date + "-p" + i, type: "dsa", title: p.title, url: p.url, diff: p.diff, hint: hint };
+        return { id: date + "-p" + i, type: "dsa", track: "dsa", title: p.title, url: p.url, diff: p.diff, hint: hint };
       }
       function csItem(i, hint) {
         var c = w.csTopics[i];
-        return { type: "theory", title: w.cs + " — " + c.label, url: c.url, vtitle: c.vtitle, vauthor: c.vauthor, hint: hint };
+        return { type: "theory", track: "cs", title: w.cs + " — " + c.label, url: c.url, vtitle: c.vtitle, vauthor: c.vauthor, hint: hint };
       }
       var FULL = "45 min alone, 20 min learning, then rewrite it with the editor closed.";
       var FULL2 = "Second problem. Past 45 minutes, read the solution — don't burn the day.";
@@ -1079,7 +1094,7 @@
           hint: "10 minutes at 1.5x, then 3 lines in your notes." });
         items.push({ id: date + "-ai", type: "ai", title: w.ai[d],
           hint: "15 minutes. Setup and first steps only — no rabbit holes during exams." });
-        items.push({ id: date + "-ex", type: "review", title: "One page of revision for tomorrow's paper",
+        items.push({ id: date + "-ex", type: "review", track: "cs", title: "One page of revision for tomorrow's paper",
           hint: "Exams come first. Blank day? Do this one and let the rest go." });
         meta.title = "Day " + (d + 1) + " · light";
         meta.time = "40 min";
@@ -1088,7 +1103,7 @@
 
       else if (w.mode === "transition") {
         if (d === 0) {
-          items.push({ id: date + "-exam", type: "review", title: "Last exam today — nothing else is required",
+          items.push({ id: date + "-exam", type: "review", track: "dev", title: "Last exam today — nothing else is required",
             hint: "Come back tomorrow. The FAANG block starts Dec 8." });
           items.push(prob(0, "Only if you have the energy. 10 minutes."));
           meta.title = "Last exam · optional"; meta.time = "10 min"; meta.light = true;
@@ -1106,11 +1121,14 @@
           items.push({ id: date + "-r1", type: "review", title: "Re-solve 3 of this week's problems — cold",
             hint: w.problems.slice(0, 3).map(function (x) { return x.title; }).join(" · ") });
           (w.stretch || []).forEach(function (sp, k) {
-            items.push({ id: date + "-st" + k, type: "stretch", title: sp.title, url: sp.url, diff: sp.diff, hint: "Optional. 30 minutes of struggle beats 3 easy wins." });
+            items.push({ id: date + "-st" + k, type: "stretch", track: "dsa", title: sp.title, url: sp.url, diff: sp.diff, hint: "Optional. 30 minutes of struggle beats 3 easy wins." });
           });
-          items.push({ id: date + "-a2", type: "dev", title: w.ai[1], hint: "45 min." });
-          items.push({ id: date + "-a3", type: "dev", title: w.ai[2], hint: "45 min." });
-          items.push({ id: date + "-r2", type: "review", title: "Weekly review: 3 lines in plan.md" });
+          items.push({ id: date + "-a3", type: "dev", track: "dev", title: w.ai[2], hint: "45 min." });
+          items.push({ id: date + "-cq", type: "theory", track: "cs",
+            title: w.cs + " — 5 rapid-fire questions, out loud",
+            url: yt(w.cs + " interview questions"),
+            hint: "Five topics from this week's list. 60 seconds each, no notes." });
+          items.push({ id: date + "-r2", type: "review", track: "dev", title: "Weekly review: 3 lines in plan.md" });
           meta.title = "Revision day"; meta.time = "~3h"; meta.revision = true;
         }
       }
@@ -1119,27 +1137,33 @@
         if (d < 6) {
           items.push(prob(d * 2, FULL)); items.push(prob(d * 2 + 1, FULL2));
           items.push(csItem(d, "30 min. Then close the tab and say it out loud in 60 seconds."));
-          if (d === 0) items.push(watchItem(w));
-          if (d === 1) items.push({ id: date + "-c1", type: "career", title: w.career[0] });
-          if (d === 2) items.push({ id: date + "-a1", type: "dev", title: w.ai[0], hint: "45 min. Commit and push before you sleep." });
-          if (d === 3) items.push({ id: date + "-proj", type: "project", title: w.project, hint: "60-90 min." });
-          if (d === 4) items.push({ id: date + "-a2", type: "dev", title: w.ai[1], hint: "45 min." });
-          if (d === 5) items.push({ id: date + "-c2", type: "career", title: w.career[1] });
+          if (d === 0) {
+            items.push(watchItem(w));
+            items.push({ id: date + "-c1", type: "career", track: "dev", title: w.career[0] });
+          }
+          if (d === 1) items.push({ id: date + "-a1", type: "dev", track: "dev", title: w.ai[0], hint: "45 min. Commit and push before you sleep." });
+          if (d === 2) items.push({ id: date + "-a2", type: "dev", track: "dev", title: w.ai[1], hint: "45 min." });
+          if (d === 3) items.push({ id: date + "-proj", type: "project", track: "dev", title: w.project, hint: "60-90 min." });
+          if (d === 4) items.push({ id: date + "-a3", type: "dev", track: "dev", title: w.ai[2], hint: "45 min." });
+          if (d === 5) items.push({ id: date + "-c2", type: "career", track: "dev", title: w.career[1] });
           meta.title = "Day " + (d + 1); meta.time = "2h 45m";
         } else {
           items.push({
-            id: date + "-r1", type: "review",
+            id: date + "-r1", type: "review", track: "dsa",
             title: timedWeek ? "OA simulation — 2 unseen mediums, 60 min, no help" : "Re-solve 3 problems from this week — cold, no hints",
             hint: timedWeek
               ? "This is the FAANG online-assessment format. Timer on, editor bare, talk out loud. Then re-solve 2 old ones."
               : w.problems.slice(0, 3).map(function (x) { return x.title; }).join(" · ")
           });
           (w.stretch || []).forEach(function (sp, k) {
-            items.push({ id: date + "-st" + k, type: "stretch", title: sp.title, url: sp.url, diff: sp.diff,
+            items.push({ id: date + "-st" + k, type: "stretch", track: "dsa", title: sp.title, url: sp.url, diff: sp.diff,
               hint: k === 0 ? "Optional FAANG-level stretch." : "Optional. Attempt, don't solve." });
           });
-          items.push({ id: date + "-a3", type: "dev", title: w.ai[2], hint: "45 min." });
-          items.push({ id: date + "-r2", type: "review", title: "Weekly review: 3 lines in plan.md — what clicked, what didn't, what I redo" });
+          items.push({ id: date + "-cq", type: "theory", track: "cs",
+            title: w.cs + " — 5 rapid-fire questions, out loud",
+            url: yt(w.cs + " interview questions"),
+            hint: "Five topics from this week's list. 60 seconds each, no notes. This is the CS round, rehearsed." });
+          items.push({ id: date + "-r2", type: "review", track: "dev", title: "Weekly review: 3 lines in plan.md — what clicked, what didn't, what I redo" });
           meta.title = timedWeek ? "Revision + timed set" : "Revision day";
           meta.time = "~3h"; meta.revision = true;
         }
@@ -1148,12 +1172,14 @@
       else {
         var day = w.days[d];
         items = day.items.map(function (it, k) {
-          return { id: date + "-s" + k, type: it.type, title: it.title, url: it.url || null, diff: it.diff || null, hint: it.hint || null };
+          var o = { id: date + "-s" + k, type: it.type, title: it.title, url: it.url || null, diff: it.diff || null, hint: it.hint || null };
+          o.track = trackFor(o);
+          return o;
         });
         meta.title = day.t; meta.time = "~3h";
       }
 
-      meta.items = items;
+      meta.items = items.map(function (it) { it.track = it.track || trackFor(it); return it; });
       DAYS.push(meta);
     }
   });
