@@ -15,7 +15,7 @@
     document.getElementById("editBtn").textContent = v ? "✓ Done editing" : "Edit plan";
     document.getElementById("editbar").style.display = v ? "flex" : "none";
     TG.ui.render();
-    TG.toast(v ? "Edit mode — every change saves to this browser" : "Edit mode off");
+    TG.toast(v ? "Edit mode — drag tasks, ＋ adds, ✎ edits" : "Edit mode off");
   }
   function toggle() { set(!editMode); }
 
@@ -64,16 +64,18 @@
 
   var TYPES = [
     ["dsa", "DSA problem"], ["stretch", "Stretch problem"], ["watch", "Watch-first video"],
-    ["theory", "CS Fundamentals topic"], ["career", "Career task"], ["review", "Review / other"]
+    ["theory", "Concept / theory"], ["career", "Career task"], ["review", "Review / other"], ["task", "Task"]
   ];
+  var PRIOS = [["", "— none —"], ["P1", "P1 · must do today"], ["P2", "P2 · this week"], ["P3", "P3 · whenever"]];
 
   /* ---------- item ---------- */
   function itemModal(existing, dayDate, track) {
-    var it = existing || { title: "", url: "", diff: "", type: track === "dsa" ? "dsa" : "review", hint: "", vtitle: "", vauthor: "", track: "dsa" };
+    var it = existing || { title: "", url: "", diff: "", type: track === "dsa" ? "dsa" : "task", priority: "", hint: "", vtitle: "", vauthor: "" };
     var body =
       field("Title", "title", it.title, { ph: "Two Sum / 5 SQL joins out loud" }) +
       field("Link (optional)", "url", it.url) +
       field("Type", "type", it.type, { options: TYPES }) +
+      field("Priority", "priority", it.priority || "", { options: PRIOS }) +
       field("Difficulty", "diff", it.diff, { options: [["", "—"], ["E", "easy"], ["M", "medium"], ["H", "hard"]] }) +
       field("Video title (optional)", "vtitle", it.vtitle) +
       field("Channel (optional)", "vauthor", it.vauthor) +
@@ -82,11 +84,11 @@
     openModal(existing ? "Edit item" : "Add item", body, function (v) {
       if (!v.title) { TG.toast("Title is required"); return; }
       if (existing) {
-        Object.assign(existing, { title: v.title, url: v.url, type: v.type, diff: v.diff, hint: v.hint, vtitle: v.vtitle, vauthor: v.vauthor });
+        Object.assign(existing, { title: v.title, url: v.url, type: v.type, priority: v.priority, diff: v.diff, hint: v.hint, vtitle: v.vtitle, vauthor: v.vauthor });
         TG.toast("Item updated");
       } else {
         var d = store.dayByDate(dayDate);
-        d.items.push({ id: store.uid(), type: v.type, track: "dsa", title: v.title, url: v.url, diff: v.diff, hint: v.hint, vtitle: v.vtitle, vauthor: v.vauthor });
+        d.items.push({ id: store.uid(), type: v.type, track: track === "dev" ? "dev" : "dsa", priority: v.priority, title: v.title, url: v.url, diff: v.diff, hint: v.hint, vtitle: v.vtitle, vauthor: v.vauthor });
         TG.toast("Item added");
       }
       store.saveDB(); TG.ui.render();
@@ -121,10 +123,20 @@
       store.saveDB(); TG.ui.render(); TG.toast("Updated");
     });
   }
+  function pillarQuickAdd(i) {
+    var p = store.db.pillars[i];
+    var body = field("New line for " + p.name, "text", "", { ph: "e.g. Finish arrays by Jan 15" });
+    openModal("Add to " + p.name, body, function (v) {
+      if (!v.text) { TG.toast("Nothing to add"); return; }
+      p.items.push(v.text);
+      store.saveDB(); TG.ui.render(); TG.toast("Added to " + p.name);
+    });
+  }
 
   TG.editor = {
     isOn: isOn, set: set, toggle: toggle,
-    itemModal: itemModal, weekModal: weekModal, dayModal: dayModal, pillarModal: pillarModal,
-    TYPES: TYPES
+    itemModal: itemModal, weekModal: weekModal, dayModal: dayModal,
+    pillarModal: pillarModal, pillarQuickAdd: pillarQuickAdd,
+    TYPES: TYPES, PRIOS: PRIOS
   };
 })();

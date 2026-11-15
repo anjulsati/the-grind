@@ -378,3 +378,34 @@ body.editing .wk{border-style:dashed}
   .editbar{top:0;position:sticky}
   .eb-actions{margin-left:0}
 }
+
+/* ---------------- drag & drop + priority ---------------- */
+.item{cursor:grab}
+.item.dragging{opacity:.35}
+.item.drag-over{outline:2px dashed var(--accent);outline-offset:-2px;border-radius:10px}
+.dcol.drag-over{background:rgba(61,220,151,.06);border-color:rgba(61,220,151,.4)}
+.grip{color:#4a5a6b;font-size:12px;margin:3px 2px 0 0;cursor:grab;line-height:1;flex:none}
+.item:hover .grip{color:var(--accent)}
+
+.prio{font-family:var(--mono);font-size:9px;font-weight:700;padding:1px 6px;border-radius:5px;
+  margin-left:6px;border:1px solid;vertical-align:1px}
+.prio.P1{color:#ff8a8a;border-color:rgba(255,107,107,.4);background:rgba(255,107,107,.09)}
+.prio.P2{color:var(--amber);border-color:rgba(245,181,69,.4);background:rgba(245,181,69,.09)}
+.prio.P3{color:var(--slate);border-color:rgba(131,151,171,.4);background:rgba(131,151,171,.09)}
+
+/* pillar cards — add/remove always available */
+.proj-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.ptools{display:flex;gap:6px;align-items:center}
+.plist{margin:10px 0 0;padding-left:18px;font-size:13px;color:var(--muted);line-height:1.9}
+.pbullet{position:relative;padding-right:22px}
+.bx{
+  position:absolute;right:0;top:50%;transform:translateY(-50%);
+  background:transparent;border:1px solid var(--line2);color:var(--dim);cursor:pointer;
+  border-radius:5px;font-size:9px;padding:1px 5px;opacity:0;transition:.15s;font-family:inherit;
+}
+.pbullet:hover .bx{opacity:1}
+.bx:hover{color:#ff8a8a;border-color:rgba(255,107,107,.4)}
+.card.proj ul{margin:0;padding-left:18px}
+.addbtn{flex:none}
+.dcol.dev{min-height:120px}
+.dcol-h{gap:8px}

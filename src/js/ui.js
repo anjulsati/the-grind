@@ -34,7 +34,7 @@
     return new Date(s + "T00:00:00").toLocaleDateString("en-IN", { month: "long", year: "numeric" });
   }
   function typeLabel(t) {
-    return { dsa: "DSA", stretch: "STRETCH", watch: "WATCH", theory: "CS", project: "SHIP", career: "CAREER", review: "REVIEW", dev: "BUILD" }[t] || t;
+    return { dsa: "DSA", stretch: "STRETCH", watch: "WATCH", theory: "CONCEPT", career: "CAREER", review: "REVIEW", task: "TASK" }[t] || t;
   }
   function diffLabel(d) { return { E: "easy", M: "med", H: "hard" }[d] || d; }
 
@@ -51,14 +51,16 @@
   }
   var LAST_DATE = store.allDays()[store.allDays().length - 1].date;
   var TODAY_DAY = store.allDays().filter(function (d) { return d.date === TODAY; })[0] || null;
-  var FIRST_DATE = db0().days[0].date;
+  var FIRST_DATE = store.db.weeks[0].days[0].date;
   var ACTIVE_WEEK = TODAY_DAY ? TODAY_DAY.week : (TODAY < FIRST_DATE ? 1 : store.db.weeks.length);
-  function db0() { return store.db.weeks[0]; }
 
   /* ============================================================
-     ITEM
+     ITEM — draggable, priority-tagged
      ============================================================ */
-  function itemHTML(item) {
+  function prioTag(p) {
+    return p ? '<span class="prio ' + p + '">' + p + "</span>" : "";
+  }
+  function itemHTML(item, idx, total) {
     var done = !!store.state.done[item.id];
     var title = item.url
       ? '<a href="' + item.url + '" target="_blank" rel="noopener">' + esc(item.title) + "</a>"
@@ -71,24 +73,24 @@
     var actions;
     if (TG.editor.isOn()) {
       actions = '<span class="itools">' +
+        '<button class="tbtn" data-up="' + item.id + '" title="Move up"' + (idx === 0 ? " disabled" : "") + ">▲</button>" +
+        '<button class="tbtn" data-down="' + item.id + '" title="Move down"' + (idx === total - 1 ? " disabled" : "") + ">▼</button>" +
         '<button class="tbtn" data-edit="' + item.id + '" title="Edit">✎</button>' +
         '<button class="tbtn danger" data-del="' + item.id + '" title="Delete">✕</button></span>';
     } else {
       actions = item.url ? '<a class="go" href="' + item.url + '" target="_blank" rel="noopener">open ↗</a>' : "";
     }
-    return '<li class="item' + (done ? " done" : "") + '">' +
+    return '<li class="item' + (done ? " done" : "") + '" draggable="true" data-dragid="' + item.id + '">' +
+      '<span class="grip" title="Drag to reorder or move to another day">⠿</span>' +
       '<input type="checkbox" data-id="' + item.id + '"' + (done ? " checked" : "") + ' aria-label="' + esc(item.title) + '">' +
-      '<div class="body"><div class="title"><span class="badge ' + item.type + '">' + typeLabel(item.type) + "</span>" + title + diff + "</div>" + vid + hint + "</div>" +
+      '<div class="body"><div class="title"><span class="badge ' + item.type + '">' + typeLabel(item.type) + "</span>" + title + diff + prioTag(item.priority) + "</div>" + vid + hint + "</div>" +
       actions + "</li>";
   }
 
-  /* ============================================================
-     DAY — two boxes: 01 DSA (everything actionable), 02 DEV (reserved)
-     ============================================================ */
   function dayHTML(day) {
     var isToday = day.date === TODAY;
     var isNext = !TODAY_DAY && day.date === FIRST_DATE;
-    var items = day.items.map(itemHTML);
+    var items = day.items.map(function (it, i) { return itemHTML(it, i, day.items.length); });
 
     var wtools = TG.editor.isOn() ? '<button class="tbtn" data-wday="' + day.date + '" title="Rename this day">✎</button>' : "";
     var cls = "day" + (isToday ? " is-today" : "") + (isNext ? " is-next" : "") + (day.revision ? " revision" : "") + (day.light ? " light" : "");
@@ -103,16 +105,13 @@
       '</div><span class="day-wrap">' + wtools +
       '<span class="day-count">' + dayDone(day) + "/" + day.items.length + "</span></span></div>" +
       '<div class="day-cols">' +
-      '<div class="dcol dsa"><div class="dcol-h"><span class="dnum">01</span>DSA' + addBtn(day, "dsa") + "</div>" +
-      (items.length ? '<ul class="items">' + items.join("") + "</ul>" : '<div class="dempty">Nothing here</div>') + "</div>" +
-      '<div class="dcol dev"><div class="dcol-h"><span class="dnum">02</span>DEV' + addBtn(day, "dev") + "</div>" +
-      '<div class="dempty">Reserved — being decided.</div>' +
+      '<div class="dcol dsa" data-boxday="' + day.date + '" data-boxtrack="dsa"><div class="dcol-h"><span class="dnum">01</span>DSA' + addBtn(day, "dsa") + "</div>" +
+      (items.length ? '<ul class="items">' + items.join("") + "</ul>" : '<div class="dempty">Nothing here — ＋ to add</div>') + "</div>" +
+      '<div class="dcol dev" data-boxday="' + day.date + '" data-boxtrack="dev"><div class="dcol-h"><span class="dnum">02</span>DEV' + addBtn(day, "dev") + "</div>" +
       "</div></div></article>";
   }
   function addBtn(day, track) {
-    return TG.editor.isOn()
-      ? '<button class="addbtn" data-add="' + day.date + '" data-track="' + track + '" title="Add">＋</button>'
-      : "";
+    return '<button class="addbtn" data-add="' + day.date + '" data-track="' + track + '" title="Add">＋</button>';
   }
 
   /* ============================================================
@@ -139,14 +138,14 @@
       (w.pattern ? row("Pattern", '<span class="plain">' + esc(w.pattern) + "</span>") : "") +
       (watch ? row("Watch 1st", '<span class="plain"><a href="' + watch.url + '" target="_blank" rel="noopener">' + esc(watch.vtitle || watch.title) + '</a><span class="a"> · ' + esc(watch.vauthor || "") + "</span></span>") : "") +
       (problems.length ? row("Problems", '<span class="sumcount">' + problems.length + "</span>" + problems.join("")) : "") +
-      (concepts.length ? line("CS study", concepts) : "") +
+      (concepts.length ? line("Concepts", concepts) : "") +
       (stretches.length ? row("Stretch", stretches.join("")) : "") +
       (career.length ? line("Career", career) : "") +
       row("Day 7", '<span class="plain">' + (w.mode === "sprint" ? "Consolidation" : (w.n >= 10 ? "Timed set: 2 unseen mediums, 60 min" : "Re-solve cold")) + "</span>") +
       "</div></div>";
 
     var b2 = '<div class="wbox dev"><div class="wbox-h">02 · DEV</div><div class="wbox-b">' +
-      '<div class="dim">Reserved — still deciding what goes here.</div></div></div>';
+      '<div class="dim">Empty — ＋ adds straight into the days.</div></div></div>';
 
     return '<div class="wk-sum two">' + b1 + b2 + "</div>";
   }
@@ -178,19 +177,25 @@
   }
 
   /* ============================================================
-     OVERVIEW — things to do till placement season
+     OVERVIEW — things to do till the plan ends (April 2027)
      ============================================================ */
+  function pillarCard(p, i) {
+    var tools = '<span class="ptools">' +
+      '<button class="addbtn" data-pillaradd="' + i + '" title="Add a line">＋</button>' +
+      '<button class="tbtn" data-editpillar="' + i + '" title="Edit ' + esc(p.name) + '">✎</button></span>';
+    var bullets = p.items.map(function (x, j) {
+      return '<li class="pbullet">' + esc(x) +
+        '<button class="bx" data-rmbullet="' + i + ":" + j + '" title="Remove">✕</button></li>';
+    }).join("");
+    var empty = p.items.length ? "" : '<li class="dim" style="list-style:none;margin-left:-18px">Empty — ＋ adds a line</li>';
+    return '<div class="card proj"><div class="proj-head"><span class="proj-n">' + esc(p.n) + "</span>" + tools + "</div>" +
+      "<h4>" + esc(p.name) + '</h4><p class="proj-tag">' + esc(p.tag) + '</p><ul class="plist">' + bullets + empty + "</ul></div>";
+  }
+
   function overviewHTML() {
     var html = '<section id="overview">';
-
-    html += '<h2>Things to do till ' + monthYear(D.PLACEMENT_SEASON) + '</h2>';
-    html += '<div class="grid three">' + store.db.pillars.map(function (p, i) {
-      var edit = TG.editor.isOn()
-        ? '<button class="tbtn" data-editpillar="' + i + '" title="Edit ' + esc(p.name) + '">✎</button>' : "";
-      return '<div class="card proj"><div class="proj-head"><span class="proj-n">' + esc(p.n) + "</span>" + edit + "</div>" +
-        "<h4>" + esc(p.name) + '</h4><p class="proj-tag">' + esc(p.tag) + "</p><ul>" +
-        p.items.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div>";
-    }).join("") + "</div>";
+    html += '<h2>Things to do till ' + monthYear(LAST_DATE) + '</h2>';
+    html += '<div class="grid three">' + store.db.pillars.map(pillarCard).join("") + "</div>";
 
     html += "<h2>All the weeks</h2>";
     html += '<div class="tablewrap"><table><thead><tr><th>Week</th><th>Dates</th><th>Theme</th><th>Problems</th></tr></thead><tbody>' +
@@ -210,7 +215,7 @@
   }
 
   /* ============================================================
-     DSA MATERIAL — the watch-first list + the best resources
+     DSA MATERIAL
      ============================================================ */
   function dsaHTML() {
     var html = '<section id="dsa"><h2>DSA — the material</h2>' +
@@ -237,8 +242,7 @@
       { label: "NeetCode 150", url: "https://neetcode.io/practice", note: "The revision sheet. Subset of patterns, best video explanations on the internet." },
       { label: "LeetCode", url: "https://leetcode.com/problemset/", note: "Where you submit. Free tier is enough. Contests every Sunday." },
       { label: "LeetCode — Top Interview 150", url: "https://leetcode.com/studyplan/top-interview-150/", note: "Company-tagged classics. Do it after A2Z." },
-      { label: "Aditya Verma — DP playlist", url: "https://www.youtube.com/playlist?list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go", note: "The most recommended DP playlist in the Indian community. Hindi." },
-      { label: "Aditya Verma — Recursion", url: "https://www.youtube.com/watch?v=XuVDW9rwx68", note: "Recursion + backtracking, taught by identification, not by problem." },
+      { label: "Aditya Verma — DP playlist", url: "https://www.youtube.com/playlist?list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go", note: "The most recommended DP playlist in the Indian community." },
       { label: "Kunal Kushwaha — Java DSA", url: "https://www.youtube.com/playlist?list=PL9gnSGHSqcnr_DxHsP7AW9ftq0AtAyYqJ", note: "Java-first DSA bootcamp. Best for building from zero." },
       { label: "Take U Forward (Striver) — YouTube", url: "https://www.youtube.com/@takeUforward", note: "Trees, graphs, DP series with notes on takeuforward.org." },
       { label: "Abdul Bari — Algorithms", url: "https://www.youtube.com/watch?v=0IAPZzGS8ME", note: "Heaps, greedy, graph algorithms — the theory done properly." },
@@ -268,7 +272,7 @@
   function resourcesHTML() {
     var html = '<section id="links"><h2>Links</h2>';
     D.RESOURCES.forEach(function (g) {
-      if (g.group.indexOf("DSA") === 0) return; // DSA material has its own section now
+      if (g.group.indexOf("DSA") === 0) return;
       html += "<h3>" + esc(g.group) + '</h3><div class="grid">' + g.items.map(function (it) {
         return '<div class="card tight"><h4><a href="' + it.url + '" target="_blank" rel="noopener">' + esc(it.label) + "</a></h4>" +
           (it.note ? "<p>" + esc(it.note) + "</p>" : "") + "</div>";
@@ -285,8 +289,8 @@
     ["overall", "Overall verdict", ["Keep as is", "Compress to 4 months", "Expand to 6 months", "Restructure"]],
     ["dsa", "DSA volume", ["Too little", "About right", "Too much"]],
     ["cs", "CS Fundamentals depth", ["Too shallow", "About right", "Too deep"]],
-    ["exam", "Exam weeks (45 min/day)", ["Too light", "About right", "Too heavy for endsems"]],
-    ["time", "Daily budget (2h 45m)", ["Unrealistic", "Tight but doable", "Comfortable"]],
+    ["exam", "Exam weeks (light)", ["Too light", "About right", "Too heavy for endsems"]],
+    ["time", "Daily budget", ["Unrealistic", "Tight but doable", "Comfortable"]],
     ["apply", "Applications from week 8", ["Too late", "About right", "Too early"]]
   ];
 
@@ -371,7 +375,7 @@
     html += '<section id="plan"><div class="plan-head"><h2>Week by week</h2>' +
       '<div class="plan-tools"><button id="expandAll" class="btn">Expand all</button>' +
       '<button id="collapseAll" class="btn">Collapse all</button></div></div>' +
-      '<p class="lead">Two boxes a day. <b>01 DSA</b> is everything you do today. <b>02 DEV</b> is reserved.</p>' +
+      '<p class="lead"><b>01 DSA</b> is everything you do today — drag tasks between days, set priorities. <b>02 DEV</b> is yours to fill with ＋.</p>' +
       store.db.weeks.map(weekHTML).join("") + "</section>";
     html += dsaHTML();
     html += faangHTML();

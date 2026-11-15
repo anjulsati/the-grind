@@ -1,7 +1,6 @@
 /* ============================================================
    The Grind — store.js
    The plan database: seeded once, then edited in the browser.
-   Owned by Anjul Sati.
    ============================================================ */
 (function () {
   "use strict";
@@ -10,6 +9,7 @@
   var D = window.CUDATA;
   var LS_DB = "the-grind-db-v1";
   var LS_STATE = "the-grind-v1";
+  var DB_VERSION = 3;
 
   /* ---------- seed ---------- */
   function seedDB() {
@@ -25,7 +25,6 @@
       return {
         n: w.n, mode: w.mode, theme: w.theme, goal: w.goal || "", note: w.note || "",
         pattern: w.pattern || "", pre: w.pre || null, cs: w.cs || "",
-        csTopics: w.csTopics || [], csExtra: w.csExtra || [],
         days: days
       };
     });
@@ -39,10 +38,13 @@
     };
   }
 
-  /* DEV is reserved for now — the user is still deciding what goes there.
-     Everything actionable lives in the DSA box until then. */
+  /* The rules, straight from Anjul:
+     - DEV is reserved: no AI/project content is seeded. The box stays empty with a ＋.
+     - CS Fundamentals content is not seeded into days — he writes that himself at the top.
+     - Everything else (problems, DSA concepts, career) lives in the DSA box. */
   function remapItem(it) {
-    if (it.type === "dev" || it.type === "project") return null;
+    if (it.type === "dev" || it.type === "project" || it.type === "ai") return null;
+    if (it.track === "cs") return null;
     it.track = "dsa";
     return it;
   }
@@ -54,31 +56,22 @@
         "Striver A2Z to learn · NeetCode 150 to revise",
         "Aditya Verma for DP, recursion, stacks",
         "Timed set every week from W10",
-        "Bar: easy under 15 min, medium under 30"
+        "Bar: easy under 15 min, medium under 30",
+        "Material: LeetCode · Top Interview 150 · CTCI ch 1-6, 17",
+        "All 19 watch-first videos → in DSA — the material"
       ]},
-      { n: "02", name: "CS Fundamentals", tag: "One round of the loop.", items: [
-        "6 areas, 30 minutes a day",
-        "Gate Smashers for OS, DBMS, CN",
-        "LeetCode SQL 50 for queries",
-        "Java internals and OOP",
-        "AI fundamentals for AI interviews"
-      ]},
-      { n: "03", name: "DEV", tag: "Being decided.", items: [
-        "Reserved — still deciding what goes here."
-      ]}
+      { n: "02", name: "CS Fundamentals", tag: "You'll write this — one shot.", items: [] },
+      { n: "03", name: "DEV", tag: "Being decided.", items: [] }
     ];
   }
 
   /* ---------- load / save ---------- */
-  var DB_VERSION = 2;
-
   var db = loadDB();
   function loadDB() {
     try {
       var raw = JSON.parse(localStorage.getItem(LS_DB));
       if (raw && raw.v === DB_VERSION && raw.weeks && raw.weeks.length) {
         if (!raw.pillars) raw.pillars = seedPillars();
-        if (!raw.csAreas) raw.csAreas = [];
         return raw;
       }
     } catch (e) { /* ignore */ }

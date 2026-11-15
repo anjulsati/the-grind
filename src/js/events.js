@@ -1,6 +1,6 @@
 /* ============================================================
    The Grind — events.js
-   Every delegated click / change / input / keyboard handler.
+   Every delegated click / change / input / drag / keyboard handler.
    ============================================================ */
 (function () {
   "use strict";
@@ -9,7 +9,86 @@
   var ui = window.TG.ui;
   var editor = window.TG.editor;
 
-  /* ---------- checkbox ---------- */
+  /* ============================================================
+     DRAG & DROP — swap within a day, move to any other day
+     ============================================================ */
+  var dragId = null;
+
+  document.addEventListener("dragstart", function (e) {
+    var li = e.target.closest && e.target.closest(".item");
+    if (!li) return;
+    dragId = li.getAttribute("data-dragid");
+    li.classList.add("dragging");
+    if (e.dataTransfer) {
+      e.dataTransfer.effectAllowed = "move";
+      try { e.dataTransfer.setData("text/plain", dragId); } catch (err) { /* ignore */ }
+    }
+  });
+
+  document.addEventListener("dragover", function (e) {
+    if (!dragId) return;
+    var itemEl = e.target.closest && e.target.closest(".item");
+    var boxEl = e.target.closest && e.target.closest(".dcol");
+    if (!itemEl && !boxEl) return;
+    e.preventDefault();
+    if (e.dataTransfer) e.dataTransfer.dropEffect = "move";
+    document.querySelectorAll(".drag-over").forEach(function (x) { x.classList.remove("drag-over"); });
+    if (itemEl && !itemEl.classList.contains("dragging")) itemEl.classList.add("drag-over");
+    else if (boxEl) boxEl.classList.add("drag-over");
+  });
+
+  document.addEventListener("drop", function (e) {
+    if (!dragId) return;
+    e.preventDefault();
+    var f = store.findItem(dragId);
+    cleanupDrag();
+    if (!f) return;
+
+    var itemEl = e.target.closest && e.target.closest(".item");
+    var boxEl = e.target.closest && e.target.closest(".dcol");
+    var dayEl = e.target.closest && e.target.closest(".day");
+
+    var targetDay = null, targetTrack = "dsa", beforeItemId = null;
+
+    if (itemEl) {
+      var tid = (itemEl.querySelector("input[data-id]") || {}).getAttribute;
+      var idAttr = itemEl.getAttribute("data-dragid");
+      var tf = store.findItem(idAttr);
+      if (tf && tf.item.id !== f.item.id) { targetDay = tf.day; beforeItemId = tf.item.id; targetTrack = tf.item.track; }
+      else if (tf) { return; } // dropped on itself
+    }
+    if (!targetDay && boxEl && dayEl) {
+      targetDay = store.dayByDate(dayEl.id.replace("d-", ""));
+      targetTrack = boxEl.classList.contains("dev") ? "dev" : "dsa";
+    }
+    if (!targetDay && dayEl) {
+      targetDay = store.dayByDate(dayEl.id.replace("d-", ""));
+      targetTrack = "dsa";
+    }
+    if (!targetDay) return;
+
+    /* remove from source, insert at target */
+    f.day.items = f.day.items.filter(function (x) { return x.id !== f.item.id; });
+    f.item.track = targetTrack;
+    var arr = targetDay.items;
+    var idx = beforeItemId ? arr.findIndex(function (x) { return x.id === beforeItemId; }) : arr.length;
+    if (idx < 0) idx = arr.length;
+    arr.splice(idx, 0, f.item);
+    store.saveDB(); ui.render();
+    TG.toast("Task moved" + (targetDay.date !== f.day.date ? " to " + ui.fmtDate(targetDay.date) : ""));
+  });
+
+  document.addEventListener("dragend", cleanupDrag);
+  function cleanupDrag() {
+    dragId = null;
+    document.querySelectorAll(".drag-over,.dragging").forEach(function (x) {
+      x.classList.remove("drag-over", "dragging");
+    });
+  }
+
+  /* ============================================================
+     CHECKBOX
+     ============================================================ */
   document.addEventListener("change", function (e) {
     var cb = e.target;
     if (!cb.matches || !cb.matches('input[type="checkbox"][data-id]')) return;
@@ -38,7 +117,9 @@
     ui.refreshHeader();
   });
 
-  /* ---------- review fields ---------- */
+  /* ============================================================
+     REVIEW FIELDS
+     ============================================================ */
   document.addEventListener("input", function (e) {
     var el = e.target;
     if (el.id === "rvName") { store.state.review.name = el.value; store.saveState(); return; }
@@ -50,7 +131,23 @@
     store.saveState();
   });
 
-  /* ---------- clicks ---------- */
+  /* ============================================================
+     REORDER (▲▼ in edit mode)
+     ============================================================ */
+  function reorder(id, dir) {
+    var f = store.findItem(id);
+    if (!f) return;
+    var arr = f.day.items;
+    var i = arr.findIndex(function (x) { return x.id === id; });
+    var j = dir === "up" ? i - 1 : i + 1;
+    if (j < 0 || j >= arr.length) return;
+    var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    store.saveDB(); ui.render();
+  }
+
+  /* ============================================================
+     CLICKS
+     ============================================================ */
   document.addEventListener("click", function (e) {
     var t = e.target;
 
@@ -82,7 +179,25 @@
     if (t.id === "exportBtn") { store.exportDB(); TG.toast("Plan exported as JSON"); return; }
     if (t.id === "importBtn") { document.getElementById("importFile").click(); return; }
 
+    /* pillars — always available */
+    var pa = t.closest("[data-pillaradd]");
+    if (pa) { editor.pillarQuickAdd(Number(pa.getAttribute("data-pillaradd"))); return; }
+    var pe = t.closest("[data-editpillar]");
+    if (pe) { editor.pillarModal(Number(pe.getAttribute("data-editpillar"))); return; }
+    var rb = t.closest("[data-rmbullet]");
+    if (rb) {
+      var pr = rb.getAttribute("data-rmbullet").split(":");
+      store.db.pillars[Number(pr[0])].items.splice(Number(pr[1]), 1);
+      store.saveDB(); ui.render(); TG.toast("Removed");
+      return;
+    }
+
     /* edit-mode actions */
+    var up = t.closest("[data-up]");
+    if (up) { reorder(up.getAttribute("data-up"), "up"); return; }
+    var dn = t.closest("[data-down]");
+    if (dn) { reorder(dn.getAttribute("data-down"), "down"); return; }
+
     var ed = t.closest("[data-edit]");
     if (ed) { var f = store.findItem(ed.getAttribute("data-edit")); if (f) editor.itemModal(f.item, f.day.date, f.item.track); return; }
 
@@ -98,16 +213,13 @@
     }
 
     var add = t.closest("[data-add]");
-    if (add) { editor.itemModal(null, add.getAttribute("data-add"), "dsa"); return; }
+    if (add) { editor.itemModal(null, add.getAttribute("data-add"), add.getAttribute("data-track")); return; }
 
     var ww = t.closest("[data-wweek]");
     if (ww) { editor.weekModal(store.weekByN(Number(ww.getAttribute("data-wweek")))); return; }
 
     var wd = t.closest("[data-wday]");
     if (wd) { editor.dayModal(store.dayByDate(wd.getAttribute("data-wday"))); return; }
-
-    var ep = t.closest("[data-editpillar]");
-    if (ep) { editor.pillarModal(Number(ep.getAttribute("data-editpillar"))); return; }
 
     /* review */
     if (t.id === "rvDownload") {
@@ -139,7 +251,9 @@
     }
   });
 
-  /* ---------- import ---------- */
+  /* ============================================================
+     IMPORT / RESET / KEYBOARD
+     ============================================================ */
   document.getElementById("importFile").addEventListener("change", function (e) {
     var file = e.target.files && e.target.files[0];
     if (!file) return;
@@ -152,14 +266,12 @@
     e.target.value = "";
   });
 
-  /* ---------- reset progress ---------- */
   document.getElementById("resetBtn").addEventListener("click", function () {
     if (!confirm("Delete all checkmarks and review notes? The plan itself is untouched.")) return;
     store.resetState();
     location.reload();
   });
 
-  /* ---------- keyboard ---------- */
   document.addEventListener("keydown", function (e) {
     if (e.target.matches("input, textarea, select")) return;
     if (e.key === "p" || e.key === "P") TG.pen.setPen(!TG.pen.isOn());
