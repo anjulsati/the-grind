@@ -1,8 +1,8 @@
-# CU Prep OS
+# Placement Prep OS
 
-**Live: https://anjulsati.github.io/cu-prep-os/**
+**Live: https://anjulsati.github.io/placement-prep-os/**
 
-One page. No tabs. 22 weeks, week by week, with every task pre-linked.
+A personal, single-page 22-week plan: DSA, CS fundamentals and agentic AI, week by week. No tabs, no accounts, nothing uploaded.
 
 ---
 
@@ -10,39 +10,42 @@ One page. No tabs. 22 weeks, week by week, with every task pre-linked.
 
 ```
 W1-3   16 Nov - 6 Dec    EXAMS       40 min/day, 21 easy problems
-W4     7 Dec - 13 Dec    TRANSITION  last paper Mon 7th, full plan from Tue 8th
-W5-19  14 Dec - 21 Mar    FULL PLAN   2h 45m/day, DSA + CS + agentic AI
+W4     7 Dec - 13 Dec    TRANSITION  last paper Mon 7th, full block from Tue 8th
+W5-19  14 Dec - 21 Mar    FULL PLAN   2h 45m/day: DSA + CS + AI
 W20-22 22 Mar - 18 Apr    SPRINT      repair, 5 mocks, portfolio, 45+ applications
 ```
 
-**550 tasks · 212 new problems (+16 optional stretch) · every problem appears once** (repeats are labelled *re-solve* on purpose).
+550 tasks · 212 new problems · every problem appears once.
 
 ---
 
-## How the page works
+## Features
 
-- **Top:** the whole 22 weeks in one table + everything you'll study, at a glance.
-- **Then:** one section per week. Each week opens with **what you study that week** — problem list, CS topics, AI task, deliverable — before you see the days.
-- **Click a week header** to open its seven days. `Expand all` / `Collapse all` at the top.
-- **Jump to today** in the header.
-- **Review** at the bottom for auditors.
-
-Progress saves in the browser. Nothing is uploaded.
-
----
-
-## For the auditor
-
-Scroll to **Review** → pick a verdict on each line → comment on weeks you disagree with → **Download review .md** → send that file back.
+- **One page.** Overview → all 22 weeks → CS → AI → links → review.
+- **Week-first reading.** Each week opens with what you study that week, before the days.
+- **Exact videos.** Every study topic links to a specific YouTube video (with channel + title shown), not a search page.
+- **Pen mode.** Click `✎ Pen` (or press `P`). The page becomes a background; draw with mouse, finger or stylus. Strokes fade on their own after 10s / 30s / 60s, or stay if you pick "keep forever". `C` clears, `Esc` exits.
+- **Progress.** 550 checkboxes, saved in this browser.
+- **Review.** For an auditor: verdicts, comments, week notes, exportable as markdown.
 
 ---
 
 ## Local
 
-Double-click `index.html`. No build step.
+Double-click `index.html`.
 
 ```bash
 python3 -m http.server 8899
 ```
 
-Preview any day: `index.html?date=2027-01-15`
+Preview a date: `index.html?date=2027-01-15`
+
+---
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `P` | toggle pen mode |
+| `C` | clear strokes (in pen mode) |
+| `Esc` | exit pen mode |

@@ -11,9 +11,155 @@
   var WEEK1 = "2026-11-16";
   var PLACEMENT_SEASON = "2027-08-01";
 
-  function yt(q) { return "https://www.youtube.com/results?search_query=" + encodeURIComponent(q); }
+  /* exact videos, resolved and verified via YouTube oEmbed */
+  var V = {
+    "abstract class vs interface java": ["qZEFslUVfx0", "Java Tutorial: Abstract Classes Vs Interfaces", "CodeWithHarry"],
+    "acid properties dbms transactions": ["-GS0OxFJsYQ", "Lec-88: ACID Properties of a Transaction | Database Management System", "Gate Smashers"],
+    "bankers algorithm deadlock avoidance": ["7gMLNiEz3nw", "L-4.5: Deadlock Avoidance Banker's Algorithm with Example |With English Subtitles", "Gate Smashers"],
+    "bcnf normalization dbms": ["mf_PbWPo7VM", "Lec-30: Boyce Codd Normal Form #BCNF #DBMS #Normalization with best examples", "Gate Smashers"],
+    "big o notation explained in 10 minutes": ["XMUe3zFhM5c", "Learn Big O notation in 6 minutes 📈", "Bro Code"],
+    "binary search intuition explained": ["y6SG0rE6nn4", "Coding Interview Patterns - Binary Search | 8 different problems in a single video", "Nikhil Lohia"],
+    "binary tree basics terminology": ["I_JuQ5ayPmc", "L-3.12: Introduction to Trees (Binary Tree, Almost Complete Binary Tree, Full BT, Complete BT, BST)", "Gate Smashers"],
+    "caching strategies system design": ["2zIFUqTx_TU", "5 Caching Strategies | System Design Interview | Cache Aside, Read through, Write through | Patterns", "SoftwareDude"],
+    "cap theorem explained": ["BHqjEjzAicA", "CAP Theorem Simplified", "ByteByteGo"],
+    "cdn and cache control headers": ["Leack-toB4c", "Cache-Control Headers: Browser Caching Explained", "DebugBear"],
+    "checked vs unchecked exceptions java": ["bCPClyGsVhc", "Checked vs. Unchecked Exceptions in Java Tutorial - What's The Difference?", "Coding with John"],
+    "composite index covering index sql": ["BxAj3bl00-o", "SQL Indexes (Visually Explained) | Clustered vs Nonclustered | #SQL Course 35", "Data with Baraa"],
+    "composition over inheritance explained": ["HNzP1aLAffM", "Composition over Inheritance Explained using Retro Games!", "Metaphorically Speaking"],
+    "consistent hashing explained": ["UF9Iqmg94tk", "Consistent Hashing | Algorithms You Should Know #1", "ByteByteGo"],
+    "cookies vs sessions vs jwt": ["QzntvHz23tw", "Token vs Session Authentication | Authentication Explained!!!", "Piyush Garg"],
+    "cors explained web": ["4KHiSt0oLJ0", "CORS in 100 Seconds", "Fireship"],
+    "cpu scheduling algorithms fcfs sjf round robin": ["pPAKs7tT8sw", "CPU Scheduling Algorithms (FCFS, SJF, Round Robin) | Learn Coding", "Learn Coding"],
+    "database connection pooling explained": ["y3oAiv4hfIo", "Why 1000 Connections Crash Postgres | Connection Pooling & PgBouncer Explained", "Chai aur Code"],
+    "database index explained": ["b3bBGEzi4lg", "Interview: How Database Indexing Works🌳", "KodeKloud"],
+    "database replication master slave": ["fsZA4K0E3kQ", "Database Replication Explained (Replication Lag, Sync vs Async) | System Design with Microsoft SWE", "Mayank Joshi"],
+    "database schema design interview": ["zHEEKq6GJq0", "Database design interview questions | Database Mock Interview", "Design Strong"],
+    "database sharding vs partitioning": ["feyeQfLNT_8", "Lec-11: Database Partitioning vs Sharding | System Design with Real Life Examples", "Gate Smashers"],
+    "dbms indexing b+ tree": ["aZjYr87r1b8", "10.2  B Trees and B+ Trees. How they are useful in Databases", "Abdul Bari"],
+    "dbms normalization 1nf 2nf 3nf": ["EGEwkad_llA", "Lec-33: All Normal Forms with Real life examples | 1NF 2NF 3NF BCNF 4NF 5NF | All in One", "Gate Smashers"],
+    "deadlock four necessary conditions os": ["rWFH6PLOIEI", "L-4.1: DEADLOCK concept | Example | Necessary condition | Operating System", "Gate Smashers"],
+    "design patterns java tutorial": ["WycvzYFRF6U", "Java Design Patterns Overview | Creational, Structural & Behavioral", "The Curious Coder"],
+    "design rate limiter system design": ["MIJFyUPG4Z4", "Design a Distributed Rate Limiter w/ a Ex-Meta Staff Engineer: System Design Breakdown", "Hello Interview"],
+    "design url shortener system design": ["9csfoQK2T8g", "URL shortener system design in Hindi | Tinyurl system design in Hindi | Bitly system design in Hindi", "Engineering Digest"],
+    "embeddings cosine similarity explained": ["e9U0QAFbfLI", "Cosine Similarity, Clearly Explained!!!", "StatQuest with Josh Starmer"],
+    "er model dbms entities relationships": ["GBjLgU1WZvo", "What is ER Diagram? full Explanation | ER Model in DBMS | #dbms #erdiagram", "Learn Coding"],
+    "essential linux commands developers": ["bUXuZbU6tYw", "Linux for Beginners: Your Ultimate Guide to Mastering Linux in 2024", "Engineering Digest"],
+    "factory design pattern java": ["dMK4TbG29fk", "Factory Design Pattern | Simple, Factory Method & Abstract Factory with Real-Life Examples", "Coder Army"],
+    "file system basics os": ["0LtuQhNFFe0", "L-7.1: File System in Operating System | Windows, Linux, Unix, Android etc.", "Gate Smashers"],
+    "gate smashers computer networks full course": ["JFF2vJaN0Cw", "Lec-1: Computer Networks and Security Full Syllabus for GATE, UGC NET,DSSSB,NIELIT & University exam", "Gate Smashers"],
+    "gate smashers dbms full course": ["kBdlM6hNDAE", "Lec-1: DBMS Syllabus for GATE, UGCNET, NIELIT, DSSSB etc.| Full DBMS for College/University Students", "Gate Smashers"],
+    "gate smashers dbms os cn full course": ["kBdlM6hNDAE", "Lec-1: DBMS Syllabus for GATE, UGCNET, NIELIT, DSSSB etc.| Full DBMS for College/University Students", "Gate Smashers"],
+    "gate smashers operating system full course": ["bkSWJJZNgf8", "Lec-0:Operating System Syllabus Discussion for all College/University & Competitive exams (GATE,NET)", "Gate Smashers"],
+    "geeksforgeeks dbms tutorial": ["Le8efR0xTdg", "Introduction to DBMS | Database Management System for Beginners | GeeksforGeeks School", "GeeksforGeeks School"],
+    "geeksforgeeks operating system tutorial": ["mBBJBF-e5As", "Operating System Lecture 01 | GATE + Semester | Introduction & Backdrop (CS & IT)", "GeeksforGeeks GATE English"],
+    "hashmap vs hashset in java difference": ["bGw2-Pdg_78", "Coding Interview Patterns - HashSet and HashMap", "Nikhil Lohia"],
+    "how arrays work in memory java": ["Qg73uiG9b6A", "How Arrays work in Java | Heap, Contiguous Storage, Random Access | Java Full Course #10", "Coder Army"],
+    "how dns works step by step": ["mpQZVYPuDGU", "How a DNS Server (Domain Name System) works.", "PowerCert Animated Videos"],
+    "how to evaluate llm applications evals": ["cNF_MO82Qew", "Introduction to LLM Evaluations – Model Evals vs Application Evals | CampusX", "CampusX"],
+    "http methods status codes explained": ["qmpUfWN7hh4", "HTTP Status Codes Explained In 5 Minutes", "ByteByteGo"],
+    "http vs https tls handshake": ["j9QmMEWmcfo", "SSL, TLS, HTTPS Explained", "ByteByteGo"],
+    "idempotency in rest apis": ["t99NvIazD68", "Idempotency in APIs: you should be aware of this!", "Software Developer Diaries"],
+    "java arraylist internal implementation": ["jSlmXcE7g7A", "How ArrayList works internally in java | Internal working of ArrayList in java", "KK JavaTutorials"],
+    "java arraylist internal working": ["_8-PxGSwnFE", "ArrayList Explained: Master Java's Dynamic Arrays in Minutes!", "Engineering Digest"],
+    "java brains object oriented programming": ["BSVKUk58K6U", "OOP 1 | Introduction & Concepts - Classes, Objects, Constructors, Keywords", "Kunal Kushwaha"],
+    "java collections framework internals interview": ["3TsmcLZ0WMo", "50+ Real & Tricky Java Collection Framework Interview Questions (2–7 Yrs Experience)", "GenZ Career"],
+    "java equals hashcode contract": ["CpVALR9HeTE", "02. Equals and HashCode Contract & Different Variations", "Ankit Wasankar"],
+    "java garbage collection explained": ["b2HSqC0RGsM", "Java Heap Memory Deep Dive | Garbage Collection Algorithms Explained | Java Full Course #46", "Coder Army"],
+    "java hashmap explained for beginners": ["H62Jfv1DJlU", "Map and HashMap in Java - Full Tutorial", "Coding with John"],
+    "java hashmap internal working interview": ["1CJbB6SzjVw", "How HashMap Internally Works in Java With Animation | Popular Java Interview QA | Java Techie", "Java Techie"],
+    "java memory leak profiling": ["AHLkbqcVLvY", "Analyze JVM Memory using JVisual VM | Memory Leak | Heap & Thread Dump | Profiling | Java Techie", "Java Techie"],
+    "java string immutability explained": ["JjIewPuyexA", "#35 Mutable vs Immutable String in Java", "Telusko"],
+    "java string pool immutability": ["Ay4lG9bHkOw", "String Immutability & String Pool Explained with Examples | Java Interview Guide", "CodeSnippet by Chetan"],
+    "java threads tutorial basics": ["091vJWjl1A4", "Multithreading Basics: CPU, Core, Program, Process, Thread & much more", "Engineering Digest"],
+    "leetcode sql 50 aggregation solutions": ["SvJLXj05cow", "Group By and Having Clause in SQL | SQL Tutorial in Hindi 9", "Rishabh Mishra"],
+    "leetcode sql 50 all solutions": ["YdoR3bGAEx4", "Complete SQL Interview Questions in One Shot | Placement Revision | Structured Query Language", "Gate Smashers"],
+    "leetcode sql 50 easy solutions": ["nYmoQ4r0DVw", "Solve 70 SQL Questions in 3 hrs | Ultimate SQL Practice | Master SQL", "Build with Akshit"],
+    "leetcode sql 50 joins solutions": ["xkYpNfpmbGY", "SQL Joins - Beginner to PRO Masterclass with 10 Examples", "Chandoo"],
+    "leetcode sql 50 subqueries solutions": ["nJIEIzF7tDw", "Subquery in SQL | Correlated Subquery + Complete SQL Subqueries Tutorial", "techTFQ"],
+    "leetcode sql 50 window functions solutions": ["S1do1EeA7ng", "SQL Window Function with Example- RANK, DENSE RANK, ROW NUMBER, LEAD/LAG | SQL Tutorial in Hindi 14", "Rishabh Mishra"],
+    "linked list data structure explained beginners": ["oAja8-Ulz6o", "Introduction to Linked List | Data Structures & Algorithms | Java Placement Course", "Apna College"],
+    "linux file permissions chmod": ["4p2zkY8Q-LQ", "Linux File Permissions For Beginners [HINDI] | Linux CHMOD Command", "M Prashant"],
+    "linux ps top lsof kill commands": ["BAwkW0o7SlM", "How to Stop a Process in Linux! | kill Command", "DeployGrid"],
+    "load balancer explained": ["TavIqNcnwSA", "Lec-3: Load Balancer in System Design", "Gate Smashers"],
+    "mdn http overview": ["ZwpXyHmu42M", "Learn Web Development - Overview", "Jeff Scott Ranken Technical College"],
+    "message queue system design": ["sKXCTtGdxWo", "Lec-13: Message Queue System | System Design", "Gate Smashers"],
+    "method overloading vs overriding java": ["ryDeTfmSY_o", "Java OVERLOADING vs OVERRIDING. Object Oriented Java tutorial. #16", "Smartherd"],
+    "mutex vs semaphore operating system": ["iwJt6hqWfTE", "Mutex vs Semaphore Explained | Concurrency in a Nutshell", "Nutshell"],
+    "mysql explain query plan": ["xAZrlhpqw54", "From Slow to Fast: Optimize Your SQL Queries Efficiently | Explain Plan", "Manish Sharma"],
+    "n+1 query problem orm": ["A5lprEaWAbQ", "What is N+1 Query Problem (JPA/ORM)", "Yeshendra Dhaker"],
+    "observer design pattern java": ["Jpmp4GY8r3Q", "Observer Design Pattern Explained | Real-Life Use Case + Code Example", "Coder Army"],
+    "oop four pillars explained java": ["bSrm9RXwBaI", "Java OOPs in One Shot | Object Oriented Programming | Java Language | Placement Course", "Apna College"],
+    "orm vs raw sql performance": ["Q7KH9bouXIE", "Should you use raw SQL or ORM?", "Atomic Code"],
+    "osi model vs tcp ip model": ["ZOLkWBVMcwU", "11 What Makes OSI and TCP/IP Models Different? Discover the Key Layers", "Chai aur Code"],
+    "page replacement algorithms lru fifo": ["8rcUs5RutX0", "L-5.22: Page Replacement Introduction | FIFO Page Replacement algorithm | Operating System", "Gate Smashers"],
+    "paging vs segmentation os": ["dz9Tk6KCMlQ", "L-5.17: Segmentation Vs Paging | Segmentation Working | Operating system", "Gate Smashers"],
+    "parking lot low level design": ["NU16qSPUmus", "🚗  Parking Lot Design | System Design + LLD + Full Code Implementation", "codeWithAryan"],
+    "process states context switching os": ["2dJdHMpCLIg", "L-1.5: Process States in Operating System| Schedulers(Long term,Short term,Medium term)", "Gate Smashers"],
+    "process vs thread operating system": ["ITc09gOrqZk", "L-1.11: Process Vs Threads in Operating System", "Gate Smashers"],
+    "prompt injection explained llm security": ["jrHRe9lSqqA", "What Is a Prompt Injection Attack?", "IBM Technology"],
+    "race condition example java": ["7eV4nib3Cm8", "#89 Race Condition in Java", "Telusko"],
+    "rag vs fine tuning when to use": ["00Q0G84kq3M", "RAG vs. Fine Tuning", "IBM Technology"],
+    "rate limiting algorithms": ["mQCJJqUfn9Y", "Five Rate Limiting Algorithms ~ Key Concepts in System Design", "Hello Byte"],
+    "recursion call stack explained beginners": ["0KE7vhtdfI8", "What Is Recursion in Programming? Base Case, Recursive Case and the Call Stack 🔁", "KnowIt"],
+    "rest api design best practices": ["7nm1pYuKAhY", "Deep Dive into REST API Design and Implementation Best Practices", "Software Developer Diaries"],
+    "rest vs graphql": ["PTfZcN20fro", "GraphQL vs REST: Which is Better for APIs?", "IBM Technology"],
+    "reverse proxy vs forward proxy": ["fe3TP8Momzw", "Lec-5: Forward proxy vs Reverse proxy | System Design", "Gate Smashers"],
+    "singleton builder pattern java": ["tSZn4wkBIu8", "The Singleton Pattern Explained and Implemented in Java | Creational Design Patterns | Geekific", "Geekific"],
+    "sliding window technique explained": ["uqGxFk0cEdI", "Lec-12: Sliding Window 🪟 Technique | Data Structure", "Gate Smashers"],
+    "solid principles explained java": ["vF9dPveOEyo", "SOLID Principles in System Design | Complete Explanation", "Gate Smashers"],
+    "solid principles real code example": ["UsNl8kcU4UA", "SOLID Design Principles | Complete Guide with Code Examples", "Coder Army"],
+    "sql group by having aggregate functions": ["SvJLXj05cow", "Group By and Having Clause in SQL | SQL Tutorial in Hindi 9", "Rishabh Mishra"],
+    "sql interview questions practice": ["YdoR3bGAEx4", "Complete SQL Interview Questions in One Shot | Placement Revision | Structured Query Language", "Gate Smashers"],
+    "sql joins explained beginners": ["H6988OpZKTU", "Complete SQL JOINS For Beginners | SQL JOIN Queries with Examples | SQL Tutorial in Hindi 11", "Rishabh Mishra"],
+    "sql joins inner left self join": ["V3xjmBi1QQE", "SQL SELF JOIN | UNION & UNION ALL in SQL | SQL Tutorial in Hindi 12", "Rishabh Mishra"],
+    "sql order by limit date functions": ["wfBSPELt8Rg", "↕️ SQL ORDER BY, LIMIT & OFFSET: Sorting & Pagination | Free SQL Class, Session 8", "theshiraverse"],
+    "sql query optimization basics explain": ["xAZrlhpqw54", "From Slow to Fast: Optimize Your SQL Queries Efficiently | Explain Plan", "Manish Sharma"],
+    "sql select where tutorial": ["eiLqDeDp7Oc", "SELECT Statement & WHERE Clause with Example | Operators in SQL | SQL Tutorial in Hindi 5", "Rishabh Mishra"],
+    "sql subqueries and cte": ["LJC8277LONg", "SQL WITH Clause | Clearly Explained | CTEs vs Subqueries vs Temp Tables | Recursive CTEs", "Maven Analytics"],
+    "sql vs nosql when to use": ["VLgchU0iLxY", "SQL vs NoSQL: Which One Should You Use?", "Gate Smashers"],
+    "sql window functions row_number rank": ["rIcB4zMYMas", "SQL Window Functions | Clearly Explained | PARTITION BY, ORDER BY, ROW_NUMBER, RANK, DENSE_RANK", "Maven Analytics"],
+    "sqlbolt interactive sql tutorial": ["JSwX1NlpG_Q", "🚀 SQL Lesson 18: Dropping Tables in SQL | SQL Tutorial for Beginners", "Learning with Cinthya"],
+    "stack vs queue data structure explained": ["6qjTUfTafsY", "How Stacks and Queues Work (Data Structures)", "Shaurya Rastogi"],
+    "strategy design pattern java": ["PpKvPrl_gRg", "Strategy Design Pattern Explained with Real-World Example | Design Patterns in LLD", "Coder Army"],
+    "stringbuilder vs string java": ["HvpUTLSt5XM", "Java String vs StringBuilder vs StringBuffer: Best Practices & Performance", "Engineering Digest"],
+    "system calls fork exec os": ["ixq5cpdEO2Q", "L-1.8: Fork System call with Example | Fork() system call questions", "Gate Smashers"],
+    "system design basics for beginners": ["SE2KF-vxvS0", "System Design for Beginners (2026)", "KodeKloud"],
+    "system design basics scaling": ["xpDnVSmNFX0", "System Design BASICS: Horizontal vs. Vertical Scaling", "Gaurav Sen"],
+    "tcp three way handshake": ["xkP8iBAdgck", "18 Unveiling TCP 3-Way Handshake: The Backbone of Reliable Connections", "Chai aur Code"],
+    "tcp vs udp difference": ["jJyXpMmXJI0", "Lec-77: TCP vs UDP differences in hindi", "Gate Smashers"],
+    "thrashing operating system": ["IyWaK8pbN6A", "L-5.16: What is Thrashing | Operating System", "Gate Smashers"],
+    "tls handshake explained": ["EBh6emvhUNw", "SSL / TLS Handshake Explained For DevOps Engineers in Hindi", "TrainWithShubham"],
+    "tokens context window llm explained": ["-QVoIxEpFkM", "What is a Context Window? Unlocking LLM Secrets", "IBM Technology"],
+    "tool calling react agent explained": ["G-usuTzmZE4", "Function calling vs Tool calling vs MCP in AI Agents", "Prateek Singh"],
+    "transaction isolation levels dbms": ["-gxyut1VLcs", "Isolation Levels in Database Management Systems", "Edredo for Learners"],
+    "transformers explained intuition no math": ["eMlx5fFNoYc", "Attention in transformers, step-by-step | Deep Learning Chapter 6", "3Blue1Brown"],
+    "two pointers technique explained coding interview": ["MQmUVokbTrs", "Coding Interview Patterns - Two Pointers", "Nikhil Lohia"],
+    "types of keys in dbms": ["RRUeFwuJ39Q", "L2.4 Keys in DBMS | Super Key, Candidate Key, Primary Key, Alternate Key, Foreign Key, Composite Key", "Shanu Kuttan CSE Classes"],
+    "uml class diagram basics": ["HuL9EMx8NQo", "Class Diagram in UML | Banking System (Real Life example) | Software Engineering", "Gate Smashers"],
+    "virtual memory os explained": ["-L14WZbcWX4", "Virtual Memory in Operating System Explained 🔥 | Complete Concept + Examples | handwritten Notes", "Code Hacker"],
+    "websockets vs polling": ["WS352jTTkPU", "WebSockets vs Polling vs Server Sent Events", "Piyush Garg"],
+    "what happens when you type a url http": ["AlkDbnbv7dk", "What happens when you type a URL into your browser?", "ByteByteGo"],
+    "what happens when you type a url in browser": ["AlkDbnbv7dk", "What happens when you type a URL into your browser?", "ByteByteGo"],
+    "what is retrieval augmented generation explained": ["T-D1OfcDW1M", "What is Retrieval-Augmented Generation (RAG)?", "IBM Technology"]
+  };
+
+  var SITES = {
+    "sqlbolt interactive sql tutorial": "https://sqlbolt.com/",
+    "mdn http overview": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview",
+    "geeksforgeeks dbms tutorial": "https://www.geeksforgeeks.org/dbms/",
+    "geeksforgeeks operating system tutorial": "https://www.geeksforgeeks.org/operating-systems/"
+  };
+  function yt(q) {
+    var v = V[q];
+    return v ? "https://www.youtube.com/watch?v=" + v[0]
+             : "https://www.youtube.com/results?search_query=" + encodeURIComponent(q);
+  }
   function P(title, slug, diff) { return { title: title, url: LC + slug + "/", diff: diff }; }
-  function C(label, q) { return { label: label, url: yt(q) }; }
+  function C(label, q) {
+    if (SITES[q]) return { label: label, url: SITES[q], vtitle: "", vauthor: "" };
+    var v = V[q] || [];
+    return { label: label, url: yt(q), vtitle: v[1] || "", vauthor: v[2] || "" };
+  }
 
   function addDaysISO(iso, n) {
     var d = new Date(iso + "T00:00:00");
@@ -875,7 +1021,7 @@
         });
         items.push({
           id: date + "-c", type: "theory",
-          title: w.cs + " — " + c.label, url: c.url,
+          title: w.cs + " — " + c.label, url: c.url, vtitle: c.vtitle, vauthor: c.vauthor,
           hint: "10 minutes at 1.5x, then 3 lines in your notes."
         });
         items.push({
@@ -923,7 +1069,7 @@
           var ct0 = w.csTopics[(d - 1) % w.csTopics.length];
           items.push({
             id: date + "-cs", type: "theory",
-            title: w.cs + " — " + ct0.label, url: ct0.url,
+            title: w.cs + " — " + ct0.label, url: ct0.url, vtitle: ct0.vtitle, vauthor: ct0.vauthor,
             hint: "30 minutes, then 5 lines in your own words."
           });
           if (d === 2) items.push({ id: date + "-proj", type: "project", title: w.project, hint: "60-90 min." });
@@ -961,7 +1107,7 @@
           });
           var ct = w.csTopics[d];
           items.push({
-            id: date + "-cs", type: "theory", title: w.cs + " — " + ct.label, url: ct.url,
+            id: date + "-cs", type: "theory", title: w.cs + " — " + ct.label, url: ct.url, vtitle: ct.vtitle, vauthor: ct.vauthor,
             hint: "30 min. Then close the tab and say it out loud in 60 seconds."
           });
           if (d === 0 || d === 2 || d === 4) {

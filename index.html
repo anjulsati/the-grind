@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CU Prep OS — 22 weeks, one page</title>
-<meta name="description" content="One-page 22-week placement plan: DSA, CS and agentic AI, week by week.">
-<link rel="stylesheet" href="styles.css?v=6">
+<title>Placement Prep OS</title>
+<meta name="description" content="A personal 22-week placement plan: DSA, CS and agentic AI, week by week.">
+<link rel="stylesheet" href="styles.css?v=8">
 </head>
 <body>
 
@@ -13,8 +13,8 @@
   <div class="brand">
     <span class="dot"></span>
     <div>
-      <strong>CU Prep OS</strong>
-      <span class="sub">Chandigarh University · CSE · Java + Python</span>
+      <strong>Placement Prep OS</strong>
+      <span class="sub">22 weeks · DSA · CS · Agentic AI</span>
     </div>
   </div>
   <div class="todaybox">
@@ -22,7 +22,8 @@
     <div class="bar"><div id="overallbar"></div></div>
     <div class="tb-line tiny"><span id="overallcount">0 / 0</span><span class="sep">·</span><span id="countdown">—</span></div>
   </div>
-  <button id="jumpToday" class="jump">Jump to today</button>
+  <button id="jumpToday" class="btn">Jump to today</button>
+  <button id="penToggle" class="btn" title="Pen mode (P)">✎ Pen</button>
 </header>
 
 <div class="navwrap">
@@ -32,13 +33,40 @@
 <main id="app"></main>
 
 <footer>
-  <span>Progress and review notes save in this browser only. Nothing is uploaded anywhere.</span>
-  <button id="resetBtn" class="ghost">Reset everything</button>
+  <span>Private to this browser. Progress and notes are stored locally, never uploaded.</span>
+  <button id="resetBtn" class="btn">Reset everything</button>
 </footer>
 
-<button id="topBtn" class="fab" title="Back to top">↑</button>
+<button id="topBtn" class="btn fab" title="Back to top">↑</button>
 
-<script src="data.js?v=6"></script>
-<script src="app.js?v=6"></script>
+<!-- pen layer -->
+<canvas id="penCanvas"></canvas>
+<div class="penbar" id="penbar">
+  <span class="penlbl">Pen</span>
+  <div class="swatches">
+    <button class="sw on" data-color="#3ddc97" style="background:#3ddc97"></button>
+    <button class="sw" data-color="#f5b545" style="background:#f5b545"></button>
+    <button class="sw" data-color="#ff6b6b" style="background:#ff6b6b"></button>
+    <button class="sw" data-color="#5fb2ff" style="background:#5fb2ff"></button>
+    <button class="sw" data-color="#ffffff" style="background:#ffffff"></button>
+  </div>
+  <select id="penSize">
+    <option value="2">thin</option>
+    <option value="4" selected>medium</option>
+    <option value="8">thick</option>
+    <option value="14">marker</option>
+  </select>
+  <select id="penFade">
+    <option value="10">fade 10s</option>
+    <option value="30" selected>fade 30s</option>
+    <option value="60">fade 60s</option>
+    <option value="0">keep forever</option>
+  </select>
+  <button id="penClear" class="btn">Clear</button>
+  <button id="penExit" class="btn solid">Done</button>
+</div>
+
+<script src="data.js?v=8"></script>
+<script src="app.js?v=8"></script>
 </body>
 </html>
