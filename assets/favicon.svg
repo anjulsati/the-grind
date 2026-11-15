@@ -1,5 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#0b1016"/>
-  <rect x="3" y="3" width="58" height="58" rx="12" fill="none" stroke="#1d2937" stroke-width="1.5"/>
-  <text x="32" y="42" font-family="Menlo,Consolas,monospace" font-size="26" font-weight="700" fill="#3ddc97" text-anchor="middle">G</text>
+  <rect width="64" height="64" rx="12" fill="#F3F5F1"/>
+  <rect x="2.5" y="2.5" width="59" height="59" rx="10" fill="none" stroke="#1B2530" stroke-width="3"/>
+  <line x1="14" y1="14" x2="14" y2="52" stroke="#E4572E" stroke-width="3"/>
+  <line x1="24" y1="22" x2="52" y2="22" stroke="#1B2530" stroke-width="3"/>
+  <line x1="24" y1="32" x2="46" y2="32" stroke="#1B2530" stroke-width="3"/>
+  <line x1="24" y1="42" x2="38" y2="42" stroke="#1B2530" stroke-width="3"/>
 </svg>

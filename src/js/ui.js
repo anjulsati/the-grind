@@ -101,7 +101,7 @@
       '<span class="day-date">' + fmtDate(day.date) + "</span>" +
       (isToday ? '<span class="pill pill-on">TODAY</span>' : "") +
       (isNext ? '<span class="pill pill-on">STARTS TOMORROW</span>' : "") +
-      (day.time ? '<span class="day-date">· ' + esc(day.time) + "</span>" : "") +
+      (day.time ? '<span class="day-date">' + esc(day.time) + "</span>" : "") +
       '</div><span class="day-wrap">' + wtools +
       '<span class="day-count">' + dayDone(day) + "/" + day.items.length + "</span></span></div>" +
       '<div class="day-cols">' +
@@ -165,8 +165,8 @@
       '<div class="wk-head" data-toggle="' + w.n + '">' +
       '<div class="wk-left"><span class="wk-num">W' + w.n + "</span>" +
       '<div class="wk-title"><h3>' + esc(w.theme) + "</h3>" +
-      '<div class="wk-dates">' + shortDate(w.days[0].date) + " → " + shortDate(w.days[6].date) +
-      (w.goal ? " · " + esc(w.goal) : "") + "</div></div></div>" +
+      '<div class="wk-dates">' + shortDate(w.days[0].date) + " → " + shortDate(w.days[6].date) + "</div>" +
+      (w.goal ? '<div class="wk-goal">' + esc(w.goal) + "</div>" : "") + "</div></div>" +
       '<div class="wk-right">' + badge +
       '<div class="mini-bar"><div style="width:' + st.pct + '%"></div></div>' +
       '<span class="day-count">' + st.done + "/" + st.total + "</span>" +
