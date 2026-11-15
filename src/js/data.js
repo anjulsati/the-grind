@@ -946,100 +946,8 @@
       project: "PORTFOLIO — READMEs with numbers, demo video, GitHub profile updated."
     },
 
-    /* ---------------- SPRINT ---------------- */
-    {
-      n: 20, mode: "sprint", theme: "Repair — re-solve what you got wrong",
-      goal: "No new topics. Cold, timed, out loud.",
-      days: [
-        { t: "Repair: arrays, hashing, two pointers", items: [
-          { type: "dsa", title: "Re-solve 6 problems you got wrong in these topics — cold, timed" }
-        ]},
-        { t: "Repair: sliding window, strings", items: [
-          { type: "dsa", title: "Re-solve 6 problems from these topics — cold" },
-          { type: "career", title: "10 applications" }
-        ]},
-        { t: "Repair: binary search + BS on answer", items: [
-          { type: "dsa", title: "Re-solve 6 problems from these topics — cold" }
-        ]},
-        { t: "Repair: recursion, linked lists, stacks, queues", items: [
-          { type: "dsa", title: "Re-solve 6 problems from these topics — cold" }
-        ]},
-        { t: "Repair: trees, heaps, greedy", items: [
-          { type: "dsa", title: "Re-solve 6 problems from these topics — cold" }
-        ]},
-        { t: "Repair: graphs, DP", items: [
-          { type: "dsa", title: "Re-solve 6 problems from these topics — cold" },
-          { type: "career", title: "Resume final pass — projects, numbers, one page" }
-        ]},
-        { t: "Timed test", items: [
-          { type: "dsa", title: "3 unseen problems, 90 minutes, no help" },
-          { type: "dsa", title: "Whatever broke here — fix it in the first hour of next week" }
-        ]}
-      ]
-    },
-    {
-      n: 21, mode: "sprint", theme: "Mock marathon — five interviews in seven days",
-      goal: "Enough reps that the real interview feels familiar.",
-      days: [
-        { t: "Mock 1 — DSA", items: [
-          { type: "career", title: "Mock interview #1 (Pramp or a senior)" },
-          { type: "dsa", title: "Re-solve the 2 you fumbled, immediately" }
-        ]},
-        { t: "Mock 2 — CS fundamentals", items: [
-          { type: "career", title: "Mock #2 — they grill DBMS / OS / CN" },
-          { type: "dsa", title: "20 rapid-fire answers out loud, no notes" }
-        ]},
-        { t: "Mock 3 — everything on your resume", items: [
-          { type: "career", title: "Mock #3 — 30 minutes on everything you claim: projects, CS, strengths" }
-        ]},
-        { t: "Mock 4 — HR round", items: [
-          { type: "career", title: "Mock #4 — HR only" },
-          { type: "career", title: "Write your final 5 HR answers: about yourself, why us, weakness, 5-year plan" }
-        ]},
-        { t: "Mock 5 — full loop", items: [
-          { type: "career", title: "Mock #5 — one full loop, end to end" },
-          { type: "career", title: "20 applications" }
-        ]},
-        { t: "Gap fixing", items: [
-          { type: "dsa", title: "Fix the top 3 gaps the mocks exposed — nothing else" }
-        ]},
-        { t: "Retrospective", items: [
-          { type: "career", title: "Write it in plan.md: what to repeat in the real interview" }
-        ]}
-      ]
-    },
-    {
-      n: 22, mode: "sprint", theme: "Apply at volume",
-      goal: "Everything a recruiter needs to say yes.",
-      days: [
-        { t: "Portfolio", items: [
-          { type: "career", title: "Resume final — 1 page, live links, a number in every bullet" },
-          { type: "career", title: "GitHub profile README + pinned repos" },
-          { type: "career", title: "LinkedIn: featured section + headline fixed" }
-        ]},
-        { t: "Contest day", items: [
-          { type: "dsa", title: "Two timed contests, 90 min each" },
-          { type: "dsa", title: "Upsolve the 2 you couldn't finish" }
-        ]},
-        { t: "Volume day", items: [
-          { type: "career", title: "25 applications + 5 referral DMs to alumni" }
-        ]},
-        { t: "Follow-up day", items: [
-          { type: "career", title: "Follow up on every application older than 10 days" },
-          { type: "dsa", title: "Fix the 3 weakest interview topics — one hour each" }
-        ]},
-        { t: "Handoff", items: [
-          { type: "career", title: "Write Phase 3 (May → Aug): DP depth, 2 mocks/week, 10 apps/week" }
-        ]},
-        { t: "Final mock", items: [
-          { type: "career", title: "One final full mock — compare against week 4" }
-        ]},
-        { t: "Retrospective", items: [
-          { type: "career", title: "22-week retrospective in plan.md — what worked, what to keep" }
-        ]}
-      ]
-    }
   ];
+
 
   /* ============================================================
      BUILD DAYS
@@ -1287,7 +1195,7 @@
       ] },
     { group: "CS fundamentals",
       items: [
-        { label: "Gate Smashers", url: yt("gate smashers dbms os cn full course"), note: "Fastest route to interview-grade OS/DBMS/CN." },
+        { label: "Gate Smashers (main channel)", url: "https://www.youtube.com/@GateSmashers", note: "OS, DBMS and CN playlists — the main channel, pick the subject you're on." },
         { label: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/", note: "Reference, not a course." },
         { label: "SQLBolt", url: "https://sqlbolt.com/" },
         { label: "LeetCode SQL 50", url: "https://leetcode.com/studyplan/top-sql-50/" }
@@ -1347,11 +1255,10 @@
   ];
 
   var MILESTONES = [
-    { when: "Week 3 · Dec 6", checks: ["21 easy problems done", "Python + first LLM call working", "Exams still passed", "Zero burnout"] },
-    { when: "Week 9 · Jan 10", checks: ["~90 problems", "Easy in under 20 min", "DBMS + SQL solid", "P1 retrieval working with a hit-rate number", "Resume v2", "First mock done"] },
-    { when: "Week 14 · Feb 21", checks: ["~150 problems", "Easy under 15 min, medium under 30", "OS + CN done", "P1 deployed with an eval score", "3 timed sets done", "3 mocks"] },
-    { when: "Week 19 · Mar 21", checks: ["~215 problems", "DP + graphs + tries done", "10 hards attempted", "P2 deployed + eval report", "Docker + CI", "6 timed sets"] },
-    { when: "Week 22 · Apr 18", checks: ["244 problems total", "5 mocks done", "60+ re-solved cold", "Portfolio + demo video", "45+ applications", "6 STAR stories written"] }
+    { when: "Week 3 · Dec 6", checks: ["21 easy problems done", "Exams still passed", "Zero burnout"] },
+    { when: "Week 9 · Jan 10", checks: ["~90 problems", "Easy in under 20 min", "DBMS + SQL solid", "Resume v2", "First mock done"] },
+    { when: "Week 14 · Feb 21", checks: ["~150 problems", "Easy under 15 min, medium under 30", "OS + CN done", "3 timed sets done", "3 mocks"] },
+    { when: "Week 19 · Mar 21", checks: ["~215 problems", "DP + graphs + tries done", "10 hards attempted", "6 timed sets", "45+ applications"] }
   ];
 
   window.CUDATA = {

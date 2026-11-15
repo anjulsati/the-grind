@@ -279,78 +279,7 @@
       }).join("") + "</div>";
     });
     html += '<div class="callout">' + D.RULES.map(function (r) { return "• " + esc(r); }).join("<br>") + "</div>";
-    html += '<h3>Checkpoints</h3><div class="grid">' + D.MILESTONES.map(function (m) {
-      return '<div class="card"><h4>' + esc(m.when) + "</h4><ul>" + m.checks.map(function (c) { return "<li>" + esc(c) + "</li>"; }).join("") + "</ul></div>";
-    }).join("") + "</div></section>";
-    return html;
-  }
-
-  var VERDICTS = [
-    ["overall", "Overall verdict", ["Keep as is", "Compress to 4 months", "Expand to 6 months", "Restructure"]],
-    ["dsa", "DSA volume", ["Too little", "About right", "Too much"]],
-    ["cs", "CS Fundamentals depth", ["Too shallow", "About right", "Too deep"]],
-    ["exam", "Exam weeks (light)", ["Too light", "About right", "Too heavy for endsems"]],
-    ["time", "Daily budget", ["Unrealistic", "Tight but doable", "Comfortable"]],
-    ["apply", "Applications from week 8", ["Too late", "About right", "Too early"]]
-  ];
-
-  function reviewMarkdown() {
-    var L = [];
-    L.push("# The Grind — plan review");
-    L.push("");
-    L.push("**Plan by:** Anjul Sati  ");
-    L.push("**Reviewer:** " + (store.state.review.name || "(unnamed)") + "  ");
-    L.push("**Date:** " + iso(new Date()));
-    L.push("");
-    L.push("## Verdicts");
-    VERDICTS.forEach(function (v) { L.push("- **" + v[1] + ":** " + (rv(v[0]) || "-")); });
-    L.push(""); L.push("## Biggest risk"); L.push(rv("risk") || "-");
-    L.push(""); L.push("## What to cut"); L.push(rv("cut") || "-");
-    L.push(""); L.push("## What is missing"); L.push(rv("add") || "-");
-    L.push(""); L.push("## Final instruction"); L.push(rv("final") || "-");
-    L.push(""); L.push("## Week by week");
-    L.push(""); L.push("| Week | Theme | Comment |"); L.push("| --- | --- | --- |");
-    store.db.weeks.forEach(function (w) {
-      var c = rv("w" + w.n);
-      if (c) L.push("| W" + w.n + " | " + w.theme + " | " + c.replace(/\|/g, "/").replace(/\n/g, " ") + " |");
-    });
-    L.push(""); L.push("---"); L.push("Generated from The Grind, by Anjul Sati.");
-    return L.join("\n");
-  }
-  function rv(key) {
-    var r = store.state.review;
-    if (!r) return "";
-    if (key === "risk" || key === "cut" || key === "add" || key === "final") return (r.a && r.a[key]) || "";
-    return (r.v && r.v[key]) || "";
-  }
-
-  function reviewHTML() {
-    var html = '<section id="review"><h2>Review</h2>' +
-      '<p class="lead">For an audit: pick a verdict, comment where you disagree, then download the file and send it back.</p>';
-    html += '<div class="form"><input type="text" id="rvName" placeholder="Reviewer name" value="' + esc(store.state.review.name || "") + '" style="flex:1;min-width:240px"></div>';
-    html += '<div class="grid">' + VERDICTS.map(function (v) {
-      var cur = rv(v[0]);
-      return '<div class="card"><h4>' + esc(v[1]) + '</h4><select data-rk="v:' + v[0] + '" style="width:100%">' +
-        '<option value="">— pick —</option>' +
-        v[2].map(function (o) { return '<option value="' + esc(o) + '"' + (cur === o ? " selected" : "") + ">" + esc(o) + "</option>"; }).join("") +
-        "</select></div>";
-    }).join("") + "</div>";
-    html += [["risk", "Biggest risk", "Be blunt. What breaks first?"],
-             ["cut", "What to cut", "Which weeks are wasted effort?"],
-             ["add", "What is missing", "Anything that isn't here?"],
-             ["final", "Final instruction", "One paragraph to read every Monday."]].map(function (a) {
-      return '<div class="card" style="margin-bottom:14px"><h4>' + esc(a[1]) + "</h4><p>" + esc(a[2]) + "</p>" +
-        '<textarea data-rk="a:' + a[0] + '" rows="3" placeholder="...">' + esc(rv(a[0])) + "</textarea></div>";
-    }).join("");
-    html += "<h3>Week by week</h3><p class=\"dim tiny\">Comment only where you disagree. Empty means approved.</p>";
-    html += '<div class="wklist">' + store.db.weeks.map(function (w) {
-      return '<div class="wkrow"><span class="pill sm">W' + w.n + "</span>" +
-        '<input type="text" data-rk="w:' + w.n + '" placeholder="' + esc(w.theme) + '" value="' + esc(rv("w" + w.n)) + '"></div>';
-    }).join("") + "</div>";
-    html += '<div class="form" style="margin-top:22px"><button id="rvDownload" class="btn solid">Download review .md</button>' +
-      '<button id="rvCopy" class="btn">Copy as text</button>' +
-      '<button id="rvClear" class="btn">Clear</button>' +
-      '<span id="rvStatus" class="dim tiny" style="align-self:center"></span></div></section>';
+    html += "</section>";
     return html;
   }
 
@@ -362,7 +291,6 @@
     parts.push('<a href="#dsa" class="navchip">DSA material</a>');
     parts.push('<a href="#faang" class="navchip">FAANG</a>');
     parts.push('<a href="#links" class="navchip">Links</a>');
-    parts.push('<a href="#review" class="navchip">Review</a>');
     return parts.join("");
   }
 
@@ -380,7 +308,6 @@
     html += dsaHTML();
     html += faangHTML();
     html += resourcesHTML();
-    html += reviewHTML();
 
     document.getElementById("app").innerHTML = html;
     document.getElementById("navchips").innerHTML = navHTML();
@@ -410,7 +337,7 @@
     LAST_DATE: LAST_DATE, TODAY_DAY: TODAY_DAY, FIRST_DATE: FIRST_DATE, ACTIVE_WEEK: ACTIVE_WEEK,
     itemHTML: itemHTML, dayHTML: dayHTML, weekHTML: weekHTML, weekSummaryHTML: weekSummaryHTML,
     overviewHTML: overviewHTML, dsaHTML: dsaHTML, faangHTML: faangHTML,
-    resourcesHTML: resourcesHTML, reviewHTML: reviewHTML, reviewMarkdown: reviewMarkdown,
+    resourcesHTML: resourcesHTML,
     navHTML: navHTML, render: render, refreshHeader: refreshHeader
   };
 })();

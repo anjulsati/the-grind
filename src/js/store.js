@@ -9,7 +9,7 @@
   var D = window.CUDATA;
   var LS_DB = "the-grind-db-v1";
   var LS_STATE = "the-grind-v1";
-  var DB_VERSION = 5;
+  var DB_VERSION = 6;
 
   /* ---------- seed ---------- */
   function seedDB() {
@@ -129,17 +129,16 @@
       var raw = JSON.parse(localStorage.getItem(LS_STATE));
       if (raw && typeof raw === "object") {
         raw.done = raw.done || {};
-        raw.review = raw.review || { v: {}, a: {}, w: {}, name: "" };
         return raw;
       }
     } catch (e) { /* ignore */ }
-    return { done: {}, review: { v: {}, a: {}, w: {}, name: "" } };
+    return { done: {} };
   }
   function saveState() {
     try { localStorage.setItem(LS_STATE, JSON.stringify(state)); } catch (e) { /* ignore */ }
   }
   function resetState() {
-    state = { done: {}, review: { v: {}, a: {}, w: {}, name: "" } };
+    state = { done: {} };
     saveState();
   }
 

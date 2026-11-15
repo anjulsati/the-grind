@@ -14,10 +14,9 @@ Every week and every day has **two boxes**:
 The top of the page is **"Things to do till August 2027"** — the three tracks as editable cards.
 
 ```
-W1-3   16 Nov - 6 Dec    EXAMS        45 min/day
+W1-3   16 Nov - 6 Dec    EXAMS        light
 W4     7 Dec - 13 Dec    TRANSITION   last paper Mon 7th, full block from Tue 8th
 W5-19  14 Dec - 21 Mar    FULL PLAN    2h 45m/day
-W20-22 22 Mar - 18 Apr    SPRINT       repair, 5 mocks, portfolio, 45+ applications
 ```
 
 ---

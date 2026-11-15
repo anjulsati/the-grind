@@ -118,20 +118,6 @@
   });
 
   /* ============================================================
-     REVIEW FIELDS
-     ============================================================ */
-  document.addEventListener("input", function (e) {
-    var el = e.target;
-    if (el.id === "rvName") { store.state.review.name = el.value; store.saveState(); return; }
-    var rk = el.getAttribute && el.getAttribute("data-rk");
-    if (!rk) return;
-    var p = rk.split(":");
-    store.state.review[p[0]] = store.state.review[p[0]] || {};
-    store.state.review[p[0]][p[1]] = el.value;
-    store.saveState();
-  });
-
-  /* ============================================================
      REORDER (▲▼ in edit mode)
      ============================================================ */
   function reorder(id, dir) {
@@ -220,39 +206,10 @@
 
     var wd = t.closest("[data-wday]");
     if (wd) { editor.dayModal(store.dayByDate(wd.getAttribute("data-wday"))); return; }
-
-    /* review */
-    if (t.id === "rvDownload") {
-      var a = document.createElement("a");
-      a.href = URL.createObjectURL(new Blob([ui.reviewMarkdown()], { type: "text/markdown;charset=utf-8" }));
-      a.download = "the-grind-review-" + store.today() + ".md";
-      document.body.appendChild(a); a.click(); document.body.removeChild(a);
-      setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
-      document.getElementById("rvStatus").textContent = "downloaded";
-      return;
-    }
-    if (t.id === "rvCopy") {
-      var txt = ui.reviewMarkdown(), s3 = document.getElementById("rvStatus");
-      function fb() {
-        var ta = document.createElement("textarea"); ta.value = txt;
-        document.body.appendChild(ta); ta.select();
-        try { document.execCommand("copy"); s3.textContent = "copied"; } catch (err) { s3.textContent = "copy failed — use Download"; }
-        document.body.removeChild(ta);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(function () { s3.textContent = "copied"; }, fb);
-      else fb();
-      return;
-    }
-    if (t.id === "rvClear") {
-      if (!confirm("Clear the whole review?")) return;
-      store.state.review = { v: {}, a: {}, w: {}, name: "" };
-      store.saveState(); ui.render();
-      document.getElementById("review").scrollIntoView();
-    }
   });
 
   /* ============================================================
-     IMPORT / RESET / KEYBOARD
+     IMPORT / KEYBOARD
      ============================================================ */
   document.getElementById("importFile").addEventListener("change", function (e) {
     var file = e.target.files && e.target.files[0];
