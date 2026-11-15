@@ -31,7 +31,7 @@
     });
 
     return {
-      v: 1,
+      v: DB_VERSION,
       by: "Anjul Sati",
       seededOn: new Date().toISOString().slice(0, 10),
       weeks: weeks,
@@ -70,11 +70,17 @@
   }
 
   /* ---------- load / save ---------- */
+  var DB_VERSION = 2;
+
   var db = loadDB();
   function loadDB() {
     try {
       var raw = JSON.parse(localStorage.getItem(LS_DB));
-      if (raw && raw.v === 1 && raw.weeks && raw.weeks.length) return raw;
+      if (raw && raw.v === DB_VERSION && raw.weeks && raw.weeks.length) {
+        if (!raw.pillars) raw.pillars = seedPillars();
+        if (!raw.csAreas) raw.csAreas = [];
+        return raw;
+      }
     } catch (e) { /* ignore */ }
     var seeded = seedDB();
     try { localStorage.setItem(LS_DB, JSON.stringify(seeded)); } catch (e) { /* ignore */ }
