@@ -516,7 +516,5 @@
     location.reload();
   });
 
-  document.getElementById("jumpToday").addEventListener("click", function () {});
-
   render();
 })();
