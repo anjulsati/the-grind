@@ -9,7 +9,7 @@
   var D = window.CUDATA;
   var LS_DB = "the-grind-db-v1";
   var LS_STATE = "the-grind-v1";
-  var DB_VERSION = 3;
+  var DB_VERSION = 4;
 
   /* ---------- seed ---------- */
   function seedDB() {
@@ -27,6 +27,26 @@
         pattern: w.pattern || "", pre: w.pre || null, cs: w.cs || "",
         days: days
       };
+    });
+
+    /* day-wise DSA schedule: the video/article always comes before the questions */
+    weeks.forEach(function (w) {
+      if (w.mode === "sprint") return;
+      w.days.forEach(function (d) {
+        var learnIdx = d.items.findIndex(function (i) { return i.type === "watch" || i.type === "theory"; });
+        if (learnIdx > 0) {
+          var l = d.items.splice(learnIdx, 1)[0];
+          d.items.unshift(l);
+        } else if (learnIdx === -1 && !d.revision && d.idx > 0 && d.idx < 6 && w.pre) {
+          d.items.unshift({
+            id: "l" + d.date + "-" + w.n,
+            type: "watch", track: "dsa",
+            title: "Learn first — " + w.pattern,
+            url: w.pre.url, vtitle: w.pre.vtitle, vauthor: w.pre.vauthor,
+            hint: "Same week video — watch the part you need, then the questions below."
+          });
+        }
+      });
     });
 
     return {
@@ -51,17 +71,17 @@
 
   function seedPillars() {
     return [
-      { n: "01", name: "DSA", tag: "The gate. 90% of the interview.", items: [
-        "244 problems, two a day",
+      { n: "01", name: "DSA", tag: "", items: [
+        "Topics & techniques: arrays · hashing · two pointers · sliding window · strings · sorting · binary search · binary search on answer · recursion · backtracking · linked lists · stacks & queues · trees · BST · heaps · greedy · graphs · DP · tries · bits",
         "Striver A2Z to learn · NeetCode 150 to revise",
         "Aditya Verma for DP, recursion, stacks",
         "Timed set every week from W10",
         "Bar: easy under 15 min, medium under 30",
         "Material: LeetCode · Top Interview 150 · CTCI ch 1-6, 17",
-        "All 19 watch-first videos → in DSA — the material"
+        "Day-wise schedule: every day = the video/article first, then that day's questions — built into the boxes below"
       ]},
-      { n: "02", name: "CS Fundamentals", tag: "You'll write this — one shot.", items: [] },
-      { n: "03", name: "DEV", tag: "Being decided.", items: [] }
+      { n: "02", name: "CS Fundamentals", tag: "", items: [] },
+      { n: "03", name: "DEV", tag: "", items: [] }
     ];
   }
 

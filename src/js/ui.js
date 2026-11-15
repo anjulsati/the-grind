@@ -189,7 +189,7 @@
     }).join("");
     var empty = p.items.length ? "" : '<li class="dim" style="list-style:none;margin-left:-18px">Empty — ＋ adds a line</li>';
     return '<div class="card proj"><div class="proj-head"><span class="proj-n">' + esc(p.n) + "</span>" + tools + "</div>" +
-      "<h4>" + esc(p.name) + '</h4><p class="proj-tag">' + esc(p.tag) + '</p><ul class="plist">' + bullets + empty + "</ul></div>";
+      "<h4>" + esc(p.name) + '</h4><ul class="plist">' + bullets + empty + "</ul></div>";
   }
 
   function overviewHTML() {
