@@ -49,7 +49,7 @@
     return new Date(s + "T00:00:00").toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" });
   }
   function typeLabel(t) {
-    return { dsa: "DSA", stretch: "STRETCH", theory: "THEORY", dev: "DEV", project: "PROJECT", career: "CAREER", review: "REVIEW" }[t] || t;
+    return { dsa: "DSA", stretch: "STRETCH", theory: "THEORY", dev: "DEV", project: "PROJECT", career: "CAREER", review: "REVIEW", ai: "AI" }[t] || t;
   }
   function diffLabel(d) { return { E: "easy", M: "med", H: "hard" }[d] || d; }
 

@@ -127,7 +127,7 @@
           hint: "10 minutes at 1.5x. Three lines in your notes afterwards."
         },
         {
-          id: md + "-d", type: "career",
+          id: md + "-d", type: "ai",
           title: mDev[i],
           hint: "10 minutes. This is setup work — it makes December painless."
         },
