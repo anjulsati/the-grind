@@ -5,7 +5,7 @@
   "use strict";
 
   var D = window.CUDATA;
-  var LS = "zero-to-offer-v1";
+  var LS = "the-grind-v1";
   var root = document.getElementById("app");
 
   /* ---------- state ---------- */
@@ -115,7 +115,7 @@
       '</div><span class="day-count">' + dayDone(day) + "/" + day.items.length + "</span></div>" +
       '<div class="day-cols">' +
       colBox("01", "DSA", "dsa", cols.dsa) +
-      colBox("02", "CS", "cs", cols.cs) +
+      colBox("02", "CS Fundamentals", "cs", cols.cs) +
       colBox("03", "DEV", "dev", cols.dev) +
       "</div></article>";
   }
@@ -144,7 +144,7 @@
       });
       return '<div class="wk-sum three">' +
         '<div class="wbox dsa"><div class="wbox-h">01 · DSA</div><div class="wbox-b"><div class="sumline">Re-solving only — cold, timed, out loud.</div><div class="sumline">Bar: medium under 30 min, easy under 15.</div></div></div>' +
-        '<div class="wbox cs"><div class="wbox-h">02 · CS</div><div class="wbox-b">' + (by.cs.length ? by.cs.map(function (x) { return '<div class="sumline">' + x + "</div>"; }).join("") : '<div class="dim">—</div>') + "</div></div>" +
+        '<div class="wbox cs"><div class="wbox-h">02 · CS Fundamentals</div><div class="wbox-b">' + (by.cs.length ? by.cs.map(function (x) { return '<div class="sumline">' + x + "</div>"; }).join("") : '<div class="dim">—</div>') + "</div></div>" +
         '<div class="wbox dev"><div class="wbox-h">03 · DEV</div><div class="wbox-b">' + (by.dev.length ? by.dev.map(function (x) { return '<div class="sumline">' + x + "</div>"; }).join("") : '<div class="dim">—</div>') + "</div></div>" +
         "</div>";
     }
@@ -157,7 +157,7 @@
       '<div class="trow"><span class="sum-k">Day 7</span><div class="sum-v plain">' +
         (w.n >= 10 ? "Timed set: 2 unseen mediums, 60 min" : "Re-solve 3 cold") + "</div></div></div></div>";
 
-    var b2 = '<div class="wbox cs"><div class="wbox-h">02 · CS</div><div class="wbox-b">' +
+    var b2 = '<div class="wbox cs"><div class="wbox-h">02 · CS Fundamentals</div><div class="wbox-b">' +
       '<div class="sum-v">' + w.csTopics.map(cchip).join("") + "</div></div></div>";
 
     var b3 = '<div class="wbox dev"><div class="wbox-h">03 · DEV</div><div class="wbox-b">' +
@@ -201,7 +201,7 @@
       [PROBLEM_COUNT + " problems, two a day", "Striver A2Z to learn · NeetCode 150 to revise", "Aditya Verma for DP, recursion, stacks",
        "Timed set every week from W10", "Bar: easy under 15 min, medium under 30"].map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") +
       "</ul></div>" +
-      '<div class="card proj"><div class="proj-n">02</div><h4>CS</h4><p class="proj-tag">One round of the loop.</p><ul>' +
+      '<div class="card proj"><div class="proj-n">02</div><h4>CS Fundamentals</h4><p class="proj-tag">One round of the loop.</p><ul>' +
       ["6 areas, 30 minutes a day", "Gate Smashers for OS, DBMS, CN", "LeetCode SQL 50 for queries",
        "Java internals and OOP", "AI fundamentals for AI interviews"].map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") +
       "</ul></div>" +
@@ -297,7 +297,7 @@
 
   function reviewMarkdown() {
     var L = [];
-    L.push("# Zero to Offer — review");
+    L.push("# The Grind — review");
     L.push("");
     L.push("**Reviewer:** " + (state.review.name || "(unnamed)"));
     L.push("**Date:** " + iso(new Date()));
@@ -314,7 +314,7 @@
       var c = rv("w", String(w.n));
       if (c) L.push("| W" + w.n + " | " + w.theme + " | " + c.replace(/\|/g, "/").replace(/\n/g, " ") + " |");
     });
-    L.push(""); L.push("---"); L.push("Generated from Zero to Offer.");
+    L.push(""); L.push("---"); L.push("Generated from The Grind.");
     return L.join("\n");
   }
 
@@ -361,7 +361,7 @@
       parts.push('<a href="#w' + w.n + '" class="navchip' + (w.n === ACTIVE_WEEK ? " on" : "") + '" data-nav="' + w.n + '">W' + w.n + "</a>");
     });
     parts.push('<a href="#faang" class="navchip">FAANG</a>');
-    parts.push('<a href="#cs" class="navchip">CS</a>');
+    parts.push('<a href="#cs" class="navchip">CS Fundamentals</a>');
     parts.push('<a href="#ai" class="navchip">AI</a>');
     parts.push('<a href="#links" class="navchip">Links</a>');
     parts.push('<a href="#review" class="navchip">Review</a>');
@@ -471,7 +471,7 @@
 
     if (e.target.id === "rvDownload") {
       var text = reviewMarkdown();
-      var name = "zero-to-offer-review-" + iso(new Date()) + ".md";
+      var name = "the-grind-review-" + iso(new Date()) + ".md";
       var blob = new Blob([text], { type: "text/markdown;charset=utf-8" });
       var url = URL.createObjectURL(blob);
       var a = document.createElement("a");

@@ -140,7 +140,19 @@
     "websockets vs polling": ["WS352jTTkPU", "WebSockets vs Polling vs Server Sent Events", "Piyush Garg"],
     "what happens when you type a url http": ["AlkDbnbv7dk", "What happens when you type a URL into your browser?", "ByteByteGo"],
     "what happens when you type a url in browser": ["AlkDbnbv7dk", "What happens when you type a URL into your browser?", "ByteByteGo"],
-    "what is retrieval augmented generation explained": ["T-D1OfcDW1M", "What is Retrieval-Augmented Generation (RAG)?", "IBM Technology"]
+    "what is retrieval augmented generation explained": ["T-D1OfcDW1M", "What is Retrieval-Augmented Generation (RAG)?", "IBM Technology"],
+    "what is a database explained simply": ["hRulZhTtUTg", "What is a Database?", "IBM Technology"],
+    "database tables rows and columns explained": ["VRylLmD7LBA", "3. SQL Tables, Rows and Columns Explained for Beginners | SQL Tutorial", "ProgramGuru"],
+    "primary key vs foreign key dbms": ["Tp37HXfekNo", "Lec-10: What is Primary Key in DBMS | Primary Key with Examples in Hindi", "Gate Smashers"],
+    "what is sql explained for beginners": ["UOJZTqA5Loc", "What is SQL? Future Career Scope & Resources", "Apna College"],
+    "client server model explained": ["a5CgfS0Y4Uc", "Client Server Architecture in detail", "Learn Then Code"],
+    "what is a process in operating system": ["B0Uq9Mjz4gM", "What is Process in Operating System in Hindi | Operating System - 08", "CS Engineering Gyan"],
+    "threads in operating system explained": ["ITc09gOrqZk", "L-1.11: Process Vs Threads in Operating System", "Gate Smashers"],
+    "cpu scheduling introduction operating system": ["EWkQl0n0w5M", "Introduction to CPU Scheduling", "Neso Academy"],
+    "http protocol explained for beginners": ["qgZiUvV41TI", "HTTP crash course | http Methods | http headers", "Chai aur Code"],
+    "dns explained simply": ["mpQZVYPuDGU", "How a DNS Server (Domain Name System) works.", "PowerCert Animated Videos"],
+    "what is an operating system introduction gate smashers": ["bkSWJJZNgf8", "Lec-0:Operating System Syllabus Discussion for all College/University & Competitive exams (GATE,NET)", "Gate Smashers"],
+    "virtual memory in os gate smashers": ["o2_iCzS9-ZQ", "L-5.19: Virtual Memory | Page fault | Significance of virtual memory | Operating System", "Gate Smashers"]
   };
 
   var SITES = {
@@ -184,6 +196,8 @@
     /* ---------------- EXAM WINDOW ---------------- */
     {
       n: 1, mode: "exam", theme: "Exam window · arrays without pressure",
+      conceptsInDsa: true,
+      csExtra: [C("What is a database?", "what is a database explained simply"), C("Tables, rows, columns", "database tables rows and columns explained"), C("Primary key vs foreign key", "primary key vs foreign key dbms"), C("What is SQL?", "what is sql explained for beginners"), C("SELECT and WHERE", "sql select where tutorial"), C("What is an operating system?", "what is an operating system introduction gate smashers"), C("Client and server", "client server model explained")],
       pattern: "Arrays — the language of every interview",
       pre: { url: "https://www.youtube.com/watch?v=n60Dn0UsbEk", vtitle: "Introduction to Arrays and ArrayList in Java", vauthor: "Kunal Kushwaha" },
       goal: "Stay warm, not productive. 40 min a day, nothing more.",
@@ -219,6 +233,8 @@
     },
     {
       n: 2, mode: "exam", theme: "Exam window · strings and recursion intuition",
+      conceptsInDsa: true,
+      csExtra: [C("What is a process?", "what is a process in operating system"), C("Process vs thread", "process vs thread operating system"), C("CPU scheduling: intro", "cpu scheduling introduction operating system"), C("Virtual memory", "virtual memory in os gate smashers"), C("What is HTTP?", "http protocol explained for beginners"), C("What is DNS?", "dns explained simply"), C("TCP vs UDP", "tcp vs udp difference")],
       pattern: "Strings and two pointers",
       pre: { url: "https://www.youtube.com/watch?v=QzZ7nmouLTI", vtitle: "Two Pointers in 7 minutes | LeetCode Pattern", vauthor: "AlgoMasterIO" },
       goal: "Still 40 min. The streak is the deliverable.",
@@ -1087,17 +1103,21 @@
 
       if (w.mode === "exam") {
         var ep = w.problems[d], ec = w.csTopics[d];
-        items.push({ id: date + "-p", type: "dsa", title: ep.title, url: ep.url, diff: ep.diff,
+        items.push({ id: date + "-p", type: "dsa", track: "dsa", title: ep.title, url: ep.url, diff: ep.diff,
           hint: "10 minutes. Can't crack it? Read the solution, write it once from memory, move on." });
-        items.push({ id: date + "-c", type: "theory", title: w.cs + " — " + ec.label, url: ec.url,
-          vtitle: ec.vtitle, vauthor: ec.vauthor,
+        items.push({ id: date + "-c", type: "theory", track: w.conceptsInDsa ? "dsa" : "cs",
+          title: w.cs + " — " + ec.label, url: ec.url, vtitle: ec.vtitle, vauthor: ec.vauthor,
           hint: "10 minutes at 1.5x, then 3 lines in your notes." });
-        items.push({ id: date + "-ai", type: "ai", title: w.ai[d],
+        if (w.csExtra) {
+          var cf = w.csExtra[d];
+          items.push({ id: date + "-cf", type: "theory", track: "cs",
+            title: "CS Fundamentals — " + cf.label, url: cf.url, vtitle: cf.vtitle, vauthor: cf.vauthor,
+            hint: "10 minutes. One CS topic a day, even during exams." });
+        }
+        items.push({ id: date + "-ai", type: "ai", track: "dev", title: w.ai[d],
           hint: "15 minutes. Setup and first steps only — no rabbit holes during exams." });
-        items.push({ id: date + "-ex", type: "review", track: "cs", title: "One page of revision for tomorrow's paper",
-          hint: "Exams come first. Blank day? Do this one and let the rest go." });
         meta.title = "Day " + (d + 1) + " · light";
-        meta.time = "40 min";
+        meta.time = "45 min";
         meta.light = true;
       }
 
