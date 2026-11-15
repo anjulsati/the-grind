@@ -52,6 +52,8 @@
   function diffLabel(d) { return { E: "easy", M: "med", H: "hard" }[d] || d; }
 
   var DAYS = D.DAYS;
+  var PROBLEM_COUNT = 0;
+  D.WEEKS.forEach(function (w) { if (w.problems) PROBLEM_COUNT += w.problems.length; });
   var LAST_DATE = DAYS[DAYS.length - 1].date;
   var WEEK_MAP = {};
   DAYS.forEach(function (d) { (WEEK_MAP[d.week] = WEEK_MAP[d.week] || []).push(d); });
@@ -158,8 +160,7 @@
   /* ---------- overview ---------- */
   function overviewHTML() {
     var o = overall();
-    var problems = 0, studied = 0;
-    D.WEEKS.forEach(function (w) { if (w.problems) problems += w.problems.length; });
+    var problems = PROBLEM_COUNT;
 
     var html = '<section id="overview">';
     html += '<div class="hero">' +
@@ -265,7 +266,7 @@
   /* ---------- review ---------- */
   var VERDICTS = [
     ["overall", "Overall verdict", ["Keep as is", "Compress to 4 months", "Expand to 5.5-6 months", "Restructure"]],
-    ["dsa", "DSA volume (228 problems)", ["Too little", "About right", "Too much"]],
+    ["dsa", "DSA volume (" + PROBLEM_COUNT + " problems)", ["Too little", "About right", "Too much"]],
     ["cs", "CS depth", ["Too shallow", "About right", "Too deep"]],
     ["ai", "AI load (3 x 45 min/week)", ["Too little", "About right", "Too much - DSA will suffer"]],
     ["exam", "Exam weeks (40 min/day)", ["Too light", "About right", "Too heavy for endsems"]],

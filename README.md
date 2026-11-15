@@ -15,7 +15,7 @@ W5-19  14 Dec - 21 Mar    FULL PLAN   2h 45m/day, DSA + CS + agentic AI
 W20-22 22 Mar - 18 Apr    SPRINT      repair, 5 mocks, portfolio, 45+ applications
 ```
 
-**550 tasks · 228 problems · every problem appears once** (repeats are labelled *re-solve* on purpose).
+**550 tasks · 212 new problems (+16 optional stretch) · every problem appears once** (repeats are labelled *re-solve* on purpose).
 
 ---
 
