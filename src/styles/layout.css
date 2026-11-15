@@ -1,0 +1,35 @@
+/* The Grind — layout: page grid, weeks, days, boxes, tables */
+/* ---------------- layout ---------------- */
+main{max-width:1120px;margin:0 auto;padding:44px 26px 120px}
+h1{font-size:31px;line-height:1.25;margin:0 0 14px;letter-spacing:-.7px;font-weight:680}
+h2{font-size:20px;margin:64px 0 18px;letter-spacing:-.2px;font-weight:650}
+h3{font-size:15px;margin:0 0 4px;font-weight:640}
+p{margin:0 0 14px}
+.lead{color:var(--muted);font-size:15px;max-width:74ch;line-height:1.75}
+.muted{color:var(--muted)}
+.dim{color:var(--dim)}
+code{font-family:var(--mono);font-size:.87em;background:#17212c;border:1px solid var(--line);
+  padding:1px 6px;border-radius:6px;color:#b9e8d2}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ---------------- hero ---------------- */
+.hero{border:1px solid var(--line);border-radius:22px;padding:34px 34px 28px;
+  background:linear-gradient(165deg,#141d28,#0e151d)}
+.hero .kicker{font-family:var(--mono);font-size:11px;letter-spacing:1.6px;text-transform:uppercase;
+  color:var(--accent);margin-bottom:14px}
+.hero .meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:22px}
+.chip{display:inline-flex;align-items:center;font-size:12px;font-weight:600;
+  padding:5px 12px;border-radius:99px;border:1px solid var(--line2);color:var(--muted);background:#141d27}
+.chip.accent{color:var(--accent);border-color:rgba(61,220,151,.3);background:rgba(61,220,151,.07)}
+.chip.info{color:var(--blue);border-color:rgba(95,178,255,.28);background:rgba(95,178,255,.06)}
+
+/* ---------------- phases ---------------- */
+.phases{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(196px,1fr))}
+.phase{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:18px}
+.phase .ph-w{font-family:var(--mono);font-size:11px;letter-spacing:.9px;color:var(--accent);margin-bottom:7px}
+.phase h4{margin:0 0 6px;font-size:14px;font-weight:640}
+.phase p{margin:0;font-size:13px;color:var(--muted);line-height:1.6}
+.phase .ph-t{display:inline-block;margin-top:12px;font-size:11px;font-family:var(--mono);
+  color:var(--dim);border:1px solid var(--line2);padding:2px 8px;border-radius:6px}
+
