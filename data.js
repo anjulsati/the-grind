@@ -1,5 +1,5 @@
 /* ============================================================
-   CU Prep OS v3 — one continuous timeline
+   The Grind — one continuous timeline
    Week 1 = Mon 16 Nov 2026 (endsems) ... Week 22 = 18 Apr 2027
    Every problem appears exactly once across the whole plan.
    ============================================================ */

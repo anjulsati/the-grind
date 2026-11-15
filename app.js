@@ -1,5 +1,5 @@
 /* ============================================================
-   Zero to Offer — single page, no tabs
+   The Grind — single page, no tabs
    ============================================================ */
 (function () {
   "use strict";
