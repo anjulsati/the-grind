@@ -52,13 +52,25 @@
     if (on || strokes.length) raf = requestAnimationFrame(tick);
     else { raf = null; ctx.clearRect(0, 0, window.innerWidth, window.innerHeight); }
   }
-  function start() { size(); if (raf === null) raf = requestAnimationFrame(tick); }
+  function start() { size(); lastScrollY = window.scrollY; if (raf === null) raf = requestAnimationFrame(tick); }
+
+  /* scroll while the pen is on: strokes stay anchored to the content */
+  var lastScrollY = window.scrollY;
+  window.addEventListener("scroll", function () {
+    if (!on) return;
+    var delta = window.scrollY - lastScrollY;
+    lastScrollY = window.scrollY;
+    if (!delta) return;
+    strokes.forEach(function (s) {
+      s.pts.forEach(function (p) { p.y -= delta; });
+    });
+  }, { passive: true });
 
   function setPen(v) {
     on = v;
     document.body.classList.toggle("pen-on", v);
     toggle.textContent = v ? "✕ Done" : "✎ Pen";
-    if (v) start();
+    if (v) { lastScrollY = window.scrollY; start(); }
   }
   function clear() { strokes = []; }
 

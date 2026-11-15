@@ -9,7 +9,7 @@
   var D = window.CUDATA;
   var LS_DB = "the-grind-db-v1";
   var LS_STATE = "the-grind-v1";
-  var DB_VERSION = 4;
+  var DB_VERSION = 5;
 
   /* ---------- seed ---------- */
   function seedDB() {

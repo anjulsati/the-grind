@@ -948,103 +948,94 @@
 
     /* ---------------- SPRINT ---------------- */
     {
-      n: 20, mode: "sprint", theme: "Repair week · fix what the checkpoints exposed",
-      goal: "No new topics. Re-solve what you got wrong.",
-      cs: "Answer bank",
+      n: 20, mode: "sprint", theme: "Repair — re-solve what you got wrong",
+      goal: "No new topics. Cold, timed, out loud.",
       days: [
         { t: "Repair: arrays, hashing, two pointers", items: [
-          { type: "review", title: "Re-solve 6 problems you got wrong in weeks 4-5 — cold", hint: "Deliberate repeats. If it takes 2 minutes because you memorised it, pick another." },
-          { type: "theory", title: "Rewrite your 10 weakest DBMS answers in your own words", hint: "3 lines each. No copy-paste." }
+          { type: "dsa", title: "Re-solve 6 problems you got wrong in these topics — cold, timed" }
         ]},
         { t: "Repair: sliding window, strings", items: [
-          { type: "review", title: "Re-solve 6 problems from weeks 5-6 — cold" },
-          { type: "career", title: "20 applications" }
+          { type: "dsa", title: "Re-solve 6 problems from these topics — cold" },
+          { type: "career", title: "10 applications" }
         ]},
-        { t: "Repair: binary search, matrices", items: [
-          { type: "review", title: "Re-solve 6 problems from weeks 7-8 — cold" },
-          { type: "theory", title: "Rewrite your weakest OS answers" }
+        { t: "Repair: binary search + BS on answer", items: [
+          { type: "dsa", title: "Re-solve 6 problems from these topics — cold" }
         ]},
-        { t: "Repair: recursion, linked lists", items: [
-          { type: "review", title: "Re-solve 6 problems from weeks 9-10 — cold" },
-          { type: "dev", title: "Fix the 3 weakest links in your eval score" }
+        { t: "Repair: recursion, linked lists, stacks, queues", items: [
+          { type: "dsa", title: "Re-solve 6 problems from these topics — cold" }
         ]},
-        { t: "Repair: stacks, trees", items: [
-          { type: "review", title: "Re-solve 6 problems from weeks 11-13 — cold" },
-          { type: "theory", title: "Rewrite your weakest CN answers" }
+        { t: "Repair: trees, heaps, greedy", items: [
+          { type: "dsa", title: "Re-solve 6 problems from these topics — cold" }
         ]},
-        { t: "Repair: heaps, greedy, graphs", items: [
-          { type: "review", title: "Re-solve 6 problems from weeks 14-17 — cold" },
-          { type: "career", title: "Update resume with both projects + eval numbers" }
+        { t: "Repair: graphs, DP", items: [
+          { type: "dsa", title: "Re-solve 6 problems from these topics — cold" },
+          { type: "career", title: "Resume final pass — projects, numbers, one page" }
         ]},
         { t: "Timed test", items: [
-          { type: "review", title: "Full mock test: 3 unseen problems, 90 min, no help" },
-          { type: "review", title: "Log what broke; schedule the repair" }
+          { type: "dsa", title: "3 unseen problems, 90 minutes, no help" },
+          { type: "dsa", title: "Whatever broke here — fix it in the first hour of next week" }
         ]}
       ]
     },
     {
-      n: 21, mode: "sprint", theme: "Mock marathon · five interviews in seven days",
+      n: 21, mode: "sprint", theme: "Mock marathon — five interviews in seven days",
       goal: "Enough reps that the real interview feels familiar.",
-      cs: "Interview mode",
       days: [
         { t: "Mock 1 — DSA", items: [
           { type: "career", title: "Mock interview #1 (Pramp or a senior)" },
-          { type: "review", title: "Re-solve the 2 you fumbled, immediately" }
+          { type: "dsa", title: "Re-solve the 2 you fumbled, immediately" }
         ]},
         { t: "Mock 2 — CS fundamentals", items: [
-          { type: "career", title: "Mock #2 — ask them to grill DBMS / OS / CN" },
-          { type: "theory", title: "20 rapid-fire questions out loud, no notes" }
+          { type: "career", title: "Mock #2 — they grill DBMS / OS / CN" },
+          { type: "dsa", title: "20 rapid-fire answers out loud, no notes" }
         ]},
-        { t: "Mock 3 — project deep dive", items: [
-          { type: "career", title: "Mock #3: 30 minutes only about your agent" },
-          { type: "dev", title: "Write the project story: problem, design, evals, failure modes" }
+        { t: "Mock 3 — everything on your resume", items: [
+          { type: "career", title: "Mock #3 — 30 minutes on everything you claim: projects, CS, strengths" }
         ]},
         { t: "Mock 4 — HR round", items: [
-          { type: "career", title: "Mock #4: HR only" },
-          { type: "career", title: "Final answers to the 5 standard HR questions" }
+          { type: "career", title: "Mock #4 — HR only" },
+          { type: "career", title: "Write your final 5 HR answers: about yourself, why us, weakness, 5-year plan" }
         ]},
         { t: "Mock 5 — full loop", items: [
-          { type: "career", title: "Mock #5: one full loop, end to end" },
+          { type: "career", title: "Mock #5 — one full loop, end to end" },
           { type: "career", title: "20 applications" }
         ]},
         { t: "Gap fixing", items: [
-          { type: "review", title: "Fix the top 3 gaps the mocks exposed — nothing else" }
+          { type: "dsa", title: "Fix the top 3 gaps the mocks exposed — nothing else" }
         ]},
-        { t: "Rest and review", items: [
-          { type: "review", title: "Write the mock retrospective in plan.md" }
+        { t: "Retrospective", items: [
+          { type: "career", title: "Write it in plan.md: what to repeat in the real interview" }
         ]}
       ]
     },
     {
-      n: 22, mode: "sprint", theme: "Ship it · portfolio, contests, handoff",
-      goal: "Everything a recruiter needs to say yes, in one place.",
-      cs: "Final polish",
+      n: 22, mode: "sprint", theme: "Apply at volume",
+      goal: "Everything a recruiter needs to say yes.",
       days: [
         { t: "Portfolio", items: [
-          { type: "career", title: "Resume v5 — 1 page, both projects, live links, numbers" },
-          { type: "dev", title: "GitHub profile README + pinned AI projects with eval scores" },
-          { type: "career", title: "LinkedIn featured: both live demos" }
+          { type: "career", title: "Resume final — 1 page, live links, a number in every bullet" },
+          { type: "career", title: "GitHub profile README + pinned repos" },
+          { type: "career", title: "LinkedIn: featured section + headline fixed" }
         ]},
         { t: "Contest day", items: [
-          { type: "review", title: "Two timed contests back to back (90 min each)" },
-          { type: "review", title: "Upsolve the 2 you couldn't finish" }
+          { type: "dsa", title: "Two timed contests, 90 min each" },
+          { type: "dsa", title: "Upsolve the 2 you couldn't finish" }
         ]},
-        { t: "Project audit", items: [
-          { type: "dev", title: "Both links work, both READMEs complete, both have a demo GIF" },
-          { type: "dev", title: "Try to break your own agent cold — fix one thing" }
+        { t: "Volume day", items: [
+          { type: "career", title: "25 applications + 5 referral DMs to alumni" }
         ]},
-        { t: "Volume", items: [
-          { type: "career", title: "25 applications + 5 referral DMs" },
-          { type: "career", title: "Follow up on everything older than 10 days" }
+        { t: "Follow-up day", items: [
+          { type: "career", title: "Follow up on every application older than 10 days" },
+          { type: "dsa", title: "Fix the 3 weakest interview topics — one hour each" }
         ]},
         { t: "Handoff", items: [
           { type: "career", title: "Write Phase 3 (May → Aug): DP depth, 2 mocks/week, 10 apps/week" }
         ]},
         { t: "Final mock", items: [
-          { type: "career", title: "One final full mock — feel the difference from week 4" }
+          { type: "career", title: "One final full mock — compare against week 4" }
         ]},
-        { t: "Done", items: [
-          { type: "review", title: "Write the 22-week retrospective. Then take a day off." }
+        { t: "Retrospective", items: [
+          { type: "career", title: "22-week retrospective in plan.md — what worked, what to keep" }
         ]}
       ]
     }

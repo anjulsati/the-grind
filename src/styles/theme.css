@@ -21,7 +21,6 @@ body{
     radial-gradient(800px 500px at 98% -4%, rgba(95,178,255,.045), transparent 58%);
   background-attachment:fixed;
 }
-body.pen-on{overflow:hidden}
 
 /* ---------------- header ---------------- */
 .topbar{

@@ -266,12 +266,6 @@
     e.target.value = "";
   });
 
-  document.getElementById("resetBtn").addEventListener("click", function () {
-    if (!confirm("Delete all checkmarks and review notes? The plan itself is untouched.")) return;
-    store.resetState();
-    location.reload();
-  });
-
   document.addEventListener("keydown", function (e) {
     if (e.target.matches("input, textarea, select")) return;
     if (e.key === "p" || e.key === "P") TG.pen.setPen(!TG.pen.isOn());

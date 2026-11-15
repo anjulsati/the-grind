@@ -15,7 +15,7 @@
     document.getElementById("editBtn").textContent = v ? "✓ Done editing" : "Edit plan";
     document.getElementById("editbar").style.display = v ? "flex" : "none";
     TG.ui.render();
-    TG.toast(v ? "Edit mode — drag tasks, ＋ adds, ✎ edits" : "Edit mode off");
+    TG.toast(v ? "Edit mode — drag tasks, ＋ adds, ✎ edits. Changes save automatically." : "Edit mode off");
   }
   function toggle() { set(!editMode); }
 

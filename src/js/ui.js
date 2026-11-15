@@ -326,7 +326,7 @@
 
   function reviewHTML() {
     var html = '<section id="review"><h2>Review</h2>' +
-      '<p class="lead">For an audit: pick a verdict, comment where you disagree, then download the file and send it back. Nothing leaves this browser until you do.</p>';
+      '<p class="lead">For an audit: pick a verdict, comment where you disagree, then download the file and send it back.</p>';
     html += '<div class="form"><input type="text" id="rvName" placeholder="Reviewer name" value="' + esc(store.state.review.name || "") + '" style="flex:1;min-width:240px"></div>';
     html += '<div class="grid">' + VERDICTS.map(function (v) {
       var cur = rv(v[0]);

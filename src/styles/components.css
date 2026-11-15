@@ -169,7 +169,7 @@ footer{max-width:1120px;margin:0 auto;padding:30px 26px;
 .fabbatch{position:fixed;right:24px;bottom:24px;z-index:60;display:flex;gap:10px}
 
 /* ---------------- pen ---------------- */
-#penCanvas{position:fixed;inset:0;z-index:80;display:none;touch-action:none}
+#penCanvas{position:fixed;inset:0;z-index:80;display:none;touch-action:pan-y}
 body.pen-on #penCanvas{display:block}
 body.pen-on{cursor:crosshair}
 .penbar{
