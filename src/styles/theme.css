@@ -10,8 +10,8 @@
   --panel2:#0d1319;
   --panel3:#151d28;
   --ink:#dfe9f3;
-  --ink2:#a6b8c9;
-  --ink3:#74889c;
+  --ink2:#c3d0dc;
+  --ink3:#97aabb;
   --line:#1a2530;
   --line2:#263645;
   --green:#00e5a0;
@@ -43,7 +43,7 @@ body{
   color:var(--ink);
   font-family:var(--sans);
   font-size:18px;
-  line-height:1.6;
+  line-height:1.7;
   background-color:var(--bg);
   background-image:
     radial-gradient(ellipse 800px 400px at 10% -5%, rgba(0,229,160,.04), transparent),
@@ -76,12 +76,12 @@ body{
   font-size:20px;font-weight:800;letter-spacing:-.3px;color:var(--green);
   font-family:var(--mono);
 }
-.brand .sub{font:500 13px/1.5 var(--mono);color:var(--ink3);letter-spacing:.2px}
+.brand .sub{font:500 15px/1.5 var(--mono);color:var(--ink3);letter-spacing:.2px}
 
 .todaybox{min-width:280px;max-width:400px;flex:1}
-.tb-line{display:flex;gap:10px;align-items:baseline;font-size:14px;color:var(--ink2)}
+.tb-line{display:flex;gap:10px;align-items:baseline;font-size:15px;color:var(--ink2)}
 .todaybox .tb-line:first-child{
-  font:700 17px var(--mono);color:var(--green);letter-spacing:-.2px;margin-bottom:6px;
+  font:700 18px var(--mono);color:var(--green);letter-spacing:-.2px;margin-bottom:6px;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 .todaybox .tb-line:last-child{justify-content:space-between}
@@ -95,7 +95,7 @@ body{
   background:linear-gradient(90deg,var(--green),var(--cyan));
   transition:width .3s ease;
 }
-.tiny{font-size:13px;font-family:var(--mono)}
+.tiny{font-size:15px;font-family:var(--mono)}
 .countdown{font-family:var(--mono);color:var(--ink3)}
 
 /* ---------------- nav: terminal tabs ---------------- */
@@ -110,7 +110,7 @@ body{
 }
 .navchips::-webkit-scrollbar{display:none}
 .navchip{
-  flex:none;font:600 14px var(--mono);text-decoration:none;
+  flex:none;font:600 15px var(--mono);text-decoration:none;
   color:var(--ink3);padding:8px 12px;border-bottom:2px solid transparent;
   transition:.12s;letter-spacing:.2px;
 }
@@ -119,7 +119,7 @@ body{
 
 /* ---------------- buttons: IDE style ---------------- */
 .btn{
-  font-family:var(--mono);font-size:14px;font-weight:600;
+  font-family:var(--mono);font-size:15px;font-weight:600;
   color:var(--ink2);background:var(--panel);
   border:1px solid var(--line2);border-radius:var(--r2);
   padding:8px 15px;cursor:pointer;white-space:nowrap;
@@ -134,7 +134,7 @@ body{
 .fab{
   position:fixed;right:20px;bottom:20px;z-index:60;
   width:38px;height:38px;border-radius:var(--r);padding:0;
-  font-size:14px;
+  font-size:15px;
   background:var(--panel);border:1px solid var(--line2);color:var(--ink3);
   box-shadow:0 4px 20px rgba(0,0,0,.5);
 }
