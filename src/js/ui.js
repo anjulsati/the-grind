@@ -104,11 +104,10 @@
       (day.time ? '<span class="day-date">' + esc(day.time) + "</span>" : "") +
       '</div><span class="day-wrap">' + wtools +
       '<span class="day-count">' + dayDone(day) + "/" + day.items.length + "</span></span></div>" +
-      '<div class="day-cols">' +
+      '<div class="day-cols single">' +
       '<div class="dcol dsa" data-boxday="' + day.date + '" data-boxtrack="dsa"><div class="dcol-h"><span class="dnum">01</span>DSA' + addBtn(day, "dsa") + "</div>" +
       (items.length ? '<ul class="items">' + items.join("") + "</ul>" : '<div class="dempty">Nothing here — ＋ to add</div>') + "</div>" +
-      '<div class="dcol dev" data-boxday="' + day.date + '" data-boxtrack="dev"><div class="dcol-h"><span class="dnum">02</span>DEV' + addBtn(day, "dev") + "</div>" +
-      "</div></div></article>";
+      '</div></article>';
   }
   function addBtn(day, track) {
     return '<button class="addbtn" data-add="' + day.date + '" data-track="' + track + '" title="Add">＋</button>';
@@ -144,10 +143,7 @@
       row("Day 7", '<span class="plain">' + (w.mode === "sprint" ? "Consolidation" : (w.n >= 10 ? "Timed set: 2 unseen mediums, 60 min" : "Re-solve cold")) + "</span>") +
       "</div></div>";
 
-    var b2 = '<div class="wbox dev"><div class="wbox-h">02 · DEV</div><div class="wbox-b">' +
-      '<div class="dim">Empty — ＋ adds straight into the days.</div></div></div>';
-
-    return '<div class="wk-sum two">' + b1 + b2 + "</div>";
+    return '<div class="wk-sum single">' + b1 + "</div>";
   }
   function pchip(t, d) {
     return '<span class="pchip ' + (d || "") + '">' + esc(t) + (d ? '<span class="d">' + diffLabel(d) + "</span>" : "") + "</span>";
