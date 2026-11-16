@@ -83,6 +83,7 @@
       el.style.left = note.x + "px";
       el.style.top = note.y + "px";
       el.style.width = "280px";
+      el.style.height = "auto";
       el.classList.add("minimized");
     } else {
       el.innerHTML =
