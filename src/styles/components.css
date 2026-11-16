@@ -218,7 +218,8 @@ body.pen-on .penbar{display:flex}
   font:700 10px var(--mono);color:var(--bg);background:var(--green);
   border-radius:50%;width:20px;height:20px;display:grid;place-items:center;flex:none;
 }
-.sn-avatar[data-author="Reviewer"]{background:var(--blue)}
+.sn-avatar[data-author="Anurag"]{background:var(--blue)}
+.sn-avatar[data-author="Anjul Sati"]{background:var(--green)}
 .sn-mini-text{font-size:11px;color:var(--ink2);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sn-mini-meta{font:500 9px var(--mono);color:var(--ink3);white-space:nowrap}
 .sn-expand,.sn-close{
@@ -315,3 +316,39 @@ body.pen-on .penbar{display:flex}
 }
 .np-create:hover{background:var(--green);color:var(--bg)}
 .np-count{font:500 10px var(--mono);color:var(--ink3);text-align:center;margin-top:8px}
+
+/* ---------------- revision tracker ---------------- */
+.rev-btn{
+  font:700 10px var(--mono);color:var(--ink3);
+  background:var(--panel3);border:1px solid var(--line2);
+  border-radius:50%;width:26px;height:26px;
+  display:grid;place-items:center;cursor:pointer;flex:none;
+  transition:.12s;font-family:var(--mono);
+}
+.rev-btn:hover{color:var(--green);border-color:var(--green);background:var(--green-dim)}
+.rev-btn.has-revs{color:var(--green);border-color:var(--green);background:var(--green-dim)}
+.rev-panel{
+  position:fixed;z-index:160;width:270px;
+  background:var(--panel);border:1px solid var(--line2);border-radius:var(--r);
+  box-shadow:0 12px 50px rgba(0,0,0,.6);
+}
+.rp-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 14px;border-bottom:1px solid var(--line);
+}
+.rp-head b{font-size:12px;color:var(--ink);font-weight:700}
+.rp-body{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.rp-empty{font-size:11.5px;color:var(--ink3);font-style:italic;line-height:1.6}
+.rp-entry{
+  display:flex;align-items:center;gap:10px;
+  padding:7px 10px;border-radius:var(--r2);
+  background:var(--panel2);border:1px solid var(--line);
+}
+.rp-num{font:700 10px var(--mono);color:var(--green);flex:none;min-width:28px}
+.rp-date{font:500 11.5px var(--mono);color:var(--ink2);flex:1}
+.rp-add{
+  width:100%;background:var(--green-dim);border:1px solid var(--green);
+  color:var(--green);font:700 11.5px var(--mono);padding:7px;
+  border-radius:var(--r2);cursor:pointer;transition:.12s;
+}
+.rp-add:hover{background:var(--green);color:var(--bg)}

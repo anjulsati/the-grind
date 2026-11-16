@@ -7,7 +7,7 @@
   "use strict";
 
   var LS_KEY = "the-grind-notes-v1";
-  var authors = ["Anjul Sati", "Reviewer"];
+  var authors = ["Anjul Sati", "Anurag"];
   var noteCounter = 0;
   var notes = load();
   var activeDrag = null;

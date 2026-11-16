@@ -197,10 +197,11 @@ td.num{font-family:var(--mono);font-weight:600;color:var(--green);text-align:rig
   transition:.12s;
 }
 .item .go:hover{color:var(--cyan);border-color:var(--cyan);background:var(--blue-dim)}
-.item.done .title{color:var(--ink3);text-decoration:line-through;text-decoration-color:var(--green)}
-.item.done .title a{color:var(--ink3)}
-.item.done .hint,.item.done .vid{opacity:.4}
-.item.done .go{opacity:.2}
+.item.done .title{color:var(--ink2);text-decoration:line-through;text-decoration-color:var(--green)}
+.item.done .title a{color:var(--ink2)}
+.item.done .hint{color:var(--ink3)}
+.item.done .vid{color:var(--ink3)}
+.item.done .badge{opacity:.6}
 
 .badge{
   font:700 8.5px var(--mono);letter-spacing:.4px;

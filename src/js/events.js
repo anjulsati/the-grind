@@ -132,6 +132,81 @@
   }
 
   /* ============================================================
+     REVISION TRACKER
+     ============================================================ */
+  function esc(s) {
+    return String(s || "").replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function openRevisionPanel(itemId, anchorEl) {
+    var f = store.findItem(itemId);
+    if (!f) return;
+    var item = f.item;
+    item.revisions = item.revisions || [];
+
+    /* remove existing panel */
+    var old = document.getElementById("revPanel");
+    if (old) { old.remove(); return; }
+
+    var panel = document.createElement("div");
+    panel.id = "revPanel";
+    panel.className = "rev-panel";
+
+    var html = '<div class="rp-head"><b>' + esc(item.title.slice(0, 40)) + '</b><button class="tbtn" id="rpClose">✕</button></div>';
+    html += '<div class="rp-body">';
+    if (item.revisions.length === 0) {
+      html += '<div class="rp-empty">No revisions yet. Tap ＋ each time you re-solve this problem.</div>';
+    } else {
+      item.revisions.forEach(function (r, i) {
+        var label = item.revisions.length === 1 ? "1st revision" :
+          (i === 0 ? "1st revision" : ordinal(i + 1) + " revision");
+        html += '<div class="rp-entry"><span class="rp-num">' + ordinal(i + 1) + '</span><span class="rp-date">' + esc(r) + '</span></div>';
+      });
+    }
+    html += '<button class="rp-add" id="rpAdd">＋ Add revision</button>';
+    html += "</div>";
+
+    panel.innerHTML = html;
+    document.body.appendChild(panel);
+
+    /* position near the button */
+    var rect = anchorEl.getBoundingClientRect();
+    var px = Math.min(rect.left - 10, window.innerWidth - 280);
+    var py = rect.bottom + 6;
+    if (py + 200 > window.innerHeight) py = rect.top - 210;
+    panel.style.left = Math.max(10, px) + "px";
+    panel.style.top = Math.max(10, py) + "px";
+
+    document.getElementById("rpClose").addEventListener("click", function () { panel.remove(); });
+    document.getElementById("rpAdd").addEventListener("click", function () {
+      var d = new Date();
+      var stamp = d.toLocaleDateString("en-IN", { day: "numeric", month: "short" }) +
+        " · " + d.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
+      item.revisions.push(stamp);
+      store.saveDB();
+      panel.remove();
+      TG.ui.render();
+      TG.toast(ordinal(item.revisions.length) + " revision logged — " + stamp);
+    });
+
+    /* close on outside click */
+    setTimeout(function () {
+      document.addEventListener("click", function close(e) {
+        if (!panel.contains(e.target) && e.target !== anchorEl) {
+          panel.remove();
+          document.removeEventListener("click", close);
+        }
+      });
+    }, 10);
+  }
+
+  function ordinal(n) {
+    var s = ["th", "st", "nd", "rd"], v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+  }
+
+  /* ============================================================
      CLICKS
      ============================================================ */
   document.addEventListener("click", function (e) {
@@ -164,6 +239,10 @@
     }
     if (t.id === "exportBtn") { store.exportDB(); TG.toast("Plan exported as JSON"); return; }
     if (t.id === "importBtn") { document.getElementById("importFile").click(); return; }
+
+    /* revision tracker */
+    var rev = t.closest("[data-rev]");
+    if (rev) { openRevisionPanel(rev.getAttribute("data-rev"), rev); return; }
 
     /* edit-mode actions */
     var up = t.closest("[data-up]");

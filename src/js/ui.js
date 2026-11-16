@@ -70,6 +70,13 @@
     var vid = item.vtitle
       ? '<p class="vid">▶ ' + (item.vauthor ? "<b>" + esc(item.vauthor) + "</b> · " : "") + esc(item.vtitle) + "</p>"
       : "";
+    var revisions = item.revisions || [];
+    var revCount = revisions.length;
+    var revBtn = "";
+    if (item.type === "dsa" || item.type === "stretch") {
+      revBtn = '<button class="rev-btn' + (revCount ? ' has-revs' : '') + '" data-rev="' + item.id + '" title="Revision tracker">' +
+        (revCount ? '↻' + revCount : '↻') + '</button>';
+    }
     var actions;
     if (TG.editor.isOn()) {
       actions = '<span class="itools">' +
@@ -84,7 +91,7 @@
       '<span class="grip" title="Drag to reorder or move to another day">⠿</span>' +
       '<input type="checkbox" data-id="' + item.id + '"' + (done ? " checked" : "") + ' aria-label="' + esc(item.title) + '">' +
       '<div class="body"><div class="title"><span class="badge ' + item.type + '">' + typeLabel(item.type) + "</span>" + title + diff + prioTag(item.priority) + "</div>" + vid + hint + "</div>" +
-      actions + "</li>";
+      revBtn + actions + "</li>";
   }
 
   function dayHTML(day) {
