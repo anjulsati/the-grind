@@ -384,3 +384,12 @@ body.pen-on .penbar{display:flex}
 .sn-header .sn-author{font-size:13px}
 .sn-header .sn-date{font-size:11px}
 .sn-footer{padding-right:26px}
+
+/* ---------------- notes pinned to a day ---------------- */
+.day{position:relative}
+.wk{overflow:visible}
+.wk-head{border-radius:var(--r) var(--r) 0 0}
+.wk:not(.open) .wk-head{border-radius:var(--r)}
+.wk-body{border-radius:0 0 var(--r) var(--r)}
+.sticky-note{z-index:40}
+.sticky-note.pinned{box-shadow:0 8px 30px rgba(0,0,0,.55), 0 0 0 1px rgba(255,184,77,.25)}

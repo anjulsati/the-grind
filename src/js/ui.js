@@ -207,6 +207,7 @@
     document.getElementById("navchips").innerHTML = navHTML();
     refreshHeader();
     window.scrollTo(0, y);
+    if (window.TG && TG.notes) TG.notes.renderAll();
   }
 
   function refreshHeader() {

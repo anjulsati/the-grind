@@ -39,6 +39,22 @@
   /* ============================================================
      CREATE
      ============================================================ */
+  /* coordinates: a note is either on the page (day = null, x/y page px)
+     or pinned inside a day (day = "YYYY-MM-DD", x/y relative to that day) */
+  function dayEl(date) { return date ? document.getElementById("d-" + date) : null; }
+  function toLocal(day, cx, cy) {
+    var c = dayEl(day);
+    if (!c) return { x: cx + window.scrollX, y: cy + window.scrollY };
+    var r = c.getBoundingClientRect();
+    return { x: cx - r.left, y: cy - r.top };
+  }
+  function toClient(note) {
+    var c = dayEl(note.day);
+    if (!c) return { x: note.x - window.scrollX, y: note.y - window.scrollY };
+    var r = c.getBoundingClientRect();
+    return { x: r.left + note.x, y: r.top + note.y };
+  }
+
   function createNote(x, y, author) {
     var id = uid();
     var note = {
@@ -46,6 +62,7 @@
       author: author || authors[0],
       created: now(),
       updated: now(),
+      day: null,
       x: (x || window.innerWidth / 2 - 180) + window.scrollX + (Math.random() - 0.5) * 100,
       y: (y || window.innerHeight / 2 - 150) + window.scrollY + (Math.random() - 0.5) * 80,
       w: 380,
@@ -68,8 +85,10 @@
       el = document.createElement("div");
       el.className = "sticky-note";
       el.id = "note-" + note.id;
-      document.body.appendChild(el);
     }
+    var host = dayEl(note.day) || document.body;
+    if (el.parentNode !== host) host.appendChild(el);
+    el.classList.toggle("pinned", host !== document.body);
 
     if (note.minimized) {
       el.innerHTML =
@@ -222,20 +241,39 @@
 
     grip.addEventListener("mousedown", function (e) {
       e.preventDefault();
-      var sx = (e.clientX + window.scrollX) - note.x;
-      var sy = (e.clientY + window.scrollY) - note.y;
+      var p0 = toLocal(note.day, e.clientX, e.clientY);
+      var sx = p0.x - note.x;
+      var sy = p0.y - note.y;
       grip.style.cursor = "grabbing";
 
       function move(ev) {
-        note.x = Math.max(0, ev.clientX + window.scrollX - sx);
-        note.y = Math.max(0, ev.clientY + window.scrollY - sy);
+        var p = toLocal(note.day, ev.clientX, ev.clientY);
+        note.x = Math.max(0, p.x - sx);
+        note.y = Math.max(0, p.y - sy);
         el.style.left = note.x + "px";
         el.style.top = note.y + "px";
       }
-      function up() {
+      function up(ev) {
         document.removeEventListener("mousemove", move);
         document.removeEventListener("mouseup", up);
         grip.style.cursor = "grab";
+
+        /* where was the note under the pointer? */
+        var at = toClient(note);
+        el.style.display = "none";
+        var under = document.elementFromPoint(ev.clientX, ev.clientY);
+        el.style.display = "";
+        var target = under && under.closest ? under.closest(".day") : null;
+        var newDay = target ? target.id.replace("d-", "") : null;
+
+        if (newDay !== note.day) {
+          var keep = at;
+          note.day = newDay;
+          var local = toLocal(newDay, keep.x, keep.y);
+          note.x = Math.max(0, local.x);
+          note.y = Math.max(0, local.y);
+          renderNote(note);
+        }
         save();
       }
       document.addEventListener("mousemove", move);
