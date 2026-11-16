@@ -175,8 +175,8 @@
 
     grip.addEventListener("mousedown", function (e) {
       e.preventDefault();
-      var sx = e.clientX - note.x;
-      var sy = e.clientY - note.y;
+      var sx = (e.clientX + window.scrollX) - note.x;
+      var sy = (e.clientY + window.scrollY) - note.y;
       grip.style.cursor = "grabbing";
 
       function move(ev) {
@@ -244,7 +244,7 @@
       '<div class="np-body">' +
         '<div class="np-author">' +
           '<span>Creating as:</span>' +
-          '<select id="npAuthor"><option>Anjul Sati</option><option>Reviewer</option></select>' +
+          '<select id="npAuthor"><option>Anjul Sati</option><option>Anurag</option></select>' +
         "</div>" +
         '<button id="npCreate" class="np-create">＋ New note</button>' +
         '<div class="np-count">' + notes.length + " note" + (notes.length !== 1 ? "s" : "") + " on the page</div>" +
