@@ -43,7 +43,7 @@
 
   /* sparkle particles */
   function spawnSparkle(x, y) {
-    var n = 3 + Math.floor(Math.random() * 4);
+    var n = 5 + Math.floor(Math.random() * 6);
     for (var i = 0; i < n; i++) {
       sparks.push({
         x: x + (Math.random() - 0.5) * 30,
@@ -51,8 +51,8 @@
         vx: (Math.random() - 0.5) * 1.5,
         vy: (Math.random() - 0.5) * 1.5 - 0.5,
         life: 1,
-        decay: 0.008 + Math.random() * 0.012,
-        size: 2 + Math.random() * 4,
+        decay: 0.005 + Math.random() * 0.008,
+        size: 2.5 + Math.random() * 5,
         hue: Math.random() > 0.6 ? "77,184,255" : "0,229,160"
       });
     }
@@ -60,7 +60,7 @@
 
   document.addEventListener("mousemove", function (e) {
     var now = performance.now();
-    if (now - lastSpawn > 25) {
+    if (now - lastSpawn > 15) {
       lastSpawn = now;
       spawnSparkle(e.clientX, e.clientY);
     }
