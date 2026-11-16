@@ -360,3 +360,27 @@ body.pen-on .penbar{display:flex}
 }
 .rp-edit:hover{color:var(--green);border-color:var(--green)}
 .rp-del:hover{color:var(--red);border-color:var(--red)}
+
+/* ---------------- notes v2: minimised highlight, resizable, text size ---------------- */
+.sticky-note.minimized{
+  background:#1a1f0e;border:1px solid rgba(255,184,77,.45);
+  box-shadow:0 0 16px -4px rgba(255,184,77,.2);
+}
+.sticky-note.minimized .sn-mini-text{color:var(--ink)}
+.sticky-note:not(.minimized){display:flex;flex-direction:column;min-width:280px;min-height:200px}
+.sticky-note .sn-body{flex:1;min-height:120px;max-height:none;overflow-y:auto}
+.sn-resize{
+  position:absolute;right:0;bottom:0;width:20px;height:20px;cursor:nwse-resize;z-index:2;
+  background:linear-gradient(135deg,transparent 50%,rgba(255,184,77,.7) 50%);
+  border-bottom-right-radius:var(--r);
+}
+.sn-resize:hover{background:linear-gradient(135deg,transparent 50%,var(--amber) 50%)}
+.sn-fs{
+  background:transparent;border:1px solid var(--line2);color:var(--ink2);cursor:pointer;
+  font:700 12px var(--mono);padding:2px 8px;border-radius:3px;transition:.1s;
+}
+.sn-fs:hover{color:var(--amber);border-color:var(--amber);background:rgba(255,184,77,.08)}
+.sn-toolbar .sn-fmt{font-size:14px;padding:3px 8px}
+.sn-header .sn-author{font-size:13px}
+.sn-header .sn-date{font-size:11px}
+.sn-footer{padding-right:26px}

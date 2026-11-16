@@ -16,7 +16,12 @@
   function load() {
     try {
       var raw = JSON.parse(localStorage.getItem(LS_KEY));
-      return Array.isArray(raw) ? raw : [];
+      if (!Array.isArray(raw)) return [];
+      raw.forEach(function (n) {
+        if (n.author === "Anjul Sati") n.author = "Anjul";
+        if (n.author === "Reviewer") n.author = "Anurag";
+      });
+      return raw;
     } catch (e) { return []; }
   }
   function save() {
@@ -106,8 +111,12 @@
           '<button class="sn-fmt" data-cmd="insertHorizontalRule" title="Divider">─</button>' +
           '<span class="sn-sep"></span>' +
           '<button class="sn-fmt" data-insert-checkbox title="Checkbox">☑</button>' +
+          '<span class="sn-sep"></span>' +
+          '<button class="sn-fs" data-fs="-1" title="Smaller text">A−</button>' +
+          '<button class="sn-fs" data-fs="1" title="Bigger text">A+</button>' +
         "</div>" +
-        '<div class="sn-body" contenteditable="true" data-nid="' + note.id + '" data-placeholder="Write a note… paste links, add checkboxes, format with the toolbar above…">' + note.html + "</div>" +
+        '<div class="sn-body" style="font-size:' + (note.fs || 14) + 'px" contenteditable="true" data-nid="' + note.id + '" data-placeholder="Write a note… paste links, add checkboxes, format with the toolbar above…">' + note.html + "</div>" +
+        '<div class="sn-resize" title="Drag to resize"></div>' +
         '<div class="sn-footer">' +
           '<span class="sn-updated">Updated ' + esc(note.updated) + "</span>" +
         "</div>";
@@ -115,6 +124,7 @@
       el.style.top = note.y + "px";
       el.style.width = note.w + "px";
       el.classList.remove("minimized");
+      el.style.height = note.h ? note.h + "px" : "auto";
 
       /* wire contenteditable save */
       var body = el.querySelector(".sn-body");
@@ -132,7 +142,8 @@
         btn.addEventListener("click", function (e) {
           e.preventDefault();
           body.focus();
-          var cmd = btn.getAttribute("data-cmd");
+          var cmd = btn.getAttribute("data-cmd") || (btn.hasAttribute("data-unlink") ? "unlink" : "");
+          if (!cmd && !btn.hasAttribute("data-insert-checkbox")) return;
           if (btn.hasAttribute("data-insert-checkbox")) {
             document.execCommand("insertHTML", false,
               '<div class="sn-check"><input type="checkbox"><span> </span></div>');
@@ -151,8 +162,43 @@
         });
       });
     }
+    wireExtras(el, note);
     attachDrag(el, note);
     attachControls(el, note);
+  }
+
+  function wireExtras(el, note) {
+    if (note.minimized) return;
+    var body = el.querySelector(".sn-body");
+
+    el.querySelectorAll(".sn-fs").forEach(function (b) {
+      b.addEventListener("mousedown", function (e) { e.preventDefault(); });
+      b.addEventListener("click", function () {
+        note.fs = Math.max(10, Math.min(28, (note.fs || 14) + Number(b.getAttribute("data-fs"))));
+        body.style.fontSize = note.fs + "px";
+        save();
+      });
+    });
+
+    var rz = el.querySelector(".sn-resize");
+    if (rz) rz.addEventListener("mousedown", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var sx = e.clientX, sy = e.clientY, sw = el.offsetWidth, sh = el.offsetHeight;
+      function move(ev) {
+        note.w = Math.max(280, Math.min(window.innerWidth - 40, sw + ev.clientX - sx));
+        note.h = Math.max(200, sh + ev.clientY - sy);
+        el.style.width = note.w + "px";
+        el.style.height = note.h + "px";
+      }
+      function up() {
+        document.removeEventListener("mousemove", move);
+        document.removeEventListener("mouseup", up);
+        save();
+      }
+      document.addEventListener("mousemove", move);
+      document.addEventListener("mouseup", up);
+    });
   }
 
   function stripHtml(html) {
