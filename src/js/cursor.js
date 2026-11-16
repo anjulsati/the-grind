@@ -43,16 +43,16 @@
 
   /* sparkle particles */
   function spawnSparkle(x, y) {
-    var n = 5 + Math.floor(Math.random() * 6);
+    var n = 1 + Math.floor(Math.random() * 2);
     for (var i = 0; i < n; i++) {
       sparks.push({
         x: x + (Math.random() - 0.5) * 30,
         y: y + (Math.random() - 0.5) * 30,
-        vx: (Math.random() - 0.5) * 1.5,
-        vy: (Math.random() - 0.5) * 1.5 - 0.5,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: (Math.random() - 0.5) * 0.6 - 0.2,
         life: 1,
-        decay: 0.005 + Math.random() * 0.008,
-        size: 2.5 + Math.random() * 5,
+        decay: 0.02 + Math.random() * 0.015,
+        size: 1 + Math.random() * 1.5,
         hue: Math.random() > 0.6 ? "77,184,255" : "0,229,160"
       });
     }
@@ -60,7 +60,7 @@
 
   document.addEventListener("mousemove", function (e) {
     var now = performance.now();
-    if (now - lastSpawn > 15) {
+    if (now - lastSpawn > 80) {
       lastSpawn = now;
       spawnSparkle(e.clientX, e.clientY);
     }
@@ -88,14 +88,11 @@
       var alpha = s.life * 0.9;
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.size * s.life, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(" + s.hue + "," + alpha + ")";
-      ctx.shadowBlur = 8;
-      ctx.shadowColor = "rgba(" + s.hue + "," + alpha + ")";
+      ctx.fillStyle = "rgba(" + s.hue + "," + alpha * 0.4 + ")";
       ctx.fill();
       keep.push(s);
     }
     sparks = keep;
-    ctx.shadowBlur = 0;
 
     raf = requestAnimationFrame(tick);
   }

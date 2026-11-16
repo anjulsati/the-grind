@@ -190,9 +190,9 @@ body.pen-on .penbar{display:flex}
 /* ---------------- cursor glow + sparkles ---------------- */
 #cursorGlow{
   position:fixed;left:-100px;top:-100px;z-index:200;
-  width:450px;height:450px;border-radius:50%;
+  width:200px;height:200px;border-radius:50%;
   pointer-events:none;
-  background:radial-gradient(circle, rgba(0,229,160,.18) 0%, rgba(0,229,160,.07) 40%, transparent 70%);
+  background:radial-gradient(circle, rgba(0,229,160,.05) 0%, rgba(0,229,160,.02) 40%, transparent 70%);
   opacity:0;transition:opacity .3s;
   mix-blend-mode:screen;
 }
