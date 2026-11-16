@@ -179,87 +179,11 @@
   /* ============================================================
      OVERVIEW — things to do till the plan ends (April 2027)
      ============================================================ */
-  function pillarCard(p, i) {
-    var tools = '<span class="ptools">' +
-      '<button class="addbtn" data-pillaradd="' + i + '" title="Add a line">＋</button>' +
-      '<button class="tbtn" data-editpillar="' + i + '" title="Edit ' + esc(p.name) + '">✎</button></span>';
-    var bullets = p.items.map(function (x, j) {
-      return '<li class="pbullet">' + esc(x) +
-        '<button class="bx" data-rmbullet="' + i + ":" + j + '" title="Remove">✕</button></li>';
-    }).join("");
-    var empty = p.items.length ? "" : '<li class="dim" style="list-style:none;margin-left:-18px">Empty — ＋ adds a line</li>';
-    return '<div class="card proj"><div class="proj-head"><span class="proj-n">' + esc(p.n) + "</span>" + tools + "</div>" +
-      "<h4>" + esc(p.name) + '</h4><ul class="plist">' + bullets + empty + "</ul></div>";
-  }
-
-  function overviewHTML() {
-    var html = '<section id="overview">';
-    html += '<h2>Things to do till ' + monthYear(LAST_DATE) + '</h2>';
-    html += '<div class="grid three">' + store.db.pillars.map(pillarCard).join("") + "</div>";
-
-    html += "<h2>All the weeks</h2>";
-    html += '<div class="tablewrap"><table><thead><tr><th>Week</th><th>Dates</th><th>Theme</th><th>Problems</th></tr></thead><tbody>' +
-      store.db.weeks.map(function (w) {
-        var probs = store.dedupe(w.days.reduce(function (a, d) {
-          return a.concat(d.items.filter(function (i) { return i.type === "dsa"; }).map(function (i) { return i.title; }));
-        }, []));
-        return '<tr class="idxrow" data-goto="w' + w.n + '">' +
-          '<td><span class="pill sm">W' + w.n + "</span></td>" +
-          '<td class="dim">' + shortDate(w.days[0].date) + " – " + shortDate(w.days[6].date) + "</td>" +
-          "<td>" + esc(w.theme) + (w.mode === "exam" ? ' <span class="wtag exam" style="font-size:9px;padding:1px 6px">EXAMS</span>' : "") + "</td>" +
-          '<td class="num">' + probs.length + "</td></tr>";
-      }).join("") + "</tbody></table></div>";
-
-    html += "</section>";
-    return html;
-  }
-
-  /* ============================================================
-     DSA MATERIAL
-     ============================================================ */
-  function dsaHTML() {
-    var html = '<section id="dsa"><h2>DSA — the material</h2>' +
-      '<p class="lead">One video per pattern, watched before the week starts. Picked from what the Indian prep community actually recommends, then verified link by link.</p>';
-
-    html += '<h3>The watch-first list</h3><div class="tablewrap"><table><thead><tr><th>Week</th><th>Pattern</th><th>Watch before the week</th></tr></thead><tbody>' +
-      store.db.weeks.filter(function (w) { return w.pre; }).map(function (w) {
-        return "<tr><td><span class=\"pill sm\">W" + w.n + "</span></td><td>" + esc(w.pattern) + "</td>" +
-          '<td><a href="' + w.pre.url + '" target="_blank" rel="noopener">' + esc(w.pre.vtitle) + '</a><span class="dim"> · ' + esc(w.pre.vauthor) + "</span></td></tr>";
-      }).join("") + "</tbody></table></div>";
-
-    html += '<h3>The resources that matter</h3><div class="grid">' +
-      dsaResources().map(function (r) {
-        return '<div class="card"><h4><a href="' + r.url + '" target="_blank" rel="noopener">' + esc(r.label) + "</a></h4><p>" + esc(r.note) + "</p></div>";
-      }).join("") + "</div>";
-
-    html += '<div class="callout"><b>The method, every single problem:</b> 45 minutes alone → 20 minutes learning → close the editor and rewrite it from scratch. Then re-solve it three days later without looking.</div>';
-    html += "</section>";
-    return html;
-  }
-  function dsaResources() {
-    return [
-      { label: "Striver A2Z Sheet", url: "https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2/", note: "The spine. 433 problems in dependency order — the sheet FAANG folks point to." },
-      { label: "NeetCode 150", url: "https://neetcode.io/practice", note: "The revision sheet. Subset of patterns, best video explanations on the internet." },
-      { label: "LeetCode", url: "https://leetcode.com/problemset/", note: "Where you submit. Free tier is enough. Contests every Sunday." },
-      { label: "LeetCode — Top Interview 150", url: "https://leetcode.com/studyplan/top-interview-150/", note: "Company-tagged classics. Do it after A2Z." },
-      { label: "Aditya Verma — DP playlist", url: "https://www.youtube.com/playlist?list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go", note: "The most recommended DP playlist in the Indian community." },
-      { label: "Kunal Kushwaha — Java DSA", url: "https://www.youtube.com/playlist?list=PL9gnSGHSqcnr_DxHsP7AW9ftq0AtAyYqJ", note: "Java-first DSA bootcamp. Best for building from zero." },
-      { label: "Take U Forward (Striver) — YouTube", url: "https://www.youtube.com/@takeUforward", note: "Trees, graphs, DP series with notes on takeuforward.org." },
-      { label: "Abdul Bari — Algorithms", url: "https://www.youtube.com/watch?v=0IAPZzGS8ME", note: "Heaps, greedy, graph algorithms — the theory done properly." },
-      { label: "Cracking the Coding Interview", url: "https://www.crackingthecodinginterview.com/", note: "Chapters 1-6 and 17 are enough for FAANG behaviour + patterns." }
-    ];
-  }
-
-  /* ============================================================
-     OTHER SECTIONS
-     ============================================================ */
   function navHTML() {
-    var parts = ['<a href="#overview" class="navchip">Overview</a>'];
+    var parts = [];
     store.db.weeks.forEach(function (w) {
       parts.push('<a href="#w' + w.n + '" class="navchip' + (w.n === ACTIVE_WEEK ? " on" : "") + '" data-nav="' + w.n + '">W' + w.n + "</a>");
     });
-    parts.push('<a href="#dsa" class="navchip">DSA material</a>');
-
     return parts.join("");
   }
 
@@ -268,13 +192,13 @@
      ============================================================ */
   function render() {
     var y = window.scrollY;
-    var html = overviewHTML();
+    var html = '';
     html += '<section id="plan"><div class="plan-head"><h2>Week by week</h2>' +
       '<div class="plan-tools"><button id="expandAll" class="btn">Expand all</button>' +
       '<button id="collapseAll" class="btn">Collapse all</button></div></div>' +
       '<p class="lead">Every day opens with what to watch or read, then the problems. Drag tasks between days, set priorities, tick them off.</p>' +
       store.db.weeks.map(weekHTML).join("") + "</section>";
-    html += dsaHTML();
+
 
     document.getElementById("app").innerHTML = html;
     document.getElementById("navchips").innerHTML = navHTML();
@@ -303,7 +227,6 @@
     dayDone: dayDone, weekStats: weekStats, overall: overall,
     LAST_DATE: LAST_DATE, TODAY_DAY: TODAY_DAY, FIRST_DATE: FIRST_DATE, ACTIVE_WEEK: ACTIVE_WEEK,
     itemHTML: itemHTML, dayHTML: dayHTML, weekHTML: weekHTML, weekSummaryHTML: weekSummaryHTML,
-    overviewHTML: overviewHTML, dsaHTML: dsaHTML,
     navHTML: navHTML, render: render, refreshHeader: refreshHeader
   };
 })();

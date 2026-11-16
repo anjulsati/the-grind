@@ -165,19 +165,6 @@
     if (t.id === "exportBtn") { store.exportDB(); TG.toast("Plan exported as JSON"); return; }
     if (t.id === "importBtn") { document.getElementById("importFile").click(); return; }
 
-    /* pillars — always available */
-    var pa = t.closest("[data-pillaradd]");
-    if (pa) { editor.pillarQuickAdd(Number(pa.getAttribute("data-pillaradd"))); return; }
-    var pe = t.closest("[data-editpillar]");
-    if (pe) { editor.pillarModal(Number(pe.getAttribute("data-editpillar"))); return; }
-    var rb = t.closest("[data-rmbullet]");
-    if (rb) {
-      var pr = rb.getAttribute("data-rmbullet").split(":");
-      store.db.pillars[Number(pr[0])].items.splice(Number(pr[1]), 1);
-      store.saveDB(); ui.render(); TG.toast("Removed");
-      return;
-    }
-
     /* edit-mode actions */
     var up = t.closest("[data-up]");
     if (up) { reorder(up.getAttribute("data-up"), "up"); return; }

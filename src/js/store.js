@@ -9,7 +9,7 @@
   var D = window.CUDATA;
   var LS_DB = "the-grind-db-v1";
   var LS_STATE = "the-grind-v1";
-  var DB_VERSION = 8;
+  var DB_VERSION = 9;
 
   /* ---------- seed ---------- */
   function seedDB() {
@@ -55,7 +55,6 @@
       by: "Anjul Sati",
       seededOn: new Date().toISOString().slice(0, 10),
       weeks: weeks,
-      pillars: seedPillars()
     };
   }
 
@@ -70,44 +69,14 @@
     return it;
   }
 
-  function seedPillars() {
-    return [
-      { n: "01", name: "Techniques", items: [
-        "Arrays · hashing · two pointers · sliding window · strings",
-        "Sorting · binary search · binary search on the answer",
-        "Recursion · backtracking · linked lists · stacks & queues",
-        "Trees · BST · heaps · greedy",
-        "Graphs: BFS, DFS, topological sort, union find, shortest path",
-        "Dynamic programming · tries · bits"
-      ]},
-      { n: "02", name: "Resources", items: [
-        "Striver A2Z — the sheet, in this plan's order",
-        "NeetCode 150 — the revision pass",
-        "LeetCode — where you submit; contests every Sunday",
-        "Aditya Verma — DP, recursion, stacks",
-        "Kunal Kushwaha — Java DSA from zero",
-        "Abdul Bari — algorithm theory",
-        "CTCI ch 1-6, 17 — the classics"
-      ]},
-      { n: "03", name: "The bar", items: [
-        "Easy under 15 min, medium under 30 — cold, out loud",
-        "Attempt 2 hards a week. Not solve. Attempt.",
-        "Timed set every week from W10 — the OA, rehearsed",
-        "Revision beats new problems after week 8",
-        "Every problem appears once — repeats are labelled re-solve",
-        "A collapsed day = one easy problem. Never zero"
-      ]}
-    ];
-  }
+  /* the plan is DSA-only now — no pillar cards */
+
   /* ---------- load / save ---------- */
   var db = loadDB();
   function loadDB() {
     try {
       var raw = JSON.parse(localStorage.getItem(LS_DB));
-      if (raw && raw.v === DB_VERSION && raw.weeks && raw.weeks.length) {
-        if (!raw.pillars) raw.pillars = seedPillars();
-        return raw;
-      }
+      if (raw && raw.v === DB_VERSION && raw.weeks && raw.weeks.length) return raw;
     } catch (e) { /* ignore */ }
     var seeded = seedDB();
     try { localStorage.setItem(LS_DB, JSON.stringify(seeded)); } catch (e) { /* ignore */ }

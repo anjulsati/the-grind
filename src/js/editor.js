@@ -112,31 +112,9 @@
     });
   }
 
-  /* ---------- pillar (the top three cards) ---------- */
-  function pillarModal(i) {
-    var p = store.db.pillars[i];
-    var body = field("Name", "name", p.name) + field("One-line tag", "tag", p.tag) +
-      field("Bullets (one per line)", "items", p.items.join("\n"), { type: "textarea" });
-    openModal(p.name, body, function (v) {
-      p.name = v.name || p.name; p.tag = v.tag;
-      p.items = v.items.split("\n").map(function (x) { return x.trim(); }).filter(Boolean);
-      store.saveDB(); TG.ui.render(); TG.toast("Updated");
-    });
-  }
-  function pillarQuickAdd(i) {
-    var p = store.db.pillars[i];
-    var body = field("New line for " + p.name, "text", "", { ph: "e.g. Finish arrays by Jan 15" });
-    openModal("Add to " + p.name, body, function (v) {
-      if (!v.text) { TG.toast("Nothing to add"); return; }
-      p.items.push(v.text);
-      store.saveDB(); TG.ui.render(); TG.toast("Added to " + p.name);
-    });
-  }
-
   TG.editor = {
     isOn: isOn, set: set, toggle: toggle,
     itemModal: itemModal, weekModal: weekModal, dayModal: dayModal,
-    pillarModal: pillarModal, pillarQuickAdd: pillarQuickAdd,
     TYPES: TYPES, PRIOS: PRIOS
   };
 })();
