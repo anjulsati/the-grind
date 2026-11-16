@@ -1,6 +1,6 @@
 /* ============================================================
    The Grind — one continuous timeline
-   Week 1 = Mon 16 Nov 2026 (endsems) ... Week 22 = 18 Apr 2027
+   Week 1 = Mon 16 Nov 2026 (endsems) ... Week 23 = 26 Apr 2027
    Every problem appears exactly once across the whole plan.
    ============================================================ */
 
@@ -945,7 +945,118 @@
       ],
       project: "PORTFOLIO — READMEs with numbers, demo video, GitHub profile updated."
     },
-
+    {
+      n: 20, mode: "normal", theme: "FAANG hard — arrays & strings",
+      goal: "The follow-up questions, not the intros.",
+      pattern: "FAANG hard — arrays & strings",
+      cs: "DSA",
+      learn: [
+        { t: "Learn first — Longest valid parentheses", v: "D190eYUIpUU", a: "codestorywithMIK", h: "Watch this first, then the problems below." },
+        null,
+        { t: "Learn first — Sliding window maximum", v: "xCZgxYEXnnk", a: "codestorywithMIK", h: "Watch this first, then the problems below." },
+        { t: "Learn first — Minimum window substring", v: "jSto0O4u0kk", a: "NeetCode", h: "Watch this first, then the problems below." },
+        { t: "Learn first — Palindromic substrings", v: "thI-pdfWdNw", a: "NeetCode", h: "Watch this first, then the problems below." },
+        { t: "Learn first — Product of array except self", v: "bNvGTIo2a8U", a: "NeetCode", h: "Watch this first, then the problems below." }
+      ],
+      problems: [
+        P("Longest Valid Parentheses", "longest-valid-parentheses", "H"),
+        P("Minimum Remove to Make Valid Parentheses", "minimum-remove-to-make-valid-parentheses", "M"),
+        P("Longest Duplicate Substring", "longest-duplicate-substring", "H"),
+        P("Basic Calculator II", "basic-calculator-ii", "M"),
+        P("Palindromic Substrings", "palindromic-substrings", "M"),
+        P("Remove Duplicate Letters", "remove-duplicate-letters", "H"),
+        P("Trapping Rain Water II", "trapping-rain-water-ii", "H"),
+        P("Course Schedule III", "course-schedule-iii", "H"),
+        P("Maximum Swap", "maximum-swap", "M"),
+        P("Word Break II", "word-break-ii", "H"),
+        P("Recover Binary Search Tree", "recover-binary-search-tree", "M"),
+        P("Populating Next Right Pointers in Each Node", "populating-next-right-pointers-in-each-node", "M")
+      ]
+    },
+    {
+      n: 21, mode: "normal", theme: "FAANG hard — graphs & design",
+      goal: "Bitmask BFS, weighted union find, design classics.",
+      pattern: "FAANG hard — graphs & design",
+      cs: "DSA",
+      learn: [
+        { t: "Learn first — Open the lock", v: "vtxETRvR9JY", a: "Coding Decoded", h: "Watch this first, then the problems below." },
+        { t: "Learn first — Evaluate division", v: "9XXry-MZQso", a: "The Coachable Dev", h: "Watch this first, then the problems below." },
+        { t: "Learn first — Bus routes", v: "Wah6MwcLC7c", a: "codestorywithMIK", h: "Watch this first, then the problems below." },
+        { t: "Learn first — Longest cycle in a graph", v: "8-NzFYbn1Jk", a: "NeetCode", h: "Watch this first, then the problems below." },
+        { t: "Learn first — Maximum frequency stack", v: "Z6idIicFDOE", a: "NeetCode", h: "Watch this first, then the problems below." },
+        { t: "Learn first — Sliding window median", v: "VtAPAwEXEyw", a: "NeetCodeIO", h: "Watch this first, then the problems below." }
+      ],
+      problems: [
+        P("Open the Lock", "open-the-lock", "M"),
+        P("Evaluate Division", "evaluate-division", "M"),
+        P("Bus Routes", "bus-routes", "H"),
+        P("Longest Cycle in a Graph", "longest-cycle-in-a-graph", "H"),
+        P("Maximum Frequency Stack", "maximum-frequency-stack", "H"),
+        P("Sliding Window Median", "sliding-window-median", "H"),
+        P("Shortest Path Visiting All Nodes", "shortest-path-visiting-all-nodes", "H"),
+        P("Basic Calculator", "basic-calculator", "H"),
+        P("Integer to English Words", "integer-to-english-words", "H"),
+        P("Minimum Cost for Tickets", "minimum-cost-for-tickets", "M"),
+        P("Number of Matching Subsequences", "number-of-matching-subsequences", "M"),
+        P("Convert Sorted List to Binary Search Tree", "convert-sorted-list-to-binary-search-tree", "M")
+      ]
+    },
+    {
+      n: 22, mode: "normal", theme: "FAANG hard — DP beyond the basics",
+      goal: "Interval DP, state machines, knapsack variants.",
+      pattern: "FAANG hard — DP beyond the basics",
+      cs: "DSA",
+      learn: [
+        { t: "Learn first — Burst balloons", v: "VFskby7lUbw", a: "NeetCode", h: "Watch this first, then the problems below." },
+        { t: "Learn first — Interleaving string", v: "3Rw3p9LrgvE", a: "NeetCode", h: "Watch this first, then the problems below." },
+        { t: "Learn first — Stock III", v: "SFJGgz_VpxE", a: "Nikhil Lohia", h: "Watch this first, then the problems below." },
+        { t: "Learn first — Word break II", v: "QgLKdluDo08", a: "NeetCodeIO", h: "Watch this first, then the problems below." },
+        { t: "Learn first — Russian doll envelopes", v: "3fF1r5nhQX4", a: "Techdose", h: "Watch this first, then the problems below." },
+        { t: "Learn first — Minimum cost for tickets", v: "oZ_xAIGCXw4", a: "CodeHelp - by Babbar", h: "Watch this first, then the problems below." }
+      ],
+      problems: [
+        P("Burst Balloons", "burst-balloons", "H"),
+        P("Interleaving String", "interleaving-string", "M"),
+        P("Best Time to Buy and Sell Stock III", "best-time-to-buy-and-sell-stock-iii", "H"),
+        P("All Nodes Distance K in Binary Tree", "all-nodes-distance-k-in-binary-tree", "M"),
+        P("Russian Doll Envelopes", "russian-doll-envelopes", "H"),
+        P("Cherry Pickup", "cherry-pickup", "H"),
+        P("Best Time to Buy and Sell Stock IV", "best-time-to-buy-and-sell-stock-iv", "H"),
+        P("Maximum Score from Performing Multiplication Operations", "maximum-score-from-performing-multiplication-operations", "H"),
+        P("Minimum Insertion Steps to Make a String Palindrome", "minimum-insertion-steps-to-make-a-string-palindrome", "H"),
+        P("Minimum Cost to Cut a Stick", "minimum-cost-to-cut-a-stick", "H"),
+        P("Longest String Chain", "longest-string-chain", "M"),
+        P("Distinct Subsequences II", "distinct-subsequences-ii", "H")
+      ]
+    },
+    {
+      n: 23, mode: "normal", theme: "FAANG mixed — timed, cold, out loud",
+      goal: "The last week: everything, under time.",
+      pattern: "FAANG mixed — timed, cold, out loud",
+      cs: "DSA",
+      learn: [
+        { t: "Learn first — Integer to English words", v: "9FLpWWJ987w", a: "codestorywithMIK", h: "Watch this first, then the problems below." },
+        { t: "Learn first — Basic calculator", v: "gW7hNe9bdII", a: "codestorywithMIK", h: "Watch this first, then the problems below." },
+        { t: "Learn first — Shortest path visiting all nodes", v: "GwqxnD3Zmbk", a: "Nitesh Nanda", h: "Watch this first, then the problems below." },
+        { t: "Learn first — Minimum knight moves", v: "YMIuMTGGGuU", a: "NeetCodeIO", h: "Watch this first, then the problems below." },
+        { t: "Learn first — Longest arithmetic subsequence", v: "4UDbKVWGccY", a: "NeetCodeIO", h: "Watch this first, then the problems below." },
+        { t: "Learn first — Delete and earn", v: "Y8jBvz0vQyY", a: "NeetCode", h: "Watch this first, then the problems below." }
+      ],
+      problems: [
+        P("House Robber III", "house-robber-iii", "M"),
+        P("Guess Number Higher or Lower II", "guess-number-higher-or-lower-ii", "H"),
+        P("Minimum ASCII Delete Sum for Two Strings", "minimum-ascii-delete-sum-for-two-strings", "H"),
+        P("Minimum Knight Moves", "minimum-knight-moves", "M"),
+        P("Longest Arithmetic Subsequence", "longest-arithmetic-subsequence", "M"),
+        P("Number of Longest Increasing Subsequence", "number-of-longest-increasing-subsequence", "M"),
+        P("Combination Sum IV", "combination-sum-iv", "M"),
+        P("Cherry Pickup II", "cherry-pickup-ii", "H"),
+        P("Minimum Falling Path Sum II", "minimum-falling-path-sum-ii", "M"),
+        P("Maximum Alternating Subsequence Sum", "maximum-alternating-subsequence-sum", "M"),
+        P("Longest Arithmetic Subsequence of Given Difference", "longest-arithmetic-subsequence-of-given-difference", "M"),
+        P("Number of Dice Rolls With Target Sum", "number-of-dice-rolls-with-target-sum", "M")
+      ]
+    }
   ];
 
 
@@ -968,7 +1079,11 @@
     "17": [{ t: "Learn first — Bipartite — 2-coloring", v: "-vu34sct1g8", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Keys and rooms — reachability", v: "4hDdUPhckYE", a: "CheatCode Ninja", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — 01 matrix — multi-source BFS", v: "gu2MD0mpy9w", a: "codestorywithMIK", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Accounts merge — union find", v: "FMwpt_aQOGw", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Cheapest flights — Bellman Ford", v: "5eIK3zUdYmE", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Critical connections — bridges", v: "6h1SucBNxgc", a: "Shradha Khapra", h: "Watch or read this first, then that day's problems below." }, null],
     "18": [{ t: "Learn first — Min cost climbing — intro DP", v: "KwItlcfF9vE", a: "Shradha Khapra", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — House robber — take or skip", v: "73r3KWiEvyk", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Coin change — unbounded", v: "H9bfqozjoqs", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Unique paths — grid DP", v: "IlEsdxuD4lY", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Longest increasing subsequence", v: "ekcwMsSIzVc", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Partition equal subset — knapsack", v: "7win3dcgo3k", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, null],
     "19": [{ t: "Learn first — Longest common subsequence", v: "jHGgXV27qtk", a: "Jenny's Lectures CS IT", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Longest palindromic subsequence", v: "6i_T5kkfv4A", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Minimum path sum — grid DP", v: "pGMsrvt0fpk", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Maximal square", v: "--x7q3PTT_c", a: "Nikhil Lohia", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Stock with cooldown — state DP", v: "IGIe46xw3YY", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Implement trie", v: "oobqoCJlHA0", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, null]
-  };
+,
+    "20": [{ t: "Learn first — Longest valid parentheses — stack", v: "uLP67Zh8bxk", a: "codestorywithMIK", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Reverse nodes in k-group", v: "1UOPsfP85V4", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Shortest palindrome — KMP", v: "5DACQK9kud0", a: "codestorywithMIK", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Minimum window subsequence", v: "xBZfV0OBmLY", a: "Engineering Digest", h: "Sliding window at its hardest — the same pattern as minimum size subarray sum, pushed further. Then the problems below." }, { t: "Learn first — Minimum remove to make valid parentheses", v: "54m6kYA9QFE", a: "RisingBrain", h: "Watch or read this first, then that day's problems below." }],
+    "21": [{ t: "Learn first — Burst balloons — interval DP", v: "VFskby7lUbw", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Interleaving string — 2D DP", v: "3Rw3p9LrgvE", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Stock III — two transactions", v: "SFJGgz_VpxE", a: "Nikhil Lohia", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Word break II — backtrack + memo", v: "QgLKdluDo08", a: "NeetCodeIO", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Russian doll envelopes — LIS", v: "3fF1r5nhQX4", a: "Techdose", h: "Watch or read this first, then that day's problems below." }],
+    "22": [{ t: "Learn first — Open the lock — BFS", v: "vtxETRvR9JY", a: "Coding Decoded", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Shortest path visiting all nodes — bitmask", v: "GwqxnD3Zmbk", a: "Nitesh Nanda", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Evaluate division — weighted union find", v: "9XXry-MZQso", a: "The Coachable Dev", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Max points on a line — hashing", v: "Bb9lOXUOnFw", a: "NeetCodeIO", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Maximal rectangle — the boss", v: "ttVu6G7Ayik", a: "take U forward", h: "Watch or read this first, then that day's problems below." }],
+    "23": [{ t: "Learn first — Stock IV — k transactions", v: "ym8NIk7ws7I", a: "Nikhil Lohia", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Recover BST — Morris", v: "ZWGW7FminDM", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Maximum frequency stack — design", v: "Z6idIicFDOE", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Integer to English words", v: "9FLpWWJ987w", a: "codestorywithMIK", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Minimum cost for tickets — DP", v: "oZ_xAIGCXw4", a: "CodeHelp - by Babbar", h: "Watch or read this first, then that day's problems below." }]  };
 
   /* ============================================================
      BUILD DAYS
@@ -1058,9 +1173,7 @@
       else if (w.mode === "normal") {
         if (d < 6) {
           items.push(prob(d * 2, FULL)); items.push(prob(d * 2 + 1, FULL2));
-          items.push(csItem(d, "30 min. Then close the tab and say it out loud in 60 seconds."));
-          if (d === 0) {
-          }
+
           meta.title = "Day " + (d + 1); meta.time = "2h 45m";
         } else {
           items.push({
