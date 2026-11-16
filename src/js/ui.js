@@ -253,44 +253,13 @@
   /* ============================================================
      OTHER SECTIONS
      ============================================================ */
-  function faangHTML() {
-    var html = '<section id="faang"><h2>The FAANG bar</h2>' +
-      '<p class="lead">' + D.FAANG.thesis + "</p>";
-    html += '<h3>Three routes in</h3><div class="grid">' + D.FAANG.route.map(function (r) {
-      return '<div class="card"><h4>' + esc(r[0]) + '</h4><p class="dim tiny">' + esc(r[1]) + "</p><p>" + esc(r[2]) + "</p></div>";
-    }).join("") + "</div>";
-    html += '<h3>The interview loop, honestly</h3><div class="steps">' + D.FAANG.loop.map(function (l, i) {
-      return '<div class="step"><span class="stnum">' + (i + 1) + '</span><div><h4>' + esc(l[0]) + "</h4><p>" + esc(l[1]) + "</p></div></div>";
-    }).join("") + "</div>";
-    html += '<h3>The bar you are training for</h3><div class="callout">' + D.FAANG.bar.map(function (b) { return "• " + esc(b); }).join("<br>") + "</div>";
-    html += '<h3>STAR — the round everyone underestimates</h3><div class="grid">' + D.FAANG.star.map(function (x) {
-      return '<div class="card tight"><h4>' + esc(x[0]) + "</h4><p>" + esc(x[1]) + "</p></div>";
-    }).join("") + "</div></section>";
-    return html;
-  }
-
-  function resourcesHTML() {
-    var html = '<section id="links"><h2>Links</h2>';
-    D.RESOURCES.forEach(function (g) {
-      if (g.group.indexOf("DSA") === 0) return;
-      html += "<h3>" + esc(g.group) + '</h3><div class="grid">' + g.items.map(function (it) {
-        return '<div class="card tight"><h4><a href="' + it.url + '" target="_blank" rel="noopener">' + esc(it.label) + "</a></h4>" +
-          (it.note ? "<p>" + esc(it.note) + "</p>" : "") + "</div>";
-      }).join("") + "</div>";
-    });
-    html += '<div class="callout">' + D.RULES.map(function (r) { return "• " + esc(r); }).join("<br>") + "</div>";
-    html += "</section>";
-    return html;
-  }
-
   function navHTML() {
     var parts = ['<a href="#overview" class="navchip">Overview</a>'];
     store.db.weeks.forEach(function (w) {
       parts.push('<a href="#w' + w.n + '" class="navchip' + (w.n === ACTIVE_WEEK ? " on" : "") + '" data-nav="' + w.n + '">W' + w.n + "</a>");
     });
     parts.push('<a href="#dsa" class="navchip">DSA material</a>');
-    parts.push('<a href="#faang" class="navchip">FAANG</a>');
-    parts.push('<a href="#links" class="navchip">Links</a>');
+
     return parts.join("");
   }
 
@@ -303,11 +272,9 @@
     html += '<section id="plan"><div class="plan-head"><h2>Week by week</h2>' +
       '<div class="plan-tools"><button id="expandAll" class="btn">Expand all</button>' +
       '<button id="collapseAll" class="btn">Collapse all</button></div></div>' +
-      '<p class="lead"><b>01 DSA</b> is everything you do today — drag tasks between days, set priorities. <b>02 DEV</b> is yours to fill with ＋.</p>' +
+      '<p class="lead">Every day opens with what to watch or read, then the problems. Drag tasks between days, set priorities, tick them off.</p>' +
       store.db.weeks.map(weekHTML).join("") + "</section>";
     html += dsaHTML();
-    html += faangHTML();
-    html += resourcesHTML();
 
     document.getElementById("app").innerHTML = html;
     document.getElementById("navchips").innerHTML = navHTML();
@@ -336,8 +303,7 @@
     dayDone: dayDone, weekStats: weekStats, overall: overall,
     LAST_DATE: LAST_DATE, TODAY_DAY: TODAY_DAY, FIRST_DATE: FIRST_DATE, ACTIVE_WEEK: ACTIVE_WEEK,
     itemHTML: itemHTML, dayHTML: dayHTML, weekHTML: weekHTML, weekSummaryHTML: weekSummaryHTML,
-    overviewHTML: overviewHTML, dsaHTML: dsaHTML, faangHTML: faangHTML,
-    resourcesHTML: resourcesHTML,
+    overviewHTML: overviewHTML, dsaHTML: dsaHTML,
     navHTML: navHTML, render: render, refreshHeader: refreshHeader
   };
 })();

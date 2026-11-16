@@ -2,43 +2,19 @@
 
 **Live: https://anjulsati.github.io/the-grind/** · **Local:** `npm start` → http://localhost:5173
 
-A dynamic, single-page 22-week plan by **Anjul Sati**, built for one goal: a **FAANG/MAANG-level offer**.
+A single-page **DSA-only** grind log by **Anjul Sati** — 19 weeks, from arrays to dynamic programming, at FAANG/MAANG interview level.
 
-Every week and every day has **two boxes**:
+Every day is one ruled sheet: **watch/read the material first**, then solve that day's problems.
 
 | | |
 |---|---|
-| **01 DSA** | pattern of the week · watch-first video · problems · CS study · career tasks · the day-7 timed test |
-| **02 DEV** | **reserved** — still being decided |
+| **Weeks 1–3** | Endsems · 1 easy problem + a concept video a day |
+| **Weeks 4–19** | Two problems a day after the day's video — arrays to graphs to DP |
+| **Every week from 10** | Ends with a timed set: 2 unseen mediums, 60 minutes |
 
-The top of the page is **"Things to do till August 2027"** — the three tracks as editable cards.
+102 learn-first items, every one a verified video. 244 unique problems.
 
-```
-W1-3   16 Nov - 6 Dec    EXAMS        light
-W4     7 Dec - 13 Dec    TRANSITION   last paper Mon 7th, full block from Tue 8th
-W5-19  14 Dec - 21 Mar    FULL PLAN    2h 45m/day
-```
-
----
-
-## The plan is a database
-
-The whole plan lives in your browser as an editable database, seeded once from the original.
-
-**Edit plan** (`E`) turns on edit mode:
-
-| Action | How |
-|---|---|
-| Add a task | **＋** on any box |
-| Edit / delete a task | **✎ / ✕** on hover |
-| Rename a week / day | **✎** on the header |
-| Edit a track card | **✎** on "Things to do till" cards |
-| Undo everything | **Restore original** (checkmarks stay) |
-| Backup | **Export plan** → JSON |
-| Restore backup | **Import plan** |
-
-Week summaries, the week table and problem counts **re-derive from your edits**.
-
+The plan is a database in your browser: **Edit plan** (`E`) to add, edit, delete, drag between days, set priorities. **＋** on any box. **Restore original** puts the plan back. **Export/Import** for backups.
 ## DSA material
 
 The **DSA — the material** section holds the watch-first list (one verified video per pattern, 19 weeks) and the resources the Indian prep community actually recommends — Striver A2Z, NeetCode 150, LeetCode, Aditya Verma, Kunal Kushwaha, Abdul Bari, CTCI.

@@ -949,6 +949,27 @@
   ];
 
 
+  /* per-day learning material: video/article BEFORE the day's problems */
+  var LEARN = {
+    "3": [{ t: "Learn first — Missing number — XOR", v: "WnPLSRLSANE", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Contains duplicate — hashing", v: "3OamzN90kPg", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Valid anagram — frequency count", v: "rpZ3RRinBRM", a: "Engineering Digest", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Intersection of two arrays — sets", v: "rqPu9ZvLdi0", a: "codestorywithMIK", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Reverse string — two pointers", v: "MQmUVokbTrs", a: "Nikhil Lohia", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Fizz buzz — loops & modulo", v: "XMUe3zFhM5c", a: "Bro Code", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Number of 1 bits — counting bits", v: "I475waWiTK4", a: "Pepcoding", h: "Watch or read this first, then that day's problems below." }],
+    "4": [null, { t: "Learn first — Kadane's algorithm", v: "9IZYqostl2M", a: "Apna College", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Product of array except self", v: "9IZYqostl2M", a: "Apna College", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Two Sum II — sorted two pointers", v: "Qa3FoGAcVdk", a: "ShashCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Container with most water", v: "EbkMABpP52U", a: "Apna College", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — 3Sum — sort + two pointers", v: "MQmUVokbTrs", a: "Nikhil Lohia", h: "Watch or read this first, then that day's problems below." }, null],
+    "5": [{ t: "Learn first — Longest consecutive sequence", v: "Q1BMW04YMWA", a: "Code with RSV", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — First missing positive", v: "McMC744R3SQ", a: "Nikhil Lohia", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Longest substring without repeating", v: "U2ppEzBaMck", a: "Nikhil Lohia", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Minimum size subarray sum", v: "xBZfV0OBmLY", a: "Engineering Digest", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Find all anagrams — fixed window", v: "egPDpu26q0M", a: "Nikhil Lohia", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Valid palindrome II — skip one", v: "MQmUVokbTrs", a: "Nikhil Lohia", h: "Watch or read this first, then that day's problems below." }, null],
+    "6": [{ t: "Learn first — Integer to Roman — mapping", v: "ohBNdSJyLh8", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — String compression — run length", v: "cAB15h6-sWA", a: "Apna College", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Count and Say — simulation", v: "JjIewPuyexA", a: "Telusko", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Longest palindromic substring", v: "5MS14_6rSa8", a: "RisingBrain", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Spiral matrix — boundaries", v: "BJnMZNwUk1M", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Search a 2D matrix — binary search", v: "JXU4Akft7yk", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, null],
+    "7": [{ t: "Learn first — Merge sort — implement it", v: "cQDtOBTy7_Y", a: "Apna College", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Merge intervals — sorting first", v: "44H3cEC2fFM", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Binary search — the template", v: "TbbSJrY5GqQ", a: "Apna College", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Squares of sorted array", v: "fikdT0AI5z4", a: "Nikhil Lohia", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Search in rotated sorted array", v: "U8XENwh8Oy8", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — First and last position", v: "jpuDyt-ruFc", a: "codestorywithMIK", h: "Watch or read this first, then that day's problems below." }, null],
+    "8": [{ t: "Learn first — Koko eating bananas", v: "U2SozAs9RzA", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Split array largest sum", v: "thUd_WJn6wk", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Pow(x,n) — fast power", v: "l0YC3876qxg", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Find peak element", v: "cXxmbemS6XM", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Peak index mountain array", v: "RjxD6UXGlhc", a: "Apna College", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Intersection of two arrays II", v: "1UdCmHJPpks", a: "Priyanshi Porwal", h: "Watch or read this first, then that day's problems below." }, null],
+    "9": [{ t: "Learn first — Subsets — pick or skip", v: "REOH22Xwdkk", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Combination sum — reuse allowed", v: "GBKI9VSKdGg", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Letter combinations — choices", v: "vgnhZzw-kfU", a: "codestorywithMIK", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Subsets II / Combination Sum II — dedupe", v: "rSA3t6BDDwg", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Word search — grid backtrack", v: "pfiQ_PS1g8E", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — N-Queens — the classic", v: "BdSJnIdR-4s", a: "Apna College", h: "Watch or read this first, then that day's problems below." }, null],
+    "10": [{ t: "Learn first — Reverse + cycle", v: "t7YaoQOFXzk", a: "Apna College", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Middle — slow & fast", v: "A2_ldqM4QcY", a: "NeetCodeIO", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Add two numbers — carry", v: "XmRrGzR6udg", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Reorder list — split & merge", v: "S5bfdUTrKLM", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Intersection of two lists", v: "oAja8-Ulz6o", a: "Apna College", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Copy list with random pointer", v: "8ze7Zopdsaw", a: "Shradha Khapra", h: "Watch or read this first, then that day's problems below." }, null],
+    "11": [{ t: "Learn first — Min stack — design", v: "wHDm-N2m2XY", a: "Shradha Khapra", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Reverse polish — stack", v: "wKbDy5FWksE", a: "RisingBrain", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Daily temperatures — monotonic", v: "cTBiBSnjO3c", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Asteroid collision — stack", v: "LN7KjRszjk4", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Remove k digits — monotonic", v: "jmbuRzYPGrg", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Largest rectangle — the boss", v: "Bzat9vgD0fs", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, null],
+    "12": [{ t: "Learn first — Inorder traversal — recursion + stack", v: "I_JuQ5ayPmc", a: "Gate Smashers", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Invert & same tree", v: "OnSn2XEQ4MY", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Diameter — height trick", v: "Rezetez59Nk", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Level order — BFS", v: "EoAsWbO7sqg", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Zigzag & right view", v: "BnOjzXe6J-Y", a: "Nikhil Lohia", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Path sum — recursion", v: "2PmdWpXv3Y4", a: "CTO Bhaiya", h: "Watch or read this first, then that day's problems below." }, null],
+    "13": [{ t: "Learn first — Validate BST — bounds", v: "f-sj7I5oXEI", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — LCA of a BST", v: "oX5D0uKOMck", a: "Shradha Khapra", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Build tree from traversals", v: "Z9zF0gLnuvM", a: "CS Engineering Gyan", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Flatten to linked list", v: "_x-YRLHP0t0", a: "RisingBrain", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — BST iterator — controlled recursion", v: "D2jMcmxU4bs", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Sorted array → balanced BST", v: "0s6sCjs_4g0", a: "Shradha Khapra", h: "Watch or read this first, then that day's problems below." }, null],
+    "14": [{ t: "Learn first — Top K frequent", v: "GLw4WbJdYLw", a: "codestorywithMIK", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — K closest points", v: "rI2EBUEMfTk", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Sort characters by frequency", v: "zPB7j1TMTDM", a: "ShashCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Task scheduler — greedy + heap", v: "QDsFBLGL9MM", a: "codestorywithMIK", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Merge k sorted lists", v: "zPB7j1TMTDM", a: "ShashCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Median from data stream", v: "6dDWBamCLyk", a: "CodeLucky", h: "Watch or read this first, then that day's problems below." }, null],
+    "15": [{ t: "Learn first — Jump game — reachability", v: "tZAa_jJ3SwQ", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Gas station — greedy proof", v: "lJwbPZGo05A", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Non-overlapping intervals", v: "HDHQ8lAWakY", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Candy — two passes", v: "ZGxqqjljpUI", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Maximum product subarray", v: "hnswaLJvr6g", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Can place flowers", v: "ZGxqqjljpUI", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, null],
+    "16": [{ t: "Learn first — Number of islands — DFS", v: "AME6baBpswY", a: "Shradha Khapra", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Rotting oranges — multi-BFS", v: "RmXo5SWkhCs", a: "Shradha Khapra", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Number of provinces — union find", v: "ZGr5nX-Gi6Y", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Course schedule — detect cycle", v: "37cJ38HadM4", a: "Shradha Khapra", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Course schedule II — build order", v: "WAOfKpxYHR8", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Network delay — Dijkstra", v: "WAOfKpxYHR8", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, null],
+    "17": [{ t: "Learn first — Bipartite — 2-coloring", v: "-vu34sct1g8", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Keys and rooms — reachability", v: "4hDdUPhckYE", a: "CheatCode Ninja", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — 01 matrix — multi-source BFS", v: "gu2MD0mpy9w", a: "codestorywithMIK", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Accounts merge — union find", v: "FMwpt_aQOGw", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Cheapest flights — Bellman Ford", v: "5eIK3zUdYmE", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Critical connections — bridges", v: "6h1SucBNxgc", a: "Shradha Khapra", h: "Watch or read this first, then that day's problems below." }, null],
+    "18": [{ t: "Learn first — Min cost climbing — intro DP", v: "KwItlcfF9vE", a: "Shradha Khapra", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — House robber — take or skip", v: "73r3KWiEvyk", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Coin change — unbounded", v: "H9bfqozjoqs", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Unique paths — grid DP", v: "IlEsdxuD4lY", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Longest increasing subsequence", v: "ekcwMsSIzVc", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Partition equal subset — knapsack", v: "7win3dcgo3k", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, null],
+    "19": [{ t: "Learn first — Longest common subsequence", v: "jHGgXV27qtk", a: "Jenny's Lectures CS IT", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Longest palindromic subsequence", v: "6i_T5kkfv4A", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Minimum path sum — grid DP", v: "pGMsrvt0fpk", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Maximal square", v: "--x7q3PTT_c", a: "Nikhil Lohia", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Stock with cooldown — state DP", v: "IGIe46xw3YY", a: "take U forward", h: "Watch or read this first, then that day's problems below." }, { t: "Learn first — Implement trie", v: "oobqoCJlHA0", a: "NeetCode", h: "Watch or read this first, then that day's problems below." }, null]
+  };
+
   /* ============================================================
      BUILD DAYS
      ============================================================ */
@@ -965,9 +986,9 @@
           t2.indexOf("contest") >= 0 || t2.indexOf("upsolve") >= 0) return "dsa";
       if (t2.indexOf("revision for tomorrow") >= 0 || t2.indexOf("answers in your own words") >= 0 ||
           t2.indexOf("cheat sheet") >= 0 || t2.indexOf("answer bank") >= 0 || t2.indexOf("rapid-fire") >= 0) return "cs";
-      return "dev";
+      return "dsa";
     }
-    return "dev";
+    return "dsa";
   }
 
   function watchItem(w, hint) {
@@ -1007,16 +1028,8 @@
         items.push({ id: date + "-c", type: "theory", track: w.conceptsInDsa ? "dsa" : "cs",
           title: w.cs + " — " + ec.label, url: ec.url, vtitle: ec.vtitle, vauthor: ec.vauthor,
           hint: "10 minutes at 1.5x, then 3 lines in your notes." });
-        if (w.csExtra) {
-          var cf = w.csExtra[d];
-          items.push({ id: date + "-cf", type: "theory", track: "cs",
-            title: "CS Fundamentals — " + cf.label, url: cf.url, vtitle: cf.vtitle, vauthor: cf.vauthor,
-            hint: "10 minutes. One CS topic a day, even during exams." });
-        }
-        items.push({ id: date + "-ai", type: "ai", track: "dev", title: w.ai[d],
-          hint: "15 minutes. Setup and first steps only — no rabbit holes during exams." });
         meta.title = "Day " + (d + 1) + " · light";
-        meta.time = "45 min";
+        meta.time = "20 min";
         meta.light = true;
       }
 
@@ -1030,11 +1043,6 @@
           var ti = 1 + (d - 1) * 2;
           items.push(prob(ti, FULL)); items.push(prob(ti + 1, FULL2));
           items.push(csItem((d - 1) % w.csTopics.length, "30 minutes, then 5 lines in your own words."));
-          if (d === 1) items.push(watchItem(w, "Week 1 of the real plan. This is the video the whole DSA track assumes."));
-          if (d === 2) items.push({ id: date + "-c1", type: "career", title: w.career[0] });
-          if (d === 3) items.push({ id: date + "-a1", type: "dev", title: w.ai[0], hint: "45 min. Commit and push before you sleep." });
-          if (d === 4) items.push({ id: date + "-proj", type: "project", title: w.project, hint: "60-90 min." });
-          if (d === 5) items.push({ id: date + "-c2", type: "career", title: w.career[1] });
           meta.title = "Day " + d; meta.time = "2h 45m";
         } else {
           items.push({ id: date + "-r1", type: "review", title: "Re-solve 3 of this week's problems — cold",
@@ -1042,12 +1050,7 @@
           (w.stretch || []).forEach(function (sp, k) {
             items.push({ id: date + "-st" + k, type: "stretch", track: "dsa", title: sp.title, url: sp.url, diff: sp.diff, hint: "Optional. 30 minutes of struggle beats 3 easy wins." });
           });
-          items.push({ id: date + "-a3", type: "dev", track: "dev", title: w.ai[2], hint: "45 min." });
-          items.push({ id: date + "-cq", type: "theory", track: "cs",
-            title: w.cs + " — 5 rapid-fire questions, out loud",
-            url: yt(w.cs + " interview questions"),
-            hint: "Five topics from this week's list. 60 seconds each, no notes." });
-          items.push({ id: date + "-r2", type: "review", track: "dev", title: "Weekly review: 3 lines in plan.md" });
+          items.push({ id: date + "-r2", type: "review", track: "dsa", title: "Weekly review: 3 lines in plan.md" });
           meta.title = "Revision day"; meta.time = "~3h"; meta.revision = true;
         }
       }
@@ -1057,14 +1060,7 @@
           items.push(prob(d * 2, FULL)); items.push(prob(d * 2 + 1, FULL2));
           items.push(csItem(d, "30 min. Then close the tab and say it out loud in 60 seconds."));
           if (d === 0) {
-            items.push(watchItem(w));
-            items.push({ id: date + "-c1", type: "career", track: "dev", title: w.career[0] });
           }
-          if (d === 1) items.push({ id: date + "-a1", type: "dev", track: "dev", title: w.ai[0], hint: "45 min. Commit and push before you sleep." });
-          if (d === 2) items.push({ id: date + "-a2", type: "dev", track: "dev", title: w.ai[1], hint: "45 min." });
-          if (d === 3) items.push({ id: date + "-proj", type: "project", track: "dev", title: w.project, hint: "60-90 min." });
-          if (d === 4) items.push({ id: date + "-a3", type: "dev", track: "dev", title: w.ai[2], hint: "45 min." });
-          if (d === 5) items.push({ id: date + "-c2", type: "career", track: "dev", title: w.career[1] });
           meta.title = "Day " + (d + 1); meta.time = "2h 45m";
         } else {
           items.push({
@@ -1078,11 +1074,7 @@
             items.push({ id: date + "-st" + k, type: "stretch", track: "dsa", title: sp.title, url: sp.url, diff: sp.diff,
               hint: k === 0 ? "Optional FAANG-level stretch." : "Optional. Attempt, don't solve." });
           });
-          items.push({ id: date + "-cq", type: "theory", track: "cs",
-            title: w.cs + " — 5 rapid-fire questions, out loud",
-            url: yt(w.cs + " interview questions"),
-            hint: "Five topics from this week's list. 60 seconds each, no notes. This is the CS round, rehearsed." });
-          items.push({ id: date + "-r2", type: "review", track: "dev", title: "Weekly review: 3 lines in plan.md — what clicked, what didn't, what I redo" });
+          items.push({ id: date + "-r2", type: "review", track: "dsa", title: "Weekly review: 3 lines in plan.md — what clicked, what didn't, what I redo" });
           meta.title = timedWeek ? "Revision + timed set" : "Revision day";
           meta.time = "~3h"; meta.revision = true;
         }
@@ -1111,160 +1103,31 @@
   /* ============================================================
      REFERENCE CONTENT
      ============================================================ */
-  var CS = [
-    { name: "DBMS + SQL", weeks: "W4-7, 14",
-      topics: ["ER model & keys", "Normalization 1NF-BCNF", "Indexes & B+ trees", "Transactions & ACID", "Isolation levels", "Joins", "GROUP BY / HAVING", "Subqueries & CTEs", "Window functions", "SQL 50", "EXPLAIN plans", "N+1", "Sharding vs partitioning", "Replication", "CAP", "Connection pooling"],
-      links: [C("Gate Smashers DBMS", "gate smashers dbms full course"), C("SQLBolt", "sqlbolt interactive sql tutorial"), C("GfG DBMS", "geeksforgeeks dbms tutorial")] },
-    { name: "Operating Systems", weeks: "W8-9, revised W20",
-      topics: ["Process vs thread", "States & context switch", "Scheduling", "Mutex vs semaphore", "Deadlock + Banker's", "Paging vs segmentation", "Virtual memory", "Page replacement", "Thrashing", "File systems", "fork / exec"],
-      links: [C("Gate Smashers OS", "gate smashers operating system full course"), C("GfG OS", "geeksforgeeks operating system tutorial")] },
-    { name: "Computer Networks", weeks: "W10-11, 16",
-      topics: ["OSI vs TCP/IP", "TCP vs UDP", "3-way handshake", "HTTP vs HTTPS / TLS", "DNS", "URL lifecycle", "Status codes", "Cookies vs JWT", "REST", "CORS", "Load balancing", "CDN & caching", "WebSockets", "Idempotency", "Rate limiting"],
-      links: [C("Gate Smashers CN", "gate smashers computer networks full course"), C("MDN HTTP", "mdn http overview")] },
-    { name: "OOP + Java internals", weeks: "W12-13, revised W20",
-      topics: ["4 pillars", "Abstract vs interface", "Overloading vs overriding", "SOLID", "Composition vs inheritance", "ArrayList internals", "HashMap internals", "String pool", "equals/hashCode", "Exceptions", "GC basics"],
-      links: [C("Java Brains OOP", "java brains object oriented programming"), C("Collections internals", "java collections framework internals interview")] },
-    { name: "AI / LLM fundamentals", weeks: "W17, every AI interview",
-      topics: ["Tokens & context", "Transformer intuition", "Embeddings", "RAG vs fine-tuning", "Hallucination", "Tool calling", "ReAct loops", "Evals & LLM-as-judge", "Prompt injection", "Latency vs cost", "Vector indexing", "Guardrails"],
-      links: [C("What is RAG", "what is retrieval augmented generation explained"), C("Transformers intuitively", "transformers explained intuition no math"), C("LLM evals", "how to evaluate llm applications evals"), C("Prompt injection", "prompt injection explained llm security")] },
-    { name: "LLD + HLD", weeks: "W18-19",
-      topics: ["SOLID in code", "Strategy", "Factory", "Observer", "Singleton & Builder", "Parking lot LLD", "Scaling basics", "Caching", "Message queues", "Consistent hashing", "URL shortener", "Rate limiter"],
-      links: [C("Design patterns", "design patterns java tutorial"), C("System design basics", "system design basics for beginners")] }
-  ];
 
-  var AI = {
-    thesis: "Agentic AI is hireable only when you can show <b>a system that runs, an eval that proves it works, and a deployed endpoint someone else can call</b>. Prompt wrappers get filtered out in round one. Agents + retrieval + evals + a live API is the shape that gets interviews.",
-    reality: "At CU most drives are SDE and service roles. AI fresher openings are fewer and mostly off-campus. So DSA and CS stay exactly where they are — this is your differentiator and your startup route, not a replacement for the coding round. Java for DSA, Python for AI.",
-    stack: ["Python 3.12", "FastAPI", "Pydantic", "OpenAI / Anthropic / Gemini SDK", "LangGraph", "Chroma / pgvector", "Langfuse", "Docker", "GitHub Actions", "Render / Railway"],
-    skip: [
-      "Training a model from scratch. You're hired to ship, not to research.",
-      "Fine-tuning before one RAG pipeline works end to end.",
-      "Collecting eight agent frameworks. The raw SDK + LangGraph is enough.",
-      "Prompt-engineering courses. You learn this by breaking prompts.",
-      "AI Twitter. It teaches you nothing and makes you feel late.",
-      "Blockchain / Web3 / AR detours.",
-      "Paid bootcamps."
-    ],
-    projects: [
-      { name: "P1 · agentic RAG assistant (W5-12)", d: "Documents in, retrieval with citations, 3 tools, guardrails, an eval suite, FastAPI + UI, deployed. Your 30-minute interview." },
-      { name: "P2 · domain agent + eval report (W17-18)", d: "A narrow agent for one job, 30-case eval set, a score you can quote. Proves P1 wasn't luck." }
-    ]
-  };
 
 
   /* ============================================================
      THE FAANG BAR
      ============================================================ */
-  var FAANG = {
-    thesis: "At FAANG/MAANG level the interview is roughly <b>90% problem solving</b>. One round on CS fundamentals, one on design, one on you. So the weights in this plan are deliberately lopsided: DSA first, CS second, AI/dev as the differentiator that also gets you into AI teams.",
-    route: [
-      ["Summer 2028 internship", "Applications open Aug-Nov 2027", "The highest-probability route in. Intern, perform, return offer, full-time. You must be interview-ready by July 2027."],
-      ["On-campus placement", "Aug-Dec 2027", "MAANG and product companies visiting CU. Your batch is the filter — the online assessment is what separates you from 500 others."],
-      ["Off-campus full-time", "2028", "Referrals and LinkedIn. Same preparation, longer timeline, more patience."]
-    ],
-    loop: [
-      ["Online assessment", "2 problems, 90-120 min, proctored. Most people die here. This is why every week from W10 has a timed set."],
-      ["Screen", "1-2 problems, live, while you talk. Practise speaking your approach out loud — that's what the mock weeks are for."],
-      ["Onsite: 2 DSA rounds", "Mediums and hards. Depth of follow-up questions, not new topics."],
-      ["Onsite: design round", "LLD for freshers (parking lot, LRU, rate limiter). HLD appears at some companies."],
-      ["Behavioral", "Amazon asks Leadership Principles to freshers. Google asks Googliness. 6 STAR stories, written, not improvised."]
-    ],
-    bar: [
-      "Every easy in under 15 minutes, cold.",
-      "Every medium in under 30 minutes, cold, talking out loud.",
-      "2 hards a week — attempted, not solved. Attempting is the skill.",
-      "By April: 240+ problems, 60+ re-solved cold, 15+ timed sets.",
-      "30 minutes about your project: design, tradeoffs, evals, what you'd change.",
-      "One page of STAR stories before August 2027."
-    ],
-    star: [
-      ["Situation", "One line of context. No backstory."],
-      ["Task", "What you specifically owned."],
-      ["Action", "What you did, in order, with decisions you made."],
-      ["Result", "A number. Even an estimate is better than nothing."],
-      ["Learning", "What you'd do differently. This is the part most people skip."]
-    ]
-  };
 
-  var RESOURCES = [
-    { group: "DSA — one sheet, no switching",
-      items: [
-        { label: "Striver A2Z", url: "https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2/", note: "Free, Java code, same order as this plan." },
-        { label: "NeetCode 150", url: "https://neetcode.io/practice", note: "Only when stuck on a pattern." },
-        { label: "LeetCode", url: "https://leetcode.com/problemset/" }
-      ] },
-    { group: "CS fundamentals",
-      items: [
-        { label: "Gate Smashers (main channel)", url: "https://www.youtube.com/@GateSmashers", note: "OS, DBMS and CN playlists — the main channel, pick the subject you're on." },
-        { label: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/", note: "Reference, not a course." },
-        { label: "SQLBolt", url: "https://sqlbolt.com/" },
-        { label: "LeetCode SQL 50", url: "https://leetcode.com/studyplan/top-sql-50/" }
-      ] },
-    { group: "AI stack",
-      items: [
-        { label: "OpenAI docs", url: "https://platform.openai.com/docs", note: "Read the tool-calling page properly, twice." },
-        { label: "Anthropic docs", url: "https://docs.anthropic.com/", note: "Best writing on agents and tool use." },
-        { label: "LangGraph docs", url: "https://langchain-ai.github.io/langgraph/", note: "Use it after you build the loop by hand." },
-        { label: "Chroma", url: "https://docs.trychroma.com/", note: "Fastest vector DB to learn on." },
-        { label: "pgvector", url: "https://github.com/pgvector/pgvector", note: "The one that shows up in real jobs." },
-        { label: "Langfuse", url: "https://langfuse.com/", note: "Tracing + evals, free tier." },
-        { label: "FastAPI docs", url: "https://fastapi.tiangolo.com/" }
-      ] },
-    { group: "Aptitude",
-      items: [
-        { label: "IndiaBix", url: "https://www.indiabix.com/", note: "Pattern-matched to TCS NQT." },
-        { label: "PrepInsta", url: "https://prepinsta.com/", note: "Company-wise previous papers." }
-      ] },
-    { group: "Applying",
-      items: [
-        { label: "Unstop", url: "https://unstop.com/", note: "Highest conversion for Indian students." },
-        { label: "Wellfound", url: "https://wellfound.com/", note: "AI startups — your most realistic route." },
-        { label: "LinkedIn Jobs", url: "https://www.linkedin.com/jobs/", note: "Use it for referrals, not blind applies." },
-        { label: "Cuvette", url: "https://cuvette.tech/" },
-        { label: "Naukri", url: "https://www.naukri.com/" },
-        { label: "Internshala", url: "https://internshala.com/" }
-      ] },
-    { group: "Company portals — register early",
-      items: [
-        { label: "TCS NextStep", url: "https://nextstep.tcs.com/" },
-        { label: "Infosys", url: "https://career.infosys.com/" },
-        { label: "Wipro", url: "https://careers.wipro.com/" },
-        { label: "Accenture", url: "https://www.accenture.com/in-en/careers" },
-        { label: "Cognizant", url: "https://careers.cognizant.com/global/en" },
-        { label: "Capgemini", url: "https://www.capgemini.com/in-en/careers/" }
-      ] },
-    { group: "Mocks",
-      items: [
-        { label: "Pramp", url: "https://www.pramp.com/", note: "Free peer mocks. Do 10+." },
-        { label: "Excalidraw", url: "https://excalidraw.com/", note: "For LLD/HLD diagrams." }
-      ] }
-  ];
 
   var RULES = [
-    "One sheet, one language, one stack. Striver A2Z to learn, NeetCode 150 to revise.",
     "45 min alone → 20 min learning → rewrite from scratch. Every problem.",
-    "FAANG bar: easy under 15 min, medium under 30 min, cold, out loud.",
+    "FAANG bar: easy under 15 min, medium under 30 min — cold, out loud.",
     "Attempt 2 hards a week. Not solve. Attempt.",
     "From week 10, every week ends with a timed set. It is the OA, rehearsed.",
-    "Deploy P1 in week 12. A live URL with an eval score beats a notebook.",
-    "Exam weeks are 40 minutes. That's the whole promise — no guilt, no backlog.",
-    "A collapsed day = one easy problem. Never zero.",
-    "CGPA floor 7.5, zero backlogs. You have 7.65 — don't waste it.",
+    "Revision beats new problems after week 8. 244 revised beats 400 forgotten.",
     "Every problem appears once. Repeats are labelled re-solve, on purpose.",
-    "Don't buy a course. Everything here is free and better."
+    "A collapsed day = one easy problem. Never zero.",
+    "One sheet: Striver A2Z to learn, NeetCode 150 to revise.",
+    "Don't buy a course. Everything here is free."
   ];
 
-  var MILESTONES = [
-    { when: "Week 3 · Dec 6", checks: ["21 easy problems done", "Exams still passed", "Zero burnout"] },
-    { when: "Week 9 · Jan 10", checks: ["~90 problems", "Easy in under 20 min", "DBMS + SQL solid", "Resume v2", "First mock done"] },
-    { when: "Week 14 · Feb 21", checks: ["~150 problems", "Easy under 15 min, medium under 30", "OS + CN done", "3 timed sets done", "3 mocks"] },
-    { when: "Week 19 · Mar 21", checks: ["~215 problems", "DP + graphs + tries done", "10 hards attempted", "6 timed sets", "45+ applications"] }
-  ];
 
   window.CUDATA = {
     WEEK1: WEEK1, PLACEMENT_SEASON: PLACEMENT_SEASON,
     WEEKS: WEEKS, DAYS: DAYS,
-    CS: CS, AI: AI, FAANG: FAANG, RESOURCES: RESOURCES, RULES: RULES, MILESTONES: MILESTONES,
+    RULES: RULES, LEARN: LEARN,
     addDaysISO: addDaysISO, diffDays: diffDays, monthOf: monthOf
   };
 })();

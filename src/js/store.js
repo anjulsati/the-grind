@@ -9,7 +9,7 @@
   var D = window.CUDATA;
   var LS_DB = "the-grind-db-v1";
   var LS_STATE = "the-grind-v1";
-  var DB_VERSION = 6;
+  var DB_VERSION = 8;
 
   /* ---------- seed ---------- */
   function seedDB() {
@@ -33,18 +33,19 @@
     weeks.forEach(function (w) {
       if (w.mode === "sprint") return;
       w.days.forEach(function (d) {
-        var learnIdx = d.items.findIndex(function (i) { return i.type === "watch" || i.type === "theory"; });
-        if (learnIdx > 0) {
-          var l = d.items.splice(learnIdx, 1)[0];
-          d.items.unshift(l);
-        } else if (learnIdx === -1 && !d.revision && d.idx > 0 && d.idx < 6 && w.pre) {
+        var learn = (window.CUDATA.LEARN && window.CUDATA.LEARN[w.n]) ? window.CUDATA.LEARN[w.n][d.idx] : null;
+        if (learn) {
           d.items.unshift({
-            id: "l" + d.date + "-" + w.n,
-            type: "watch", track: "dsa",
-            title: "Learn first — " + w.pattern,
-            url: w.pre.url, vtitle: w.pre.vtitle, vauthor: w.pre.vauthor,
-            hint: "Same week video — watch the part you need, then the questions below."
+            id: "l" + d.date + "-" + w.n, type: "watch", track: "dsa",
+            title: learn.t, url: "https://www.youtube.com/watch?v=" + learn.v,
+            vtitle: learn.t.replace(/^Learn first — /, ""), vauthor: learn.a, hint: learn.h
           });
+        } else {
+          var learnIdx = d.items.findIndex(function (i) { return i.type === "watch" || i.type === "theory"; });
+          if (learnIdx > 0) {
+            var l = d.items.splice(learnIdx, 1)[0];
+            d.items.unshift(l);
+          }
         }
       });
     });
@@ -63,7 +64,7 @@
      - CS Fundamentals content is not seeded into days — he writes that himself at the top.
      - Everything else (problems, DSA concepts, career) lives in the DSA box. */
   function remapItem(it) {
-    if (it.type === "dev" || it.type === "project" || it.type === "ai") return null;
+    if (it.type === "dev" || it.type === "project" || it.type === "ai" || it.type === "career") return null;
     if (it.track === "cs") return null;
     it.track = "dsa";
     return it;
@@ -71,20 +72,33 @@
 
   function seedPillars() {
     return [
-      { n: "01", name: "DSA", tag: "", items: [
-        "Topics & techniques: arrays · hashing · two pointers · sliding window · strings · sorting · binary search · binary search on answer · recursion · backtracking · linked lists · stacks & queues · trees · BST · heaps · greedy · graphs · DP · tries · bits",
-        "Striver A2Z to learn · NeetCode 150 to revise",
-        "Aditya Verma for DP, recursion, stacks",
-        "Timed set every week from W10",
-        "Bar: easy under 15 min, medium under 30",
-        "Material: LeetCode · Top Interview 150 · CTCI ch 1-6, 17",
-        "Day-wise schedule: every day = the video/article first, then that day's questions — built into the boxes below"
+      { n: "01", name: "Techniques", items: [
+        "Arrays · hashing · two pointers · sliding window · strings",
+        "Sorting · binary search · binary search on the answer",
+        "Recursion · backtracking · linked lists · stacks & queues",
+        "Trees · BST · heaps · greedy",
+        "Graphs: BFS, DFS, topological sort, union find, shortest path",
+        "Dynamic programming · tries · bits"
       ]},
-      { n: "02", name: "CS Fundamentals", tag: "", items: [] },
-      { n: "03", name: "DEV", tag: "", items: [] }
+      { n: "02", name: "Resources", items: [
+        "Striver A2Z — the sheet, in this plan's order",
+        "NeetCode 150 — the revision pass",
+        "LeetCode — where you submit; contests every Sunday",
+        "Aditya Verma — DP, recursion, stacks",
+        "Kunal Kushwaha — Java DSA from zero",
+        "Abdul Bari — algorithm theory",
+        "CTCI ch 1-6, 17 — the classics"
+      ]},
+      { n: "03", name: "The bar", items: [
+        "Easy under 15 min, medium under 30 — cold, out loud",
+        "Attempt 2 hards a week. Not solve. Attempt.",
+        "Timed set every week from W10 — the OA, rehearsed",
+        "Revision beats new problems after week 8",
+        "Every problem appears once — repeats are labelled re-solve",
+        "A collapsed day = one easy problem. Never zero"
+      ]}
     ];
   }
-
   /* ---------- load / save ---------- */
   var db = loadDB();
   function loadDB() {
