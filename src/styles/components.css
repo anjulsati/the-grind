@@ -219,7 +219,7 @@ body.pen-on .penbar{display:flex}
   border-radius:50%;width:20px;height:20px;display:grid;place-items:center;flex:none;
 }
 .sn-avatar[data-author="Anurag"]{background:var(--blue)}
-.sn-avatar[data-author="Anjul Sati"]{background:var(--green)}
+.sn-avatar[data-author="Anjul"]{background:var(--green)}
 .sn-mini-text{font-size:11px;color:var(--ink2);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sn-mini-meta{font:500 9px var(--mono);color:var(--ink3);white-space:nowrap}
 .sn-expand,.sn-close{

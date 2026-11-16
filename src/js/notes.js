@@ -7,7 +7,7 @@
   "use strict";
 
   var LS_KEY = "the-grind-notes-v1";
-  var authors = ["Anjul Sati", "Anurag"];
+  var authors = ["Anjul", "Anurag"];
   var noteCounter = 0;
   var notes = load();
   var activeDrag = null;
@@ -244,7 +244,7 @@
       '<div class="np-body">' +
         '<div class="np-author">' +
           '<span>Creating as:</span>' +
-          '<select id="npAuthor"><option>Anjul Sati</option><option>Anurag</option></select>' +
+          '<select id="npAuthor"><option>Anjul</option><option>Anurag</option></select>' +
         "</div>" +
         '<button id="npCreate" class="np-create">＋ New note</button>' +
         '<div class="np-count">' + notes.length + " note" + (notes.length !== 1 ? "s" : "") + " on the page</div>" +
