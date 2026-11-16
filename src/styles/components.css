@@ -186,3 +186,17 @@ body.pen-on .penbar{display:flex}
   border-left-color: var(--cyan);
   box-shadow: -2px 0 0 var(--cyan-dim);
 }
+
+/* ---------------- cursor glow + sparkles ---------------- */
+#cursorGlow{
+  position:fixed;left:-100px;top:-100px;z-index:200;
+  width:200px;height:200px;border-radius:50%;
+  pointer-events:none;
+  background:radial-gradient(circle, rgba(0,229,160,.07) 0%, rgba(0,229,160,.03) 40%, transparent 70%);
+  opacity:0;transition:opacity .3s;
+  mix-blend-mode:screen;
+}
+#sparkleCanvas{
+  position:fixed;inset:0;z-index:201;pointer-events:none;
+  width:100%;height:100%;
+}
