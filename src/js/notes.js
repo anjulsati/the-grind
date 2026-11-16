@@ -135,7 +135,7 @@
           '<button class="sn-fs" data-fs="-1" title="Smaller text">A−</button>' +
           '<button class="sn-fs" data-fs="1" title="Bigger text">A+</button>' +
         "</div>" +
-        '<div class="sn-body" style="font-size:' + (note.fs || 14) + 'px" contenteditable="true" data-nid="' + note.id + '" data-placeholder="Write a note… paste links, add checkboxes, format with the toolbar above…">' + note.html + "</div>" +
+        '<div class="sn-body" style="font-size:' + (note.fs || 16) + 'px" contenteditable="true" data-nid="' + note.id + '" data-placeholder="Write a note… paste links, add checkboxes, format with the toolbar above…">' + note.html + "</div>" +
         '<div class="sn-resize" title="Drag to resize"></div>' +
         '<div class="sn-footer">' +
           '<span class="sn-updated">Updated ' + esc(note.updated) + "</span>" +
@@ -194,7 +194,7 @@
     el.querySelectorAll(".sn-fs").forEach(function (b) {
       b.addEventListener("mousedown", function (e) { e.preventDefault(); });
       b.addEventListener("click", function () {
-        note.fs = Math.max(10, Math.min(28, (note.fs || 14) + Number(b.getAttribute("data-fs"))));
+        note.fs = Math.max(10, Math.min(28, (note.fs || 16) + Number(b.getAttribute("data-fs"))));
         body.style.fontSize = note.fs + "px";
         save();
       });
