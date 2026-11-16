@@ -41,8 +41,8 @@
       author: author || authors[0],
       created: now(),
       updated: now(),
-      x: x || window.innerWidth / 2 - 180 + (Math.random() - 0.5) * 100,
-      y: y || window.innerHeight / 2 - 150 + (Math.random() - 0.5) * 80,
+      x: (x || window.innerWidth / 2 - 180) + window.scrollX + (Math.random() - 0.5) * 100,
+      y: (y || window.innerHeight / 2 - 150) + window.scrollY + (Math.random() - 0.5) * 80,
       w: 380,
       h: "auto",
       minimized: false,
@@ -180,8 +180,8 @@
       grip.style.cursor = "grabbing";
 
       function move(ev) {
-        note.x = Math.max(0, Math.min(window.innerWidth - 100, ev.clientX - sx));
-        note.y = Math.max(0, Math.min(window.innerHeight - 30, ev.clientY - sy));
+        note.x = Math.max(0, ev.clientX + window.scrollX - sx);
+        note.y = Math.max(0, ev.clientY + window.scrollY - sy);
         el.style.left = note.x + "px";
         el.style.top = note.y + "px";
       }

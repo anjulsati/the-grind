@@ -203,9 +203,9 @@ body.pen-on .penbar{display:flex}
 
 /* ---------------- sticky notes ---------------- */
 .sticky-note{
-  position:fixed;z-index:150;width:380px;
-  background:var(--panel);border:1px solid var(--line2);border-radius:var(--r);
-  box-shadow:0 8px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(0,229,160,.08);
+  position:absolute;z-index:150;width:380px;
+  background:#1a1f0e;border:1px solid rgba(255,184,77,.4);border-radius:var(--r);
+  box-shadow:0 8px 40px rgba(0,0,0,.5), 0 0 16px -4px rgba(255,184,77,.15);
   font-family:var(--sans);overflow:visible;
 }
 .sticky-note.minimized{
@@ -319,8 +319,8 @@ body.pen-on .penbar{display:flex}
 
 /* ---------------- revision tracker ---------------- */
 .rev-btn{
-  font:700 10px var(--mono);color:var(--ink3);
-  background:var(--panel3);border:1px solid var(--line2);
+  font:700 11px var(--mono);color:var(--amber);
+  background:rgba(255,184,77,.08);border:1px solid rgba(255,184,77,.35);
   border-radius:50%;width:26px;height:26px;
   display:grid;place-items:center;cursor:pointer;flex:none;
   transition:.12s;font-family:var(--mono);
@@ -352,3 +352,11 @@ body.pen-on .penbar{display:flex}
   border-radius:var(--r2);cursor:pointer;transition:.12s;
 }
 .rp-add:hover{background:var(--green);color:var(--bg)}
+
+.rp-edit,.rp-del{
+  background:transparent;border:1px solid var(--line2);color:var(--ink3);
+  cursor:pointer;border-radius:3px;font-size:10px;padding:1px 5px;
+  font-family:var(--mono);transition:.1s;flex:none;
+}
+.rp-edit:hover{color:var(--green);border-color:var(--green)}
+.rp-del:hover{color:var(--red);border-color:var(--red)}

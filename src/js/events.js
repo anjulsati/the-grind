@@ -159,9 +159,12 @@
       html += '<div class="rp-empty">No revisions yet. Tap ＋ each time you re-solve this problem.</div>';
     } else {
       item.revisions.forEach(function (r, i) {
-        var label = item.revisions.length === 1 ? "1st revision" :
-          (i === 0 ? "1st revision" : ordinal(i + 1) + " revision");
-        html += '<div class="rp-entry"><span class="rp-num">' + ordinal(i + 1) + '</span><span class="rp-date">' + esc(r) + '</span></div>';
+        html += '<div class="rp-entry">' +
+          '<span class="rp-num">' + ordinal(i + 1) + '</span>' +
+          '<span class="rp-date">' + esc(r) + '</span>' +
+          '<button class="rp-edit" data-rp-edit="' + i + '" title="Edit">✎</button>' +
+          '<button class="rp-del" data-rp-del="' + i + '" title="Delete">✕</button>' +
+          '</div>';
       });
     }
     html += '<button class="rp-add" id="rpAdd">＋ Add revision</button>';
@@ -179,6 +182,30 @@
     panel.style.top = Math.max(10, py) + "px";
 
     document.getElementById("rpClose").addEventListener("click", function () { panel.remove(); });
+    panel.querySelectorAll("[data-rp-edit]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var ri = Number(btn.getAttribute("data-rp-edit"));
+        var newVal = prompt("Edit revision date:", item.revisions[ri]);
+        if (newVal !== null && newVal.trim()) {
+          item.revisions[ri] = newVal.trim();
+          store.saveDB();
+          panel.remove();
+          TG.ui.render();
+          openRevisionPanel(itemId, anchorEl);
+        }
+      });
+    });
+    panel.querySelectorAll("[data-rp-del]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var ri = Number(btn.getAttribute("data-rp-del"));
+        if (!confirm("Delete this revision entry?")) return;
+        item.revisions.splice(ri, 1);
+        store.saveDB();
+        panel.remove();
+        TG.ui.render();
+        if (item.revisions.length > 0) openRevisionPanel(itemId, anchorEl);
+      });
+    });
     document.getElementById("rpAdd").addEventListener("click", function () {
       var d = new Date();
       var stamp = d.toLocaleDateString("en-IN", { day: "numeric", month: "short" }) +
