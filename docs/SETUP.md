@@ -48,18 +48,16 @@ window.GRIND_FIREBASE = {
 
 The config is public by design. Access is controlled by the database rules, not by keeping the config secret.
 
-## 4. Set the allowed accounts
+## 4. Set the admin account
 
-Edit `database.rules.json` and replace the two example addresses with the Google accounts allowed to use the plan:
+The admin is the one Google account that can approve other people. It is set in two places, both by email:
 
-```json
-"plan": {
-  ".read": "auth != null && auth.token.email_verified === true && (auth.token.email === 'first@gmail.com' || auth.token.email === 'second@gmail.com')",
-  ".write": "..."
-}
-```
+- `database.rules.json`: the admin email appears in each `auth.token.email === '...'` check.
+- `src/js/sync.js`: `ADMIN_EMAIL`, which controls who sees the **People** button.
 
-Then publish the rules. See [OPERATIONS.md](OPERATIONS.md#publish-database-rules).
+Everything else is managed from the site. Other people are added and removed in the **People** panel. No code changes are needed for them.
+
+Publish the rules after any change to them. See [OPERATIONS.md](OPERATIONS.md#publish-database-rules).
 
 ## 5. Link the Firebase project
 

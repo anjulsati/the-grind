@@ -74,14 +74,23 @@ data.js ──(first load)──▶ localStorage ◀── every edit writes her
 
 Local storage is always the first copy. The shared document is a mirror that lets two browsers see the same state.
 
+## Sign-in and sharing
+
+- `sync.js` does nothing until `firebase-config.js` has a config.
+- The top bar shows **Sign in with Google**. A new person is shown as "Waiting for approval", and their request is written to `requests/<uid>`.
+- The admin (see `ADMIN_EMAIL` in `sync.js`) sees a **People** button. It opens a panel with waiting requests and approved people, and Approve, Reject, and Remove buttons.
+- An approved person is stored at `allowed/<uid>`. Only then can they read or write the plan.
+- The database rules, not the page, decide access. Firebase checks every read and write.
+- Sign-in needs the site to be served over `https://` or `http://localhost`. It won't work from `file://`.
+
 ## Sync behaviour
 
-- **Starting up.** `main.js` renders from local storage first, so the page works offline. Then `sync.connect()` signs the user in and subscribes to `/plan`.
+- **Starting up.** `main.js` renders from local storage first, so the page works offline. Then `sync.connect()` signs the user in and checks their approval.
 - **Pushing.** Any save call schedules a push 600 ms later. The push writes the plan, progress, notes, and a timestamp `updated`.
 - **Receiving.** A remote update is applied only if its `updated` value differs from the last one this browser pushed. This prevents an echo loop.
 - **Conflicts.** The most recent write replaces the whole document. Two people editing at the same moment can overwrite each other's changes.
 - **Active notes.** If a note is being typed in, an incoming update waits 1.5 seconds before it is applied.
-- **Empty room.** If `/plan` is empty when first read, the browser that connects first seeds it with its local data.
+- **Empty room.** If `/plan` is empty when first read, the first approved browser to connect seeds it with its local data.
 
 ## Rendering model
 

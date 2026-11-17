@@ -4,13 +4,16 @@ This document describes who can see and change the plan, what is public, and how
 
 ## Access model
 
-| Party | Can read the plan | Can change the plan |
-| --- | --- | --- |
-| Anonymous visitor | No | No |
-| Signed-in account not in the rules | No | No |
-| Signed-in allowed account, verified email | Yes | Yes |
+| Party | Read the plan | Change the plan | Manage people |
+| --- | --- | --- | --- |
+| Anonymous visitor | No | No | No |
+| Signed in, waiting for approval | No | No | No |
+| Approved person, verified email | Yes | Yes | No |
+| Admin, verified email | Yes | Yes | Yes |
 
-The only enforcement point is `database.rules.json`, evaluated by Firebase on its servers. The client code does not decide who has access. A browser can be modified freely, but Firebase still refuses reads and writes that the rules do not allow.
+- The admin is the account named in `database.rules.json` and in `ADMIN_EMAIL` in `sync.js`.
+- Approval is stored by Google user ID (`uid`), not by email.
+- The only enforcement point is `database.rules.json`, evaluated by Firebase on its servers. A modified browser can't bypass it.
 
 ## What is public
 
@@ -27,13 +30,15 @@ The only enforcement point is `database.rules.json`, evaluated by Firebase on it
 
 Current rules (see `database.rules.json`):
 
-- `.read` and `.write` at the root are `false`, so nothing outside `plan` is accessible.
-- `plan` allows reads and writes only when the request is signed in, the email is verified, and the email is one of the two listed accounts.
+- The root is closed (`.read` and `.write` are `false`).
+- `plan`: reads and writes only for the admin, or for an approved `uid`, with a verified email.
+- `allowed`: only the admin can read or change the list. Each person can read their own entry, which tells the site whether they're approved.
+- `requests`: the admin can read and manage requests. Each person can create or read only their own request.
 
 Requirements for any change to the rules:
-- Keep the root `false`. Do not add a broad rule.
+- Keep the root closed. Do not add a broad rule.
 - Require `auth != null` and `auth.token.email_verified === true`.
-- Use exact email matches.
+- Use exact checks.
 
 ## Known limits
 
@@ -41,7 +46,8 @@ Requirements for any change to the rules:
 - **No audit trail.** The database keeps only the latest version of the plan.
 - **Local copies.** Each browser keeps its own copy in localStorage. Anyone with access to a signed-in browser can read it. Sign out on shared computers.
 - **Note content is HTML.** Notes are rendered from rich text. Only allowed accounts can write notes, but avoid pasting untrusted content into them.
-- **Shared code removed.** An earlier design used a shared code. It is no longer used, and no code is stored in the database.
+- **Admin is fixed in code.** The admin email is set in the rules and in `sync.js`. Changing the admin means editing those two places and redeploying.
+- **Approval is not time-limited.** An approved person keeps access until you remove them.
 
 ## Reporting a problem
 

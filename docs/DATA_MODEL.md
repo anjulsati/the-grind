@@ -105,19 +105,17 @@ The Grind stores four things: the plan, progress, notes, and the shared copy in 
 - `day` is `null` for a free-floating note. Otherwise it is a date key (`YYYY-MM-DD`). For a pinned note, `x` and `y` are relative to that day's box. For a free note, they are page coordinates.
 - `html` holds the rich text from the note editor. Treat it as HTML content from a trusted account, and avoid pasting untrusted markup into notes.
 
-## Shared document (Firebase `/plan`)
+## Shared database (Firebase Realtime Database)
 
-```json
-{
-  "plan": { "...": "same shape as the plan" },
-  "progress": { "done": { } },
-  "notes": [ ],
-  "updated": 1763398800000
-}
-```
+| Path | Who can read | Who can write | Contents |
+| --- | --- | --- | --- |
+| `plan` | Admin and approved people | Admin and approved people | `{ plan, progress, notes, updated }` |
+| `allowed/<uid>` | The person themselves, and the admin | The admin | `{ email, at }`. Presence means approved. |
+| `requests/<uid>` | The person themselves, and the admin | The person themselves (create), and the admin (approve, reject) | `{ email, at }`. Presence means waiting. |
 
+- `uid` is the Google account's permanent identifier. Approval uses it instead of the email, so an approval can't be transferred by changing an email address.
 - `updated` is a millisecond timestamp. A browser ignores an update whose `updated` matches the last one it pushed.
-- The whole document is written at once. Writes are last-write-wins.
+- The whole `plan` document is written at once. Writes are last-write-wins.
 
 ## Export and import
 

@@ -44,13 +44,24 @@ Use **Edit plan → Export plan** to download a JSON copy of the plan. Keep it o
 - **Restore original** (in edit mode) rebuilds the plan from `data.js`. Progress and notes are kept.
 - **Import plan** (in edit mode) replaces the plan with a previously exported file. When signed in, the import reaches the other signed-in browser.
 
+## Manage people
+
+Only the admin can do this. Sign in with the admin account and click **People** in the top bar.
+
+- **Approve** a waiting request to give that person access.
+- **Reject** a request to dismiss it. The person can request again.
+- **Remove** an approved person to revoke access. Their open session stops receiving changes.
+
+The same lists are visible in the Firebase console under **Realtime Database → Data**, in `allowed` and `requests`.
+
 ## Troubleshooting
 
 | Symptom | Likely cause | Fix |
 | --- | --- | --- |
 | No **Sign in with Google** button | Firebase config is `null`, or the page is cached | Check `firebase-config.js`. Reload with `Ctrl+Shift+R`. |
 | Sign-in popup shows an error | The domain is not authorised | Add the site domain under **Authentication → Settings → Authorized domains**. |
-| "Not allowed to read the shared plan" | The account is not in the rules, or its email is not verified | Add the email to `database.rules.json` and redeploy, or verify the email with Google. |
+| "Waiting for approval" stays on screen | The admin hasn't approved the request yet | Ask the admin to approve in the People panel. |
+| "Not allowed to read the shared plan" | The person is not approved, or their email isn't verified | Approve them in the People panel, or verify the email with Google. |
 | "Not allowed to change the shared plan" | Same as above, for writes | Same fix. |
 | Changes appear on one browser only | The other browser is not signed in | Sign in on that browser. |
 | Plan looks outdated after a deploy | Browser cache | Reload with `Ctrl+Shift+R`. |
