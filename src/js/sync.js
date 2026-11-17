@@ -22,7 +22,7 @@
   var modal = null;
   var lastSeen = null;
   var HIST_KEY = "the-grind-hist-at";
-  var HIST_GAP = 5 * 60 * 1000;
+  var HIST_GAP = 24 * 60 * 60 * 1000;
   var HIST_KEEP = 30;
   var HIST_MIGRATED = "the-grind-hist-v2";
 

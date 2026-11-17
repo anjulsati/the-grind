@@ -112,7 +112,7 @@ The Grind stores four things: the plan, progress, notes, and the shared copy in 
 | `plan` | Admin and approved people | Admin and approved people | `{ plan, progress, notes, updated }` |
 | `allowed/<uid>` | The person themselves, and the admin | The admin | `{ email, at }`. Presence means approved. |
 | `requests/<uid>` | The person themselves, and the admin | The person themselves (create), and the admin (approve, reject) | `{ email, at }`. Presence means waiting. |
-| `history/<timestamp>` | Admin only | Approved people can add a new entry. Only the admin can change or delete entries. | A saved copy of `plan`, keyed by the time it was saved. At most 30 are kept. |
+| `history/<timestamp>` | Admin only | Approved people can add a new entry. Only the admin can change or delete entries. | A saved copy of `plan`, keyed by the time it was saved. One is saved per day, and the last 30 are kept. |
 | `historyIndex/<timestamp>` | Admin only | Same as `history` | `true`. A small list of saved copies, so cleanup doesn't download the full copies. |
 
 - `uid` is the Google account's permanent identifier. Approval uses it instead of the email, so an approval can't be transferred by changing an email address.
