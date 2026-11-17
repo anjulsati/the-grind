@@ -216,10 +216,16 @@
 
   function restore(key) {
     var when = new Date(Number(key)).toLocaleString("en-IN");
-    if (!confirm("Restore the plan from " + when + "? The current version is saved to history first.")) return;
-    var current = lastSeen;
-    var saveCurrent = current ? saveVersion(current) : Promise.resolve();
-    saveCurrent
+    if (!confirm("Restore the plan from " + when + "?\n\nYour current plan is saved first as \"Before restore\", so you can undo this.")) return;
+    var now = Date.now();
+    var backup = clean({
+      plan: TG.store.db,
+      progress: TG.store.state,
+      notes: TG.notes.getNotes(),
+      updated: now
+    });
+    db.ref("history/" + now).set(backup)
+      .then(function () { return db.ref("historyIndex/" + now).set("Before restore"); })
       .then(function () { return db.ref("history/" + key).once("value"); })
       .then(function (snap) {
         var v = snap.val();
@@ -228,8 +234,8 @@
         lastSeen = v;
         return db.ref("plan").set(v);
       })
-      .then(function () { TG.toast("Plan restored from " + when); closePeople(); })
-      .catch(fail);
+      .then(function () { TG.toast("Restored from " + when + ". Undo: restore the \"Before restore\" entry."); closePeople(); })
+      .catch(function () { TG.toast("Restore cancelled: the current plan could not be saved first"); });
   }
 
   function renderHistory(body) {
@@ -239,11 +245,13 @@
     db.ref("historyIndex").once("value").then(function (snap) {
       list.textContent = "";
       var keys = [];
-      snap.forEach(function (c) { keys.push(c.key); });
+      var labels = {};
+      snap.forEach(function (c) { keys.push(c.key); labels[c.key] = typeof c.val() === "string" ? c.val() : "Automatic"; });
       if (!keys.length) { list.appendChild(el("div", "sync-empty", "No saved versions yet.")); return; }
       keys.reverse().forEach(function (key) {
         var row = el("div", "sync-row");
-        row.appendChild(el("span", "sync-who", new Date(Number(key)).toLocaleString("en-IN")));
+        var text = el("span", "sync-who", new Date(Number(key)).toLocaleString("en-IN") + "  ·  " + labels[key]);
+        row.appendChild(text);
         row.appendChild(btn("Restore", "btn", function () { restore(key); }));
         list.appendChild(row);
       });
