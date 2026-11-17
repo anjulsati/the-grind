@@ -14,7 +14,6 @@
   var lastStamp = 0;
   var applying = false;
   var seeded = false;
-  var bar = null;
 
   function config() { return window.GRIND_FIREBASE || null; }
 
@@ -83,17 +82,13 @@
   }
 
   function showBar(user) {
-    if (!bar) {
-      bar = document.createElement("div");
-      bar.id = "syncBar";
-      bar.className = "sync-bar";
-      document.body.appendChild(bar);
-    }
+    var bar = document.getElementById("syncSlot");
+    if (!bar) return;
     if (user) {
-      bar.innerHTML = '<span>Signed in as ' + user.email + '</span><button class="btn" id="syncOut">Sign out</button>';
+      bar.innerHTML = '<span class="sync-who">' + user.email + '</span><button class="btn" id="syncOut">Sign out</button>';
       document.getElementById("syncOut").addEventListener("click", function () { firebase.auth().signOut(); });
     } else {
-      bar.innerHTML = '<button class="btn solid" id="syncIn">Sign in with Google to share the plan</button>';
+      bar.innerHTML = '<button class="btn solid" id="syncIn">Sign in with Google</button>';
       document.getElementById("syncIn").addEventListener("click", function () {
         firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(function (err) {
           TG.toast("Sign-in failed: " + err.message);
