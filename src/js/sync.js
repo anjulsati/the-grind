@@ -136,7 +136,10 @@
     if (!bar) return;
     bar.textContent = "";
     if (!user) {
-      bar.appendChild(btn("Sign in", "btn solid", signIn));
+      var si = btn("Sign in", "btn solid", signIn);
+      si.title = "Sign in with Google";
+      si.setAttribute("aria-label", "Sign in with Google");
+      bar.appendChild(si);
       return;
     }
     var wrap = el("div", "acct");
