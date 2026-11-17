@@ -156,7 +156,7 @@ body.pen-on .penbar{display:flex}
 
 /* ---------------- responsive ---------------- */
 @media (max-width:880px){
-  .topbar{flex-wrap:wrap;gap:9px;padding:10px 15px}
+  .topbar{grid-template-columns:1fr;height:auto;gap:12px;padding:14px 16px}
   .todaybox{order:4;width:100%;max-width:none;min-width:0}
   .navwrap{top:0}
   main{padding:20px 14px 80px}
@@ -175,7 +175,7 @@ body.pen-on .penbar{display:flex}
   .item .itools{opacity:1}
   .wtag{display:none}
   .plan-head{flex-direction:column;align-items:flex-start}
-  .actions{order:4;width:100%;justify-content:flex-end}
+  .actions{flex-wrap:wrap;justify-content:flex-start}
   .editbar{top:0;position:sticky}
   .eb-actions{margin-left:0}
 }
