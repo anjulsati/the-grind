@@ -118,20 +118,6 @@
   });
 
   /* ============================================================
-     REORDER (▲▼ on each task)
-     ============================================================ */
-  function reorder(id, dir) {
-    var f = store.findItem(id);
-    if (!f) return;
-    var arr = f.day.items;
-    var i = arr.findIndex(function (x) { return x.id === id; });
-    var j = dir === "up" ? i - 1 : i + 1;
-    if (j < 0 || j >= arr.length) return;
-    var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
-    store.saveDB(); ui.render();
-  }
-
-  /* ============================================================
      REVISION TRACKER
      ============================================================ */
   function esc(s) {
@@ -272,12 +258,6 @@
     /* revision tracker */
     var rev = t.closest("[data-rev]");
     if (rev) { openRevisionPanel(rev.getAttribute("data-rev"), rev); return; }
-
-    /* edit-mode actions */
-    var up = t.closest("[data-up]");
-    if (up) { reorder(up.getAttribute("data-up"), "up"); return; }
-    var dn = t.closest("[data-down]");
-    if (dn) { reorder(dn.getAttribute("data-down"), "down"); return; }
 
     var del = t.closest("[data-del]");
     if (del) {

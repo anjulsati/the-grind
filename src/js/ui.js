@@ -62,16 +62,29 @@
   }
   function itemHTML(item, idx, total, editing) {
     var done = !!store.state.done[item.id];
+    var ef2 = function (f) { return ' data-ef="task|' + item.id + '|' + f + '"'; };
     var title = editing
-      ? '<span class="t" data-ef="task|' + item.id + '|title" contenteditable="true">' + esc(item.title) + "</span>"
+      ? '<span class="t"' + ef2("title") + ' contenteditable="true">' + esc(item.title) + "</span>"
       : item.url
         ? '<a href="' + item.url + '" target="_blank" rel="noopener">' + esc(item.title) + "</a>"
         : esc(item.title);
-    var diff = item.diff ? '<span class="diff ' + item.diff + '">' + diffLabel(item.diff) + "</span>" : "";
+    var diff = item.diff
+      ? '<span class="diff ' + item.diff + '"' + (editing ? ef2("diff") + ' contenteditable="true"' : "") + ">" + diffLabel(item.diff) + "</span>"
+      : (editing ? '<span class="diff"' + ef2("diff") + ' contenteditable="true" data-ph="diff"></span>' : "");
+    var prio = prioTag(item.priority);
+    if (editing && item.priority) {
+      prio = '<span class="prio ' + item.priority + '"' + ef2("priority") + ' contenteditable="true">' + esc(item.priority) + "</span>";
+    }
     var hint = (!editing && item.hint) ? '<p class="hint">' + esc(item.hint) + "</p>" : "";
-    var vid = item.vtitle
-      ? '<p class="vid">▶ ' + (item.vauthor ? "<b>" + esc(item.vauthor) + "</b> · " : "") + esc(item.vtitle) + "</p>"
-      : "";
+    var vid;
+    if (editing) {
+      vid = '<p class="vid">▶ <b' + ef2("vauthor") + ' contenteditable="true" data-ph="channel">' + esc(item.vauthor || "") + "</b>" +
+        '<span class="vsep"> · </span><span' + ef2("vtitle") + ' contenteditable="true" data-ph="video title">' + esc(item.vtitle || "") + "</span></p>";
+    } else {
+      vid = item.vtitle
+        ? '<p class="vid">▶ ' + (item.vauthor ? "<b>" + esc(item.vauthor) + "</b> · " : "") + esc(item.vtitle) + "</p>"
+        : "";
+    }
     var revisions = item.revisions || [];
     var revCount = revisions.length;
     var revBtn = "";
@@ -81,10 +94,7 @@
     }
     var actions;
     if (editing) {
-      actions =
-        '<button class="tbtn" data-up="' + item.id + '" title="Move up"' + (idx === 0 ? " disabled" : "") + ">▲</button>" +
-        '<button class="tbtn" data-down="' + item.id + '" title="Move down"' + (idx === total - 1 ? " disabled" : "") + ">▼</button>" +
-        '<button class="tbtn danger" data-del="' + item.id + '" title="Delete task">✕</button>';
+      actions = '<button class="tbtn danger" data-del="' + item.id + '" title="Delete task">✕</button>';
     } else {
       actions = item.url ? '<a class="go" href="' + item.url + '" target="_blank" rel="noopener">open ↗</a>' : "";
     }
@@ -95,7 +105,7 @@
     return '<li class="item' + (done ? " done" : "") + '" draggable="' + (editing ? "false" : "true") + '" data-dragid="' + item.id + '">' +
       '<span class="grip" title="Drag to reorder or move to another day">⠿</span>' +
       '<input type="checkbox" data-id="' + item.id + '"' + (done ? " checked" : "") + ' aria-label="' + esc(item.title) + '">' +
-      '<div class="body"><div class="title"><span class="badge ' + item.type + '">' + typeLabel(item.type) + "</span>" + title + diff + prioTag(item.priority) + "</div>" + vid + inline + hint + "</div>" +
+      '<div class="body"><div class="title"><span class="badge ' + item.type + '">' + typeLabel(item.type) + "</span>" + title + diff + prio + "</div>" + vid + inline + hint + "</div>" +
       '<div class="row-end">' + revBtn + actions + "</div></li>";
   }
 

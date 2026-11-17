@@ -65,6 +65,8 @@ textarea{
 }
 [contenteditable][data-ef]:hover{background:var(--panel3)}
 [contenteditable][data-ef]:focus{background:var(--panel3);box-shadow:0 0 0 1px var(--green)}
+.vid [contenteditable][data-ef]{display:inline;min-height:0}
+.vsep{opacity:.6}
 [contenteditable][data-ef]:empty::before{
   content:attr(data-ph);color:var(--ink3);opacity:.55;pointer-events:none;
 }

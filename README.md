@@ -49,9 +49,10 @@ Clicking it turns that week's content into directly editable text — click any 
 - Day labels and time
 - Task titles, links and how-to lines
 
-While a week is being edited it also shows `＋` to add a task to a day, `▲` `▼` to move a task,
-and `✕` to delete it. Click **Done** in the week header to finish. Changes save as soon as you
-click away (or press Enter), in the browser and in the shared copy when you are signed in.
+While a week is being edited it also shows `＋` to add a task to a day and `✕` to delete a task.
+Tasks are reordered by dragging them in normal view. Click **Done** in the week header to finish.
+Changes save as soon as you click away (or press Enter), in the browser and in the shared copy
+when you are signed in.
 
 Export, import and restore live in the admin **People** panel (account menu), so they are not
 accidentally reachable from the main screen.
