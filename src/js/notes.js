@@ -26,6 +26,7 @@
   }
   function save() {
     try { localStorage.setItem(LS_KEY, JSON.stringify(notes)); } catch (e) {}
+    if (window.TG && TG.sync) TG.sync.changed();
   }
 
   function now() {
@@ -365,5 +366,13 @@
     init();
   }
 
-  TG.notes = { create: createNote, toggle: toggle, renderAll: renderAll, notes: notes };
+  function getNotes() { return JSON.parse(JSON.stringify(notes)); }
+  function setNotes(list) {
+    notes = list;
+    save();
+    document.querySelectorAll(".sticky-note").forEach(function (el) { el.remove(); });
+    renderAll();
+  }
+
+  TG.notes = { create: createNote, toggle: toggle, renderAll: renderAll, getNotes: getNotes, setNotes: setNotes };
 })();

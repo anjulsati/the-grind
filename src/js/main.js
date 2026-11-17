@@ -16,4 +16,5 @@
 
   document.getElementById("editbar").style.display = "none";
   window.TG.ui.render();
+  if (window.TG.sync) TG.sync.connect();
 })();

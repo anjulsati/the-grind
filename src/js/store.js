@@ -84,6 +84,7 @@
   }
   function saveDB() {
     try { localStorage.setItem(LS_DB, JSON.stringify(db)); } catch (e) { /* ignore */ }
+    if (window.TG && TG.sync) TG.sync.changed();
   }
   function restoreDB() {
     db = seedDB();
@@ -119,6 +120,14 @@
   }
   function saveState() {
     try { localStorage.setItem(LS_STATE, JSON.stringify(state)); } catch (e) { /* ignore */ }
+    if (window.TG && TG.sync) TG.sync.changed();
+  }
+  function setAll(plan, progress) {
+    db = plan;
+    state = progress;
+    state.done = state.done || {};
+    saveDB();
+    saveState();
   }
   function resetState() {
     state = { done: {} };
@@ -165,7 +174,7 @@
   }
 
   TG.store = {
-    LS_DB: LS_DB, LS_STATE: LS_STATE,
+    LS_DB: LS_DB, LS_STATE: LS_STATE, setAll: setAll,
     get db() { return db; },
     get state() { return state; },
     seedDB: seedDB, loadDB: loadDB, saveDB: saveDB, restoreDB: restoreDB,
