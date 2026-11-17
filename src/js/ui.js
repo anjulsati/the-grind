@@ -49,6 +49,16 @@
     store.allDays().forEach(function (x) { t += x.items.length; d += dayDone(x); });
     return { total: t, done: d, pct: t ? (d / t) * 100 : 0 };
   }
+  function dsaOverall() {
+    var t = 0, d = 0;
+    store.allDays().forEach(function (day) {
+      day.items.forEach(function (i) {
+        if (i.type !== "dsa" && i.type !== "stretch") return;
+        t++; if (store.state.done[i.id]) d++;
+      });
+    });
+    return { total: t, done: d, pct: t ? (d / t) * 100 : 0 };
+  }
   var LAST_DATE = store.allDays()[store.allDays().length - 1].date;
   var TODAY_DAY = store.allDays().filter(function (d) { return d.date === TODAY; })[0] || null;
   var FIRST_DATE = store.db.weeks[0].days[0].date;
@@ -233,12 +243,10 @@
   }
 
   function refreshHeader() {
-    var o = overall();
+    var o = dsaOverall();
     document.getElementById("overallbar").style.width = o.pct + "%";
     document.getElementById("overallcount").textContent =
-      o.done + " / " + o.total + " (" + (o.pct > 0 && o.pct < 10 ? o.pct.toFixed(1) : Math.round(o.pct)) + "%)";
-    var left = D.diffDays(TODAY, D.PLACEMENT_SEASON);
-    document.getElementById("countdown").textContent = left > 0 ? left + " days to placements" : "placement season";
+      o.done + " / " + o.total + " DSA" + (o.pct > 0 ? " (" + (o.pct > 0 && o.pct < 10 ? o.pct.toFixed(1) : Math.round(o.pct)) + "%)" : "");
     var label;
     if (TODAY < FIRST_DATE) label = "Starts " + fmtDate(FIRST_DATE);
     else if (TODAY > LAST_DATE) label = store.db.weeks.length + " weeks complete";
@@ -250,7 +258,7 @@
     esc: esc, iso: iso, TODAY: TODAY, PREVIEW: PREVIEW,
     fmtDate: fmtDate, shortDate: shortDate, monthYear: monthYear,
     typeLabel: typeLabel, diffLabel: diffLabel,
-    dayDone: dayDone, weekStats: weekStats, overall: overall,
+    dayDone: dayDone, weekStats: weekStats, overall: overall, dsaOverall: dsaOverall,
     LAST_DATE: LAST_DATE, TODAY_DAY: TODAY_DAY, FIRST_DATE: FIRST_DATE, ACTIVE_WEEK: ACTIVE_WEEK,
     itemHTML: itemHTML, dayHTML: dayHTML, weekHTML: weekHTML, weekSummaryHTML: weekSummaryHTML,
     navHTML: navHTML, render: render, refreshHeader: refreshHeader
