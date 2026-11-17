@@ -1,7 +1,7 @@
 {
   "name": "the-grind",
   "version": "1.0.0",
-  "description": "A personal 22-week placement plan by Anjul Sati — DSA, CS Fundamentals, and the FAANG bar.",
+  "description": "A personal 23-week DSA placement plan by Anjul Sati.",
   "author": "Anjul Sati",
   "license": "MIT",
   "private": true,
@@ -14,5 +14,7 @@
     "type": "git",
     "url": "https://github.com/anjulsati/the-grind"
   },
-  "engines": { "node": ">=14" }
+  "engines": {
+    "node": ">=14"
+  }
 }

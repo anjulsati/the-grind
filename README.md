@@ -2,15 +2,19 @@
 
 **Live: https://anjulsati.github.io/the-grind/** · **Local:** `npm start` → http://localhost:5173
 
-A single-page **DSA-only** grind log by **Anjul Sati** — 19 weeks, arrays to dynamic programming, at FAANG/MAANG interview level.
-
-The whole site is the plan: open it, today is marked, do it.
+A single-page **DSA-only** study planner by **Anjul Sati**: 23 weeks, arrays to dynamic programming, built for placement interviews.
 
 - Every day opens with the **video/article to learn from**, then that day's problems
-- **244 unique problems**, one per slot, never repeated
-- Weeks 1–3 are endsem-light; from week 10 every week ends with a timed set (2 unseen mediums, 60 min)
+- **469 tasks**, one per slot, never repeated
 - **Edit plan** (`E`): add, edit, delete, drag tasks between days, set priorities
+- **↻ revision tracker** on each problem: log, edit and delete revision dates
+- **💬 Notes** (`N`): sticky notes you can drag, resize, minimise, or pin to a study day
 - **✎ Pen** (`P`): write on the page, strokes fade
-- **Export/Import**: your plan as JSON
+- **Export / Import**: a JSON backup of the plan
+- **Sign in with Google** (top bar): shares the plan, progress and notes between the two allowed accounts
 
-Keyboard: `P` pen · `E` edit · `C` clear strokes · `Esc` exit
+Keyboard: `P` pen · `E` edit · `N` note · `C` clear strokes · `Esc` exit
+
+## Sharing setup
+
+Sharing uses Firebase. The config lives in `src/js/firebase-config.js`, and the access rules in `database.rules.json`. Only the two accounts listed in those rules can read or change the plan. To publish rule changes: `npx firebase-tools deploy --only database`.
