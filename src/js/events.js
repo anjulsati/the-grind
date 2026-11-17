@@ -118,7 +118,7 @@
   });
 
   /* ============================================================
-     REORDER (▲▼ in edit mode)
+     REORDER (▲▼ on each task)
      ============================================================ */
   function reorder(id, dir) {
     var f = store.findItem(id);
@@ -239,6 +239,12 @@
   document.addEventListener("click", function (e) {
     var t = e.target;
 
+    var ww = t.closest("[data-wweek]");
+    if (ww) { editor.weekModal(store.weekByN(Number(ww.getAttribute("data-wweek")))); return; }
+
+    var wd = t.closest("[data-wday]");
+    if (wd) { editor.dayModal(store.dayByDate(wd.getAttribute("data-wday"))); return; }
+
     var tg = t.closest("[data-toggle]");
     if (tg) { var sec = tg.closest(".wk"); if (sec) sec.classList.toggle("open"); return; }
 
@@ -257,7 +263,15 @@
       return;
     }
     if (t.id === "topBtn") { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
-    if (t.id === "editBtn") { editor.toggle(); return; }
+    var more = t.closest && t.closest("#moreBtn");
+    if (more) {
+      e.stopPropagation();
+      var mm = document.getElementById("moreMenu");
+      var wasOpen = mm.classList.contains("open");
+      document.querySelectorAll(".acct-menu.open").forEach(function (x) { x.classList.remove("open"); });
+      if (!wasOpen) mm.classList.add("open");
+      return;
+    }
     if (t.id === "restoreBtn") {
       if (confirm("Restore the original plan? Everything you added, edited or deleted goes back to factory state. Checkmarks stay.")) {
         store.restoreDB(); ui.render(); TG.toast("Plan restored to the original");
@@ -294,11 +308,6 @@
     var add = t.closest("[data-add]");
     if (add) { editor.itemModal(null, add.getAttribute("data-add"), add.getAttribute("data-track")); return; }
 
-    var ww = t.closest("[data-wweek]");
-    if (ww) { editor.weekModal(store.weekByN(Number(ww.getAttribute("data-wweek")))); return; }
-
-    var wd = t.closest("[data-wday]");
-    if (wd) { editor.dayModal(store.dayByDate(wd.getAttribute("data-wday"))); return; }
   });
 
   /* ============================================================
@@ -319,7 +328,6 @@
   document.addEventListener("keydown", function (e) {
     if (e.target.matches("input, textarea, select")) return;
     if (e.key === "p" || e.key === "P") TG.pen.setPen(!TG.pen.isOn());
-    else if (e.key === "e" || e.key === "E") editor.toggle();
     else if (e.key === "Escape") { if (TG.pen.isOn()) TG.pen.setPen(false); }
   });
 })();

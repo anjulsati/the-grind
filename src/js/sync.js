@@ -337,7 +337,10 @@
   function connect() {
     var cfg = config();
     if (!cfg || !cfg.databaseURL || !window.firebase) return;
-    document.addEventListener("click", closeAccountMenus);
+    document.addEventListener("click", function (e) {
+      if (e.target.closest && e.target.closest(".acct, .more")) return;
+      closeAccountMenus();
+    });
     if (!firebase.apps.length) firebase.initializeApp(cfg);
     db = firebase.database();
     firebase.auth().onAuthStateChanged(function (user) {

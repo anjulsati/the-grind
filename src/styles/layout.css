@@ -114,6 +114,7 @@ td.num{font-family:var(--mono);font-weight:600;color:var(--green);text-align:rig
 
 /* week summary */
 .wk-sum{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px}
+.wk.open .wk-sum{display:none}
 .sum-row{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:start;font-size:18px;line-height:1.6}
 .sum-k{font:600 14px var(--sans);color:var(--ink3);padding-top:2px}
 .sum-v{display:flex;flex-wrap:wrap;gap:5px;line-height:1.6}
@@ -158,6 +159,17 @@ td.num{font-family:var(--mono);font-weight:600;color:var(--green);text-align:rig
 }
 .day.is-next{border-style:dashed;border-color:var(--line2)}
 .day.revision{background:var(--panel2);border-style:dashed}
+.day-cols{display:flex;flex-direction:column;gap:8px}
+.dcol{display:flex;flex-direction:column;gap:4px;min-width:0}
+.dcol-h{
+  display:flex;align-items:center;gap:8px;margin:2px 0 3px;
+  font:600 12px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);
+}
+.dnum{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:24px;height:20px;padding:0 5px;border:1px solid var(--line2);border-radius:4px;
+  font:600 12px var(--sans);color:var(--ink3);letter-spacing:0;
+}
 .day-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:7px;flex-wrap:wrap}
 .day-head .left{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0}
 .pill{
@@ -171,11 +183,12 @@ td.num{font-family:var(--mono);font-weight:600;color:var(--green);text-align:rig
 
 .items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
 .item{
-  display:grid;grid-template-columns:auto auto 1fr auto;gap:8px;align-items:start;
+  display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;gap:10px;align-items:start;
   padding:9px 8px;border-radius:var(--r2);border:1px solid transparent;cursor:grab;
   transition:background .1s;
 }
 .item:hover{background:var(--panel3);border-color:var(--line)}
+.row-end{display:flex;align-items:center;gap:8px;justify-content:flex-end;min-width:0}
 .item input{
   appearance:none;width:15px;height:15px;margin:2px 0 0;flex:none;
   border:1.5px solid var(--ink3);border-radius:3px;background:var(--panel2);

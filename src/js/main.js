@@ -14,7 +14,10 @@
     toastTimer = setTimeout(function () { t.className = ""; }, 2600);
   };
 
-  document.getElementById("editbar").style.display = "none";
+  document.addEventListener("click", function (e) {
+    if (e.target.closest && e.target.closest(".acct, .more")) return;
+    document.querySelectorAll(".acct-menu.open").forEach(function (m) { m.classList.remove("open"); });
+  });
   window.TG.ui.render();
   if (window.TG.sync) TG.sync.connect();
 })();

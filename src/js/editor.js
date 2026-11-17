@@ -1,23 +1,11 @@
 /* ============================================================
    The Grind — editor.js
-   Edit mode + every modal that mutates the plan database.
+   Every modal that mutates the plan database.
    ============================================================ */
 (function () {
   "use strict";
   window.TG = window.TG || {};
   var store = window.TG.store;
-
-  var editMode = false;
-  function isOn() { return editMode; }
-  function set(v) {
-    editMode = v;
-    document.body.classList.toggle("editing", v);
-    document.getElementById("editBtn").textContent = v ? "✓ Done editing" : "Edit plan";
-    document.getElementById("editbar").style.display = v ? "flex" : "none";
-    TG.ui.render();
-    TG.toast(v ? "Edit mode — drag tasks, ＋ adds, ✎ edits. Changes save automatically." : "Edit mode off");
-  }
-  function toggle() { set(!editMode); }
 
   /* ---------- modal plumbing ---------- */
   function openModal(title, bodyHTML, onSave, extra) {
@@ -113,7 +101,6 @@
   }
 
   TG.editor = {
-    isOn: isOn, set: set, toggle: toggle,
     itemModal: itemModal, weekModal: weekModal, dayModal: dayModal,
     TYPES: TYPES, PRIOS: PRIOS
   };

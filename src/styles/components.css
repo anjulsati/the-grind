@@ -51,17 +51,7 @@ textarea{
 }
 
 /* ---------------- edit mode ---------------- */
-.editbar{
-  position:sticky;top:56px;z-index:44;display:none;align-items:center;gap:12px;
-  padding:8px 20px;flex-wrap:wrap;
-  background:rgba(255,184,77,.07);border-bottom:1px solid rgba(255,184,77,.3);
-}
-.eb-tag{font:700 14px var(--mono);letter-spacing:.8px;color:var(--amber)}
-.eb-msg{font-size:17px;color:var(--ink2);font-family:var(--mono)}
-.eb-actions{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
 
-body.editing .dcol{border-style:dashed}
-body.editing .wk{border-style:dashed}
 
 .tbtn{
   background:var(--panel);border:1px solid var(--line2);color:var(--ink3);cursor:pointer;
@@ -73,7 +63,15 @@ body.editing .wk{border-style:dashed}
 .tbtn:disabled:hover{color:var(--ink3);border-color:var(--line2)}
 .tbtn.tiny{padding:1px 6px;font-size:14px;opacity:.5}
 .tbtn.tiny:hover{opacity:1}
-.wk-tools{display:inline-flex}
+.wk-tools{display:inline-flex;gap:4px}
+
+.day-wrap .tbtn,
+.wk-tools .tbtn{
+  width:26px;height:26px;padding:0;display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--sans);font-size:13px;line-height:1;opacity:.6;
+}
+.day-wrap .tbtn:hover,
+.wk-tools .tbtn:hover{opacity:1}
 
 .item .itools{display:flex;gap:2px;opacity:0;transition:.12s}
 .item:hover .itools{opacity:1}
@@ -170,15 +168,15 @@ body.pen-on .penbar{display:flex}
   .sum-k{padding-top:5px}
   .wk-body{padding:9px 8px 3px}
   .day{padding:10px 10px 6px}
-  .item{grid-template-columns:auto auto 1fr;gap:6px}
+  .item{grid-template-columns:auto auto minmax(0,1fr);gap:4px 8px;align-items:start}
+  .item .body{grid-column:3}
+  .item .row-end{grid-column:2 / -1;grid-row:2;justify-content:flex-end;gap:6px}
   .item .go{display:none}
   .item .itools{opacity:1}
   .wtag{display:none}
   .plan-head{flex-direction:column;align-items:flex-start}
   .actions{flex-wrap:wrap;justify-content:flex-start}
-  .editbar{top:0;position:sticky}
-  .eb-actions{margin-left:0}
-}
+    }
 .callout:hover {
   border-left-color: var(--cyan);
   box-shadow: -2px 0 0 var(--cyan-dim);
@@ -425,4 +423,5 @@ body.pen-on .penbar{display:flex}
 .sync-state{font-size:13px;color:var(--amber);font-family:var(--mono)}
 
 .sync-slot{display:flex;align-items:center}
+.more{position:relative}
 .sync-who{font:500 13px var(--sans);color:var(--ink3);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

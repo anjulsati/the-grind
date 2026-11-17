@@ -77,21 +77,17 @@
       revBtn = '<button class="rev-btn' + (revCount ? ' has-revs' : '') + '" data-rev="' + item.id + '" title="Revision tracker">' +
         (revCount ? '↻' + revCount : '↻') + '</button>';
     }
-    var actions;
-    if (TG.editor.isOn()) {
-      actions = '<span class="itools">' +
-        '<button class="tbtn" data-up="' + item.id + '" title="Move up"' + (idx === 0 ? " disabled" : "") + ">▲</button>" +
-        '<button class="tbtn" data-down="' + item.id + '" title="Move down"' + (idx === total - 1 ? " disabled" : "") + ">▼</button>" +
-        '<button class="tbtn" data-edit="' + item.id + '" title="Edit">✎</button>' +
-        '<button class="tbtn danger" data-del="' + item.id + '" title="Delete">✕</button></span>';
-    } else {
-      actions = item.url ? '<a class="go" href="' + item.url + '" target="_blank" rel="noopener">open ↗</a>' : "";
-    }
+    var actions = (item.url ? '<a class="go" href="' + item.url + '" target="_blank" rel="noopener">open ↗</a>' : "") +
+      '<span class="itools">' +
+      '<button class="tbtn" data-up="' + item.id + '" title="Move up"' + (idx === 0 ? " disabled" : "") + ">▲</button>" +
+      '<button class="tbtn" data-down="' + item.id + '" title="Move down"' + (idx === total - 1 ? " disabled" : "") + ">▼</button>" +
+      '<button class="tbtn" data-edit="' + item.id + '" title="Edit task">✎</button>' +
+      '<button class="tbtn danger" data-del="' + item.id + '" title="Delete task">✕</button></span>';
     return '<li class="item' + (done ? " done" : "") + '" draggable="true" data-dragid="' + item.id + '">' +
       '<span class="grip" title="Drag to reorder or move to another day">⠿</span>' +
       '<input type="checkbox" data-id="' + item.id + '"' + (done ? " checked" : "") + ' aria-label="' + esc(item.title) + '">' +
       '<div class="body"><div class="title"><span class="badge ' + item.type + '">' + typeLabel(item.type) + "</span>" + title + diff + prioTag(item.priority) + "</div>" + vid + hint + "</div>" +
-      revBtn + actions + "</li>";
+      '<div class="row-end">' + revBtn + actions + "</div></li>";
   }
 
   function dayHTML(day) {
@@ -99,7 +95,7 @@
     var isNext = !TODAY_DAY && day.date === FIRST_DATE;
     var items = day.items.map(function (it, i) { return itemHTML(it, i, day.items.length); });
 
-    var wtools = TG.editor.isOn() ? '<button class="tbtn" data-wday="' + day.date + '" title="Rename this day">✎</button>' : "";
+    var wtools = '<button class="tbtn" data-wday="' + day.date + '" title="Edit day">✎</button>';
     var cls = "day" + (isToday ? " is-today" : "") + (isNext ? " is-next" : "") + (day.revision ? " revision" : "") + (day.light ? " light" : "");
 
     return '<article class="' + cls + '" id="d-' + day.date + '">' +
@@ -162,7 +158,7 @@
     var badge = w.mode === "exam" ? '<span class="wtag exam">EXAMS</span>'
       : w.mode === "transition" ? '<span class="wtag trans">TRANSITION</span>'
       : w.mode === "sprint" ? '<span class="wtag sprint">SPRINT</span>' : "";
-    var wtools = TG.editor.isOn() ? '<button class="tbtn" data-wweek="' + w.n + '" title="Edit week">✎</button>' : "";
+    var wtools = '<button class="tbtn" data-wweek="' + w.n + '" title="Edit week">✎</button>';
 
     return '<section class="wk' + (isActive ? " open active" : "") + '" id="w' + w.n + '" data-week="' + w.n + '">' +
       '<div class="wk-head" data-toggle="' + w.n + '">' +

@@ -40,12 +40,27 @@ Then open http://localhost:5173. See [docs/SETUP.md](docs/SETUP.md) for full set
 | [docs/OPERATIONS.md](docs/OPERATIONS.md) | Deploying the site and rules, backups, and troubleshooting |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Workflow for changing the code |
 
+## Editing the plan
+
+There is no global edit mode. Each item is edited where it lives:
+
+| Control | Where | What it does |
+| --- | --- | --- |
+| `✎` | Week header | Edit the week's title, dates, goal, note and mode |
+| `✎` | Day header | Edit the day's label, date, time and notes |
+| `✎` | Each task | Edit the task title, link, difficulty, hint and type |
+| `＋` | Day box | Add a task to that day |
+| `▲` `▼` | Each task | Move the task up or down |
+| `✕` | Each task | Delete the task |
+| `⋯` | Top bar | Export, import, or restore the plan |
+
+Changes save to the browser immediately, and to the shared copy when you are signed in.
+
 ## Keyboard shortcuts
 
 | Key | Action |
 | --- | --- |
 | `P` | Toggle pen mode |
-| `E` | Toggle edit mode |
 | `N` | Toggle the notes panel |
 | `Esc` | Exit pen mode |
 
