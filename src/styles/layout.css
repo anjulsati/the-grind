@@ -95,8 +95,11 @@ td.num{font-family:var(--mono);font-weight:600;color:var(--green);text-align:rig
 .wk-right .caret{color:var(--ink3);font-size:13.5px;transition:transform .15s;display:inline-block}
 .wk.open .caret{transform:rotate(180deg)}
 .mini-bar{width:64px;height:3px;background:var(--line);border-radius:2px;overflow:hidden;border:none}
-.mini-bar>div{height:100%;background:var(--green);width:0;transition:width .3s}
-.day-count{font:600 15px var(--mono);color:var(--ink3);white-space:nowrap}
+.mini-bar>div{height:100%;background:var(--green);width:0;transition:width .3s}.day-count {
+  font:600 14.5px var(--mono);
+  color:var(--ink3);
+  white-space:nowrap;
+}
 
 .wtag{font:700 14px var(--mono);letter-spacing:.4px;padding:2px 7px;border-radius:3px;border:1px solid;white-space:nowrap}
 .wtag.exam{color:var(--amber);border-color:rgba(255,184,77,.4);background:var(--amber-dim)}
@@ -163,7 +166,6 @@ td.num{font-family:var(--mono);font-weight:600;color:var(--green);text-align:rig
 .pill.sm{font-size:14px;padding:2px 8px}
 .pill-on{background:var(--green-dim) !important;color:var(--green) !important;border-color:var(--green) !important}
 .day-date{font:500 15px var(--mono);color:var(--ink3)}
-.day-count{font:600 14.5px var(--mono);color:var(--ink3)}
 .day-wrap{display:flex;align-items:center;gap:8px}
 
 .items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}

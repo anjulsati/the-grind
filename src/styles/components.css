@@ -5,16 +5,19 @@
 .card{
   border:1px solid var(--line);background:var(--panel2);border-radius:var(--r);
   padding:14px 16px;transition:border-color .12s;
+}.card:hover {
+  border-color: rgba(0,229,160,.25);
+  box-shadow: 0 0 16px -4px rgba(0,229,160,.08);
 }
-.card:hover{border-color:var(--line2)}
 .card.tight{padding:11px 14px}
 .card h4{margin:0 0 8px;font-size:18px;font-weight:700;color:var(--ink)}
 .card h4 a{color:var(--ink);text-decoration:none}
 .card h4 a:hover{color:var(--green)}
 .card p{font-size:17px;color:var(--ink2);margin:0 0 8px;line-height:1.6}
 .card ul{margin:6px 0 0;padding-left:18px;font-size:17px;color:var(--ink2);line-height:1.8}
-.card li{margin-bottom:2px}
-.card-tools{margin-top:10px}
+.card li{margin-bottom:2px}.card-tools {
+  margin-top:8px;
+}
 
 .links{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
 .links a{
@@ -81,7 +84,6 @@ body.editing .wk{border-style:dashed}
   transition:.12s;
 }
 .addbtn:hover{color:var(--green);border-color:var(--green);background:var(--green-dim)}
-.card-tools{margin-top:8px}
 h4 .tbtn{margin-left:8px}
 
 /* ---------------- drag & drop ---------------- */
@@ -177,11 +179,6 @@ body.pen-on .penbar{display:flex}
   .editbar{top:0;position:sticky}
   .eb-actions{margin-left:0}
 }
-
-.card:hover {
-  border-color: rgba(0,229,160,.25);
-  box-shadow: 0 0 16px -4px rgba(0,229,160,.08);
-}
 .callout:hover {
   border-left-color: var(--cyan);
   box-shadow: -2px 0 0 var(--cyan-dim);
@@ -202,14 +199,21 @@ body.pen-on .penbar{display:flex}
 }
 
 /* ---------------- sticky notes ---------------- */
-.sticky-note{
-  position:absolute;z-index:150;width:380px;
-  background:#1a1f0e;border:1px solid rgba(255,184,77,.4);border-radius:var(--r);
+.sticky-note {
+  position:absolute;
+  z-index:40;
+  width:380px;
+  background:#1a1f0e;
+  border:1px solid rgba(255,184,77,.4);
+  border-radius:var(--r);
   box-shadow:0 8px 40px rgba(0,0,0,.5), 0 0 16px -4px rgba(255,184,77,.15);
-  font-family:var(--sans);overflow:visible;
-}
-.sticky-note.minimized{
-  width:280px;background:var(--panel3);border:1px solid var(--line);
+  font-family:var(--sans);
+  overflow:visible;
+}.sticky-note.minimized {
+  width:280px;
+  background:#1a1f0e;
+  border:1px solid rgba(255,184,77,.45);
+  box-shadow:0 0 16px -4px rgba(255,184,77,.2);
 }
 .sticky-note.minimized .sn-minimized{
   display:flex;align-items:center;gap:8px;padding:7px 10px;cursor:grab;
@@ -285,9 +289,11 @@ body.pen-on .penbar{display:flex}
 }
 .sn-body ul,.sn-body ol{padding-left:18px;margin:4px 0}
 .sn-body li{margin-bottom:2px}
-.sn-body hr{border:none;border-top:1px solid var(--line2);margin:8px 0}
-
-.sn-footer{padding:5px 12px 7px;border-top:1px solid var(--line)}
+.sn-body hr{border:none;border-top:1px solid var(--line2);margin:8px 0}.sn-footer {
+  padding:5px 12px 7px;
+  border-top:1px solid var(--line);
+  padding-right:26px;
+}
 .sn-updated{font:500 14px var(--mono);color:var(--ink3)}
 
 /* ---------------- note panel (top-right popup) ---------------- */
@@ -360,12 +366,6 @@ body.pen-on .penbar{display:flex}
 }
 .rp-edit:hover{color:var(--green);border-color:var(--green)}
 .rp-del:hover{color:var(--red);border-color:var(--red)}
-
-/* ---------------- notes v2: minimised highlight, resizable, text size ---------------- */
-.sticky-note.minimized{
-  background:#1a1f0e;border:1px solid rgba(255,184,77,.45);
-  box-shadow:0 0 16px -4px rgba(255,184,77,.2);
-}
 .sticky-note.minimized .sn-mini-text{color:var(--ink)}
 .sticky-note:not(.minimized){display:flex;flex-direction:column;min-width:280px;min-height:200px}
 .sticky-note .sn-body{flex:1;min-height:120px;max-height:none;overflow-y:auto}
@@ -383,7 +383,6 @@ body.pen-on .penbar{display:flex}
 .sn-toolbar .sn-fmt{font-size:15px;padding:3px 8px}
 .sn-header .sn-author{font-size:15px}
 .sn-header .sn-date{font-size:14px}
-.sn-footer{padding-right:26px}
 
 /* ---------------- notes pinned to a day ---------------- */
 .day{position:relative}
@@ -391,12 +390,11 @@ body.pen-on .penbar{display:flex}
 .wk-head{border-radius:var(--r) var(--r) 0 0}
 .wk:not(.open) .wk-head{border-radius:var(--r)}
 .wk-body{border-radius:0 0 var(--r) var(--r)}
-.sticky-note{z-index:40}
 .sticky-note.pinned{box-shadow:0 8px 30px rgba(0,0,0,.55), 0 0 0 1px rgba(255,184,77,.25)}
 
 /* ---------------- shared plan sign-in bar ---------------- */
 .sync-slot{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--ink2)}
-.sync-who{font-family:var(--mono);color:var(--green);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sync-who{font:500 13px var(--sans);color:var(--ink3);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 /* ---------------- people panel (admin) ---------------- */
 .sync-sec{font:700 12px var(--mono);color:var(--green);letter-spacing:.4px;margin-top:6px}
