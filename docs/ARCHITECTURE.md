@@ -19,7 +19,7 @@ the-grind/
     │   ├── data.js            Plan content: 23 weeks, learning resources, problems
     │   ├── store.js           Plan database: seeding, storage, edits, import/export
     │   ├── ui.js              Renders weeks, days, items, and progress
-    │   ├── editor.js          Week, day and task dialogs
+    │   ├── editor.js          Inline week editing (no dialogs)
     │   ├── events.js          Clicks, drag and drop, revision panel, shortcuts
     │   ├── notes.js           Sticky notes: create, drag, resize, minimise, pin
     │   ├── pen.js             Pen mode on a canvas, with fading strokes

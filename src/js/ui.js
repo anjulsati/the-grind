@@ -60,13 +60,15 @@
   function prioTag(p) {
     return p ? '<span class="prio ' + p + '">' + p + "</span>" : "";
   }
-  function itemHTML(item, idx, total) {
+  function itemHTML(item, idx, total, editing) {
     var done = !!store.state.done[item.id];
-    var title = item.url
-      ? '<a href="' + item.url + '" target="_blank" rel="noopener">' + esc(item.title) + "</a>"
-      : esc(item.title);
+    var title = editing
+      ? '<span class="t" data-ef="task|' + item.id + '|title" contenteditable="true">' + esc(item.title) + "</span>"
+      : item.url
+        ? '<a href="' + item.url + '" target="_blank" rel="noopener">' + esc(item.title) + "</a>"
+        : esc(item.title);
     var diff = item.diff ? '<span class="diff ' + item.diff + '">' + diffLabel(item.diff) + "</span>" : "";
-    var hint = item.hint ? '<p class="hint">' + esc(item.hint) + "</p>" : "";
+    var hint = (!editing && item.hint) ? '<p class="hint">' + esc(item.hint) + "</p>" : "";
     var vid = item.vtitle
       ? '<p class="vid">▶ ' + (item.vauthor ? "<b>" + esc(item.vauthor) + "</b> · " : "") + esc(item.vtitle) + "</p>"
       : "";
@@ -77,43 +79,55 @@
       revBtn = '<button class="rev-btn' + (revCount ? ' has-revs' : '') + '" data-rev="' + item.id + '" title="Revision tracker">' +
         (revCount ? '↻' + revCount : '↻') + '</button>';
     }
-    var actions = (item.url ? '<a class="go" href="' + item.url + '" target="_blank" rel="noopener">open ↗</a>' : "") +
-      '<span class="itools">' +
-      '<button class="tbtn" data-up="' + item.id + '" title="Move up"' + (idx === 0 ? " disabled" : "") + ">▲</button>" +
-      '<button class="tbtn" data-down="' + item.id + '" title="Move down"' + (idx === total - 1 ? " disabled" : "") + ">▼</button>" +
-      '<button class="tbtn" data-edit="' + item.id + '" title="Edit task">✎</button>' +
-      '<button class="tbtn danger" data-del="' + item.id + '" title="Delete task">✕</button></span>';
-    return '<li class="item' + (done ? " done" : "") + '" draggable="true" data-dragid="' + item.id + '">' +
+    var actions;
+    if (editing) {
+      actions =
+        '<button class="tbtn" data-up="' + item.id + '" title="Move up"' + (idx === 0 ? " disabled" : "") + ">▲</button>" +
+        '<button class="tbtn" data-down="' + item.id + '" title="Move down"' + (idx === total - 1 ? " disabled" : "") + ">▼</button>" +
+        '<button class="tbtn danger" data-del="' + item.id + '" title="Delete task">✕</button>';
+    } else {
+      actions = item.url ? '<a class="go" href="' + item.url + '" target="_blank" rel="noopener">open ↗</a>' : "";
+    }
+    var inline = editing
+      ? '<div class="eurl" data-ef="task|' + item.id + '|url" contenteditable="true" data-ph="link">' + esc(item.url || "") + "</div>" +
+        '<p class="hint" data-ef="task|' + item.id + '|hint" contenteditable="true" data-ph="how to do it">' + esc(item.hint || "") + "</p>"
+      : "";
+    return '<li class="item' + (done ? " done" : "") + '" draggable="' + (editing ? "false" : "true") + '" data-dragid="' + item.id + '">' +
       '<span class="grip" title="Drag to reorder or move to another day">⠿</span>' +
       '<input type="checkbox" data-id="' + item.id + '"' + (done ? " checked" : "") + ' aria-label="' + esc(item.title) + '">' +
-      '<div class="body"><div class="title"><span class="badge ' + item.type + '">' + typeLabel(item.type) + "</span>" + title + diff + prioTag(item.priority) + "</div>" + vid + hint + "</div>" +
+      '<div class="body"><div class="title"><span class="badge ' + item.type + '">' + typeLabel(item.type) + "</span>" + title + diff + prioTag(item.priority) + "</div>" + vid + inline + hint + "</div>" +
       '<div class="row-end">' + revBtn + actions + "</div></li>";
   }
 
-  function dayHTML(day) {
+  function dayHTML(day, editing) {
     var isToday = day.date === TODAY;
     var isNext = !TODAY_DAY && day.date === FIRST_DATE;
-    var items = day.items.map(function (it, i) { return itemHTML(it, i, day.items.length); });
+    var items = day.items.map(function (it, i) { return itemHTML(it, i, day.items.length, editing); });
 
-    var wtools = '<button class="tbtn" data-wday="' + day.date + '" title="Edit day">✎</button>';
+    var pill = editing
+      ? '<span class="pill" data-ef="day|' + day.date + '|title" contenteditable="true">' + esc(day.title) + "</span>"
+      : '<span class="pill">' + esc(day.title) + "</span>";
+    var time = editing
+      ? '<span class="day-date" data-ef="day|' + day.date + '|time" contenteditable="true" data-ph="time">' + esc(day.time || "") + "</span>"
+      : (day.time ? '<span class="day-date">' + esc(day.time) + "</span>" : "");
     var cls = "day" + (isToday ? " is-today" : "") + (isNext ? " is-next" : "") + (day.revision ? " revision" : "") + (day.light ? " light" : "");
 
     return '<article class="' + cls + '" id="d-' + day.date + '">' +
       '<div class="day-head"><div class="left">' +
-      '<span class="pill">' + esc(day.title) + "</span>" +
+      pill +
       '<span class="day-date">' + fmtDate(day.date) + "</span>" +
       (isToday ? '<span class="pill pill-on">TODAY</span>' : "") +
       (isNext ? '<span class="pill pill-on">STARTS TOMORROW</span>' : "") +
-      (day.time ? '<span class="day-date">' + esc(day.time) + "</span>" : "") +
-      '</div><span class="day-wrap">' + wtools +
+      time +
+      '</div><span class="day-wrap">' +
       '<span class="day-count">' + dayDone(day) + "/" + day.items.length + "</span></span></div>" +
       '<div class="day-cols single">' +
-      '<div class="dcol dsa" data-boxday="' + day.date + '" data-boxtrack="dsa"><div class="dcol-h"><span class="dnum">01</span>DSA' + addBtn(day, "dsa") + "</div>" +
-      (items.length ? '<ul class="items">' + items.join("") + "</ul>" : '<div class="dempty">Nothing here — ＋ to add</div>') + "</div>" +
+      '<div class="dcol dsa" data-boxday="' + day.date + '" data-boxtrack="dsa"><div class="dcol-h"><span class="dnum">01</span>DSA' + (editing ? addBtn(day, "dsa") : "") + "</div>" +
+      (items.length ? '<ul class="items">' + items.join("") + "</ul>" : '<div class="dempty">' + (editing ? "Nothing here — ＋ to add" : "Nothing here") + "</div>") + "</div>" +
       '</div></article>';
   }
   function addBtn(day, track) {
-    return '<button class="addbtn" data-add="' + day.date + '" data-track="' + track + '" title="Add">＋</button>';
+    return '<button class="addbtn" data-add="' + day.date + '" data-track="' + track + '" title="Add task">＋</button>';
   }
 
   /* ============================================================
@@ -155,24 +169,27 @@
   function weekHTML(w) {
     var st = weekStats(w);
     var isActive = w.n === ACTIVE_WEEK;
+    var editing = TG.editor.isEditing(w.n);
     var badge = w.mode === "exam" ? '<span class="wtag exam">EXAMS</span>'
       : w.mode === "transition" ? '<span class="wtag trans">TRANSITION</span>'
       : w.mode === "sprint" ? '<span class="wtag sprint">SPRINT</span>' : "";
-    var wtools = '<button class="tbtn" data-wweek="' + w.n + '" title="Edit week">✎</button>';
+    var wtools = '<button class="btn wk-edit' + (editing ? " on" : "") + '" data-wedit="' + w.n + '">' +
+      (editing ? "Done" : "Edit") + "</button>";
 
-    return '<section class="wk' + (isActive ? " open active" : "") + '" id="w' + w.n + '" data-week="' + w.n + '">' +
+    return '<section class="wk' + (isActive ? " open active" : "") + (editing ? " editing" : "") + '" id="w' + w.n + '" data-week="' + w.n + '">' +
       '<div class="wk-head" data-toggle="' + w.n + '">' +
       '<div class="wk-left"><span class="wk-num">W' + w.n + "</span>" +
-      '<div class="wk-title"><h3>' + esc(w.theme) + "</h3>" +
+      '<div class="wk-title"><h3' + (editing ? ' data-ef="week|' + w.n + '|theme" contenteditable="true"' : "") + ">" + esc(w.theme) + "</h3>" +
       '<div class="wk-dates">' + shortDate(w.days[0].date) + " → " + shortDate(w.days[6].date) + "</div>" +
-      (w.goal ? '<div class="wk-goal">' + esc(w.goal) + "</div>" : "") + "</div></div>" +
+      (w.goal || editing ? '<div class="wk-goal"' + (editing ? ' data-ef="week|' + w.n + '|goal" contenteditable="true" data-ph="add a goal"' : "") + ">" + esc(w.goal || "") + "</div>" : "") +
+      "</div></div>" +
       '<div class="wk-right">' + badge +
       '<div class="mini-bar"><div style="width:' + st.pct + '%"></div></div>' +
       '<span class="day-count">' + st.done + "/" + st.total + "</span>" +
-      '<span class="wk-tools">' + wtools + '</span><span class="caret">▾</span></div></div>' +
-      (w.note ? '<div class="wk-note">' + esc(w.note) + "</div>" : "") +
+      wtools + '<span class="caret">▾</span></div></div>' +
+      (w.note || editing ? '<div class="wk-note"' + (editing ? ' data-ef="week|' + w.n + '|note" contenteditable="true" data-ph="add a note"' : "") + ">" + esc(w.note || "") + "</div>" : "") +
       weekSummaryHTML(w) +
-      '<div class="wk-body">' + w.days.map(dayHTML).join("") + "</div></section>";
+      '<div class="wk-body">' + w.days.map(function (d) { return dayHTML(d, editing); }).join("") + "</div></section>";
   }
 
   /* ============================================================

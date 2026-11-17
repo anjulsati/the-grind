@@ -311,6 +311,16 @@
         body.appendChild(row);
       });
 
+      body.appendChild(el("div", "sync-sec", "Plan tools"));
+      var tools = el("div", "sync-tools");
+      [["exportBtn", "Export plan"], ["importBtn", "Import plan"], ["restoreBtn", "Restore original"]].forEach(function (x) {
+        var b = el("button", "btn");
+        b.id = x[0];
+        b.textContent = x[1];
+        tools.appendChild(b);
+      });
+      body.appendChild(tools);
+
       var me = firebase.auth().currentUser;
       if (me && me.email === ADMIN_EMAIL) renderHistory(body);
 

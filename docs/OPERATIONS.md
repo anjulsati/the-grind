@@ -37,7 +37,7 @@ An anonymous request should return `Permission denied`.
 
 ## Back up the plan
 
-Use **⋯ → Export plan** to download a JSON copy of the plan. Keep it outside the browser. Progress and notes are not included in this export, so they need a separate backup if they matter to you. The shared copy in Firebase is also a backup, but it holds only the latest version.
+Use **People → Export plan** to download a JSON copy of the plan. Keep it outside the browser. Progress and notes are not included in this export, so they need a separate backup if they matter to you. The shared copy in Firebase is also a backup, but it holds only the latest version.
 
 ## Version history and restore
 
@@ -51,8 +51,8 @@ Everyone signed in sees the restored plan within seconds.
 
 ## Restore the plan
 
-- **Restore original** (in the **⋯** menu) rebuilds the plan from `data.js`. Progress and notes are kept.
-- **Import plan** (in the **⋯** menu) replaces the plan with a previously exported file. When signed in, the import reaches the other signed-in browser.
+- **Restore original** (in the People panel) rebuilds the plan from `data.js`. Progress and notes are kept.
+- **Import plan** (in the People panel) replaces the plan with a previously exported file. When signed in, the import reaches the other signed-in browser.
 
 ## Manage people
 

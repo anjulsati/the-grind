@@ -15,7 +15,7 @@
   };
 
   document.addEventListener("click", function (e) {
-    if (e.target.closest && e.target.closest(".acct, .more")) return;
+    if (e.target.closest && e.target.closest(".acct")) return;
     document.querySelectorAll(".acct-menu.open").forEach(function (m) { m.classList.remove("open"); });
   });
   window.TG.ui.render();

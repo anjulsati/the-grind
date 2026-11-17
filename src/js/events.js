@@ -239,14 +239,11 @@
   document.addEventListener("click", function (e) {
     var t = e.target;
 
-    var ww = t.closest("[data-wweek]");
-    if (ww) { editor.weekModal(store.weekByN(Number(ww.getAttribute("data-wweek")))); return; }
-
-    var wd = t.closest("[data-wday]");
-    if (wd) { editor.dayModal(store.dayByDate(wd.getAttribute("data-wday"))); return; }
+    var we = t.closest("[data-wedit]");
+    if (we) { editor.toggle(we.getAttribute("data-wedit")); return; }
 
     var tg = t.closest("[data-toggle]");
-    if (tg) { var sec = tg.closest(".wk"); if (sec) sec.classList.toggle("open"); return; }
+    if (tg && !t.closest("[contenteditable]")) { var sec = tg.closest(".wk"); if (sec) sec.classList.toggle("open"); return; }
 
     var go = t.closest("[data-goto]");
     if (go) {
@@ -263,15 +260,6 @@
       return;
     }
     if (t.id === "topBtn") { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
-    var more = t.closest && t.closest("#moreBtn");
-    if (more) {
-      e.stopPropagation();
-      var mm = document.getElementById("moreMenu");
-      var wasOpen = mm.classList.contains("open");
-      document.querySelectorAll(".acct-menu.open").forEach(function (x) { x.classList.remove("open"); });
-      if (!wasOpen) mm.classList.add("open");
-      return;
-    }
     if (t.id === "restoreBtn") {
       if (confirm("Restore the original plan? Everything you added, edited or deleted goes back to factory state. Checkmarks stay.")) {
         store.restoreDB(); ui.render(); TG.toast("Plan restored to the original");
@@ -291,9 +279,6 @@
     var dn = t.closest("[data-down]");
     if (dn) { reorder(dn.getAttribute("data-down"), "down"); return; }
 
-    var ed = t.closest("[data-edit]");
-    if (ed) { var f = store.findItem(ed.getAttribute("data-edit")); if (f) editor.itemModal(f.item, f.day.date, f.item.track); return; }
-
     var del = t.closest("[data-del]");
     if (del) {
       var fi = store.findItem(del.getAttribute("data-del"));
@@ -306,7 +291,7 @@
     }
 
     var add = t.closest("[data-add]");
-    if (add) { editor.itemModal(null, add.getAttribute("data-add"), add.getAttribute("data-track")); return; }
+    if (add) { editor.addTask(add.getAttribute("data-add"), add.getAttribute("data-track")); return; }
 
   });
 
@@ -325,9 +310,30 @@
     e.target.value = "";
   });
 
+  /* ============================================================
+     INLINE EDITING — one Edit button per week, no dialogs
+     ============================================================ */
   document.addEventListener("keydown", function (e) {
-    if (e.target.matches("input, textarea, select")) return;
+    var ce = e.target.closest && e.target.closest("[contenteditable][data-ef]");
+    if (ce && e.key === "Enter") { e.preventDefault(); ce.blur(); return; }
+    if (e.target.matches("input, textarea, select, [contenteditable]")) return;
     if (e.key === "p" || e.key === "P") TG.pen.setPen(!TG.pen.isOn());
     else if (e.key === "Escape") { if (TG.pen.isOn()) TG.pen.setPen(false); }
+  });
+
+  document.addEventListener("paste", function (e) {
+    var ce = e.target.closest && e.target.closest("[contenteditable][data-ef]");
+    if (!ce) return;
+    e.preventDefault();
+    var text = (e.clipboardData || window.clipboardData).getData("text/plain");
+    try { document.execCommand("insertText", false, text); } catch (err) { /* ignore */ }
+  });
+
+  document.addEventListener("focusout", function (e) {
+    var ce = e.target;
+    if (!ce.getAttribute) return;
+    var ef = ce.getAttribute("data-ef");
+    if (!ef) return;
+    editor.commit(ef, ce.textContent || "");
   });
 })();

@@ -50,6 +50,29 @@ textarea{
   border-radius:var(--r2);padding:10px 12px;font-family:var(--mono);font-size:17px;resize:vertical;line-height:1.6;
 }
 
+/* ---------------- inline week editing ---------------- */
+.wk.editing{border-color:var(--green)}
+.wk.editing .wk-head{border-radius:var(--r) var(--r) 0 0}
+.wk.editing .wk-sum{display:none}
+.wk.editing .grip{display:none}
+.wk.editing .item{cursor:default}
+.wk-edit{height:26px;padding:0 12px;font-size:13px}
+.wk-edit.on{color:var(--green);border-color:var(--green)}
+.wk-edit.on:hover{color:var(--green);border-color:var(--green)}
+[contenteditable][data-ef]{
+  outline:none;border-radius:3px;cursor:text;transition:background .1s,box-shadow .1s;
+  white-space:pre-wrap;word-break:break-word;
+}
+[contenteditable][data-ef]:hover{background:var(--panel3)}
+[contenteditable][data-ef]:focus{background:var(--panel3);box-shadow:0 0 0 1px var(--green)}
+[contenteditable][data-ef]:empty::before{
+  content:attr(data-ph);color:var(--ink3);opacity:.55;pointer-events:none;
+}
+.wk-goal:empty,.wk-note:empty{min-height:18px}
+.eurl{display:block;min-height:15px;font:500 12.5px var(--sans);color:var(--ink3);word-break:break-all}
+.hint[data-ef]{min-height:15px}
+.day-date[data-ef]{display:inline-block;min-width:44px;min-height:17px}
+
 /* ---------------- edit mode ---------------- */
 
 
@@ -63,18 +86,7 @@ textarea{
 .tbtn:disabled:hover{color:var(--ink3);border-color:var(--line2)}
 .tbtn.tiny{padding:1px 6px;font-size:14px;opacity:.5}
 .tbtn.tiny:hover{opacity:1}
-.wk-tools{display:inline-flex;gap:4px}
 
-.day-wrap .tbtn,
-.wk-tools .tbtn{
-  width:26px;height:26px;padding:0;display:inline-flex;align-items:center;justify-content:center;
-  font-family:var(--sans);font-size:13px;line-height:1;opacity:.6;
-}
-.day-wrap .tbtn:hover,
-.wk-tools .tbtn:hover{opacity:1}
-
-.item .itools{display:flex;gap:2px;opacity:0;transition:.12s}
-.item:hover .itools{opacity:1}
 
 .addbtn{
   margin-left:auto;background:transparent;border:1px dashed var(--line2);color:var(--ink3);
@@ -172,7 +184,6 @@ body.pen-on .penbar{display:flex}
   .item .body{grid-column:3}
   .item .row-end{grid-column:2 / -1;grid-row:2;justify-content:flex-end;gap:6px}
   .item .go{display:none}
-  .item .itools{opacity:1}
   .wtag{display:none}
   .plan-head{flex-direction:column;align-items:flex-start}
   .actions{flex-wrap:wrap;justify-content:flex-start}
@@ -423,5 +434,4 @@ body.pen-on .penbar{display:flex}
 .sync-state{font-size:13px;color:var(--amber);font-family:var(--mono)}
 
 .sync-slot{display:flex;align-items:center}
-.more{position:relative}
 .sync-who{font:500 13px var(--sans);color:var(--ink3);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

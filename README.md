@@ -42,19 +42,19 @@ Then open http://localhost:5173. See [docs/SETUP.md](docs/SETUP.md) for full set
 
 ## Editing the plan
 
-There is no global edit mode. Each item is edited where it lives:
+There is no global edit mode and no dialogs. Each week has one **Edit** button in its header.
+Clicking it turns that week's content into directly editable text — click any text and type:
 
-| Control | Where | What it does |
-| --- | --- | --- |
-| `✎` | Week header | Edit the week's title, dates, goal, note and mode |
-| `✎` | Day header | Edit the day's label, date, time and notes |
-| `✎` | Each task | Edit the task title, link, difficulty, hint and type |
-| `＋` | Day box | Add a task to that day |
-| `▲` `▼` | Each task | Move the task up or down |
-| `✕` | Each task | Delete the task |
-| `⋯` | Top bar | Export, import, or restore the plan |
+- Week title, goal and note
+- Day labels and time
+- Task titles, links and how-to lines
 
-Changes save to the browser immediately, and to the shared copy when you are signed in.
+While a week is being edited it also shows `＋` to add a task to a day, `▲` `▼` to move a task,
+and `✕` to delete it. Click **Done** in the week header to finish. Changes save as soon as you
+click away (or press Enter), in the browser and in the shared copy when you are signed in.
+
+Export, import and restore live in the admin **People** panel (account menu), so they are not
+accidentally reachable from the main screen.
 
 ## Keyboard shortcuts
 
