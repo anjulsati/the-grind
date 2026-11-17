@@ -43,7 +43,7 @@ Requirements for any change to the rules:
 ## Known limits
 
 - **Last-write-wins.** Two allowed users editing at once can overwrite each other.
-- **No audit trail.** The database keeps only the latest version of the plan.
+- **Version history is limited.** The last 30 saved versions are kept, at most one every 5 minutes. A change made within 5 minutes of the previous save can't be recovered on its own.
 - **Local copies.** Each browser keeps its own copy in localStorage. Anyone with access to a signed-in browser can read it. Sign out on shared computers.
 - **Note content is HTML.** Notes are rendered from rich text. Only allowed accounts can write notes, but avoid pasting untrusted content into them.
 - **Admin is fixed in code.** The admin email is set in the rules and in `sync.js`. Changing the admin means editing those two places and redeploying.

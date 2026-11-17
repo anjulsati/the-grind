@@ -20,6 +20,10 @@
   var applying = false;
   var seeded = false;
   var modal = null;
+  var lastSeen = null;
+  var HIST_KEY = "the-grind-hist-at";
+  var HIST_GAP = 5 * 60 * 1000;
+  var HIST_KEEP = 30;
 
   function config() { return window.GRIND_FIREBASE || null; }
 
@@ -38,15 +42,24 @@
     return b;
   }
 
+  function keepVersion(v) {
+    localStorage.setItem(HIST_KEY, String(Date.now()));
+    return db.ref("history/" + v.updated).set(v).catch(function () {});
+  }
+
   function push() {
     if (!ref || applying) return;
-    lastStamp = Date.now();
-    ref.set(clean({
+    var now = Date.now();
+    if (lastSeen && now - Number(localStorage.getItem(HIST_KEY) || 0) >= HIST_GAP) keepVersion(lastSeen);
+    lastStamp = now;
+    var payload = clean({
       plan: TG.store.db,
       progress: TG.store.state,
       notes: TG.notes.getNotes(),
-      updated: lastStamp
-    })).catch(function () {
+      updated: now
+    });
+    lastSeen = payload;
+    ref.set(payload).catch(function () {
       TG.toast("Not allowed to change the shared plan");
     });
   }
@@ -83,6 +96,7 @@
     seeded = true;
     if (v.updated === lastStamp) return;
     lastStamp = v.updated;
+    lastSeen = v;
     apply(v);
   }
 
@@ -142,6 +156,57 @@
     watchAccess(user);
   }
 
+  function pruneHistory() {
+    return db.ref("history").orderByKey().limitToLast(HIST_KEEP).once("value").then(function (snap) {
+      var keys = [];
+      snap.forEach(function (c) { keys.push(c.key); });
+      if (keys.length < HIST_KEEP) return;
+      return db.ref("history").orderByKey().endBefore(keys[0]).once("value").then(function (old) {
+        var jobs = [];
+        old.forEach(function (c) { jobs.push(db.ref("history/" + c.key).remove()); });
+        return Promise.all(jobs);
+      });
+    });
+  }
+
+  function restore(key) {
+    var when = new Date(Number(key)).toLocaleString("en-IN");
+    if (!confirm("Restore the plan from " + when + "? The current version is saved to history first.")) return;
+    var current = lastSeen;
+    var saveCurrent = current ? db.ref("history/" + current.updated).set(current) : Promise.resolve();
+    saveCurrent
+      .then(function () { return db.ref("history/" + key).once("value"); })
+      .then(function (snap) {
+        var v = snap.val();
+        if (!v) throw new Error("missing version");
+        v.updated = Date.now();
+        lastSeen = v;
+        return db.ref("plan").set(v);
+      })
+      .then(function () { TG.toast("Plan restored from " + when); closePeople(); })
+      .catch(fail);
+  }
+
+  function renderHistory(body) {
+    body.appendChild(el("div", "sync-sec", "Version history"));
+    var list = el("div", null, "Loading…");
+    body.appendChild(list);
+    pruneHistory().then(function () {
+      return db.ref("history").orderByKey().limitToLast(HIST_KEEP).once("value");
+    }).then(function (snap) {
+      list.textContent = "";
+      var keys = [];
+      snap.forEach(function (c) { keys.push(c.key); });
+      if (!keys.length) { list.appendChild(el("div", "sync-empty", "No saved versions yet.")); return; }
+      keys.reverse().forEach(function (key) {
+        var row = el("div", "sync-row");
+        row.appendChild(el("span", "sync-who", new Date(Number(key)).toLocaleString("en-IN")));
+        row.appendChild(btn("Restore", "btn", function () { restore(key); }));
+        list.appendChild(row);
+      });
+    }).catch(function () { list.textContent = "Could not load version history."; });
+  }
+
   function openPeople() {
     if (!modal) {
       modal = el("div", "modal-wrap");
@@ -191,6 +256,9 @@
         }
         body.appendChild(row);
       });
+
+      var me = firebase.auth().currentUser;
+      if (me && me.email === ADMIN_EMAIL) renderHistory(body);
 
       box.appendChild(head);
       box.appendChild(body);

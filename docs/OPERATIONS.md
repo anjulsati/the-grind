@@ -39,6 +39,16 @@ An anonymous request should return `Permission denied`.
 
 Use **Edit plan → Export plan** to download a JSON copy of the plan. Keep it outside the browser. Progress and notes are not included in this export, so they need a separate backup if they matter to you. The shared copy in Firebase is also a backup, but it holds only the latest version.
 
+## Version history and restore
+
+The shared plan keeps up to 30 saved versions, at most one every 5 minutes. The admin can restore one from the **People** panel:
+
+1. Click **People** in the top bar.
+2. Under **Version history**, find the time you want and click **Restore**.
+3. Confirm. The current version is saved first, so the restore can be undone the same way.
+
+Everyone signed in sees the restored plan within seconds.
+
 ## Restore the plan
 
 - **Restore original** (in edit mode) rebuilds the plan from `data.js`. Progress and notes are kept.
