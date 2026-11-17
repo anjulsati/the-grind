@@ -196,10 +196,9 @@
   function render() {
     var y = window.scrollY;
     var html = '';
-    html += '<section id="plan"><div class="plan-head"><h2>Week by week</h2>' +
+    html += '<section id="plan"><div class="plan-head">' +
       '<div class="plan-tools"><button id="expandAll" class="btn">Expand all</button>' +
       '<button id="collapseAll" class="btn">Collapse all</button></div></div>' +
-      '<p class="lead">Every day opens with what to watch or read, then the problems. Drag tasks between days, set priorities, tick them off.</p>' +
       store.db.weeks.map(weekHTML).join("") + "</section>";
 
 

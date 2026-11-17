@@ -63,7 +63,7 @@ td{color:var(--ink2)}
 td.num{font-family:var(--mono);font-weight:600;color:var(--green);text-align:right;width:54px}
 
 /* ---------------- weeks ---------------- */
-.plan-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:36px 0 4px}
+.plan-head{display:flex;align-items:flex-end;justify-content:flex-end;gap:12px;flex-wrap:wrap;margin:36px 0 12px}
 .plan-head h2{margin:0}
 .plan-tools{display:flex;gap:6px}
 
