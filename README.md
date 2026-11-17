@@ -1,20 +1,61 @@
 # The Grind
 
-**Live: https://anjulsati.github.io/the-grind/** · **Local:** `npm start` → http://localhost:5173
+A study planner for data structures and algorithms (DSA) interview preparation. It runs as a static web page with no build step.
 
-A single-page **DSA-only** study planner by **Anjul Sati**: 23 weeks, arrays to dynamic programming, built for placement interviews.
+**Live site:** https://anjulsati.github.io/the-grind/
 
-- Every day opens with the **video/article to learn from**, then that day's problems
-- **469 tasks**, one per slot, never repeated
-- **Edit plan** (`E`): add, edit, delete, drag tasks between days, set priorities
-- **↻ revision tracker** on each problem: log, edit and delete revision dates
-- **💬 Notes** (`N`): sticky notes you can drag, resize, minimise, or pin to a study day
-- **✎ Pen** (`P`): write on the page, strokes fade
-- **Export / Import**: a JSON backup of the plan
-- **Sign in with Google** (top bar): shares the plan, progress and notes between the two allowed accounts
+The plan runs for 23 weeks from 16 November 2026 to 25 April 2027. It has 469 tasks, each a learn-first video or article followed by that day's problems. Progress, revision history, and notes can be shared between two signed-in accounts.
 
-Keyboard: `P` pen · `E` edit · `N` note · `C` clear strokes · `Esc` exit
+## Features
 
-## Sharing setup
+| Feature | Description |
+| --- | --- |
+| Day-by-day plan | Each study day starts with a learning resource, then its problems. Problems do not repeat. |
+| Progress tracking | Tick a task to mark it done. Done tasks stay readable, with a strike-through and a green line. |
+| Revision tracker | The ↻ button on each problem logs revision dates and times. Entries can be edited or deleted. |
+| Sticky notes | Notes can be dragged by their grip, resized, set to a larger or smaller text size, minimised, and pinned to a study day. Pinned notes hide when their week is collapsed. |
+| Plan editing | Add, edit, delete, and drag tasks between days. Set priorities. |
+| Pen | Draw on the page. Strokes fade after a set time. |
+| Backup | Export the plan as JSON, and import it again. |
+| Shared sync | Sign in with Google to share the plan, progress, and notes between the two allowed accounts. |
 
-Sharing uses Firebase. The config lives in `src/js/firebase-config.js`, and the access rules in `database.rules.json`. Only the two accounts listed in those rules can read or change the plan. To publish rule changes: `npx firebase-tools deploy --only database`.
+## Quick start
+
+Run the site locally:
+
+```bash
+npm start
+```
+
+Then open http://localhost:5173. See [docs/SETUP.md](docs/SETUP.md) for full setup, including the Firebase project for sharing.
+
+## Documentation
+
+| Document | Contents |
+| --- | --- |
+| [docs/SETUP.md](docs/SETUP.md) | Local development and Firebase project setup |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Code layout, modules, and how data flows through the app |
+| [docs/DATA_MODEL.md](docs/DATA_MODEL.md) | Stored data: plan, progress, notes, and the shared document |
+| [docs/SECURITY.md](docs/SECURITY.md) | Access model, what is public, and what must stay private |
+| [docs/OPERATIONS.md](docs/OPERATIONS.md) | Deploying the site and rules, backups, and troubleshooting |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Workflow for changing the code |
+
+## Keyboard shortcuts
+
+| Key | Action |
+| --- | --- |
+| `P` | Toggle pen mode |
+| `E` | Toggle edit mode |
+| `N` | Toggle the notes panel |
+| `Esc` | Exit pen mode |
+
+## Technology
+
+Plain HTML, CSS, and JavaScript, with no framework and no bundler. The only external dependency is the Firebase SDK, used for Google sign-in and shared storage. Fonts come from Google Fonts. The site is hosted on GitHub Pages.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
+
+---
+Built by Anjul Sati.

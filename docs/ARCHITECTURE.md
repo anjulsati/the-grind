@@ -1,71 +1,99 @@
 # Architecture
 
-The Grind is a **zero-build** single-page app. Plain JavaScript and CSS, no framework, no bundler. The only external library is the Firebase SDK, loaded from a CDN, and it is used only for sign-in and shared storage.
+The Grind is a static single-page application. It has no build step and no framework. Plain JavaScript and CSS are loaded directly by `index.html`, in a fixed order. Firebase is the only external library, and it is used only for sign-in and shared storage.
+
+## Repository layout
 
 ```
 the-grind/
-├── index.html              entry point (loads styles + scripts in order)
-├── server.js               dependency-free dev server (node server.js)
-├── package.json            npm scripts, metadata
-├── firebase.json           Firebase deploy config (database rules)
-├── .firebaserc             Firebase project id
-├── database.rules.json     who may read/write the shared plan (two accounts)
-├── docs/ARCHITECTURE.md    this file
-├── assets/favicon.svg      favicon
+├── index.html                 Entry point; loads styles and scripts in order
+├── server.js                  Dependency-free development server
+├── package.json               npm scripts and metadata
+├── firebase.json              Firebase deploy configuration (database rules)
+├── .firebaserc                Firebase project id
+├── database.rules.json        Access rules for the shared plan
+├── assets/favicon.svg         Site icon
+├── docs/                      Documentation
 └── src/
     ├── js/
-    │   ├── data.js           23-week plan seed data, learn-first videos, problems
-    │   ├── store.js          plan database: seed → localStorage, edits, export/import
-    │   ├── ui.js             renders the week list, days, items, progress
-    │   ├── editor.js         edit mode + modals
-    │   ├── events.js         clicks, drag-and-drop, revision panel, shortcuts
-    │   ├── notes.js          sticky notes: drag, resize, minimise, pin to a day
-    │   ├── pen.js            annotation layer (canvas, fading strokes)
-    │   ├── cursor.js         cursor glow and sparkles
-    │   ├── firebase-config.js  Firebase web config (public; security is in the rules)
-    │   ├── sync.js           Google sign-in + shared plan/progress/notes
-    │   └── main.js           boot: toast helper, first render, sync connect
+    │   ├── data.js            Plan content: 23 weeks, learning resources, problems
+    │   ├── store.js           Plan database: seeding, storage, edits, import/export
+    │   ├── ui.js              Renders weeks, days, items, and progress
+    │   ├── editor.js          Edit mode and its dialogs
+    │   ├── events.js          Clicks, drag and drop, revision panel, shortcuts
+    │   ├── notes.js           Sticky notes: create, drag, resize, minimise, pin
+    │   ├── pen.js             Pen mode on a canvas, with fading strokes
+    │   ├── cursor.js          Cursor glow and sparkle effect
+    │   ├── firebase-config.js Firebase web config (public)
+    │   ├── sync.js            Google sign-in and shared storage
+    │   └── main.js            Boot: toast helper, first render, sync connection
     └── styles/
-        ├── theme.css         design tokens, base, header, nav, buttons
-        ├── layout.css        page grid, weeks, days, items, tables
-        └── components.css    cards, notes, revision tracker, modals, sign-in slot
+        ├── theme.css          Design tokens, base styles, top bar, buttons
+        ├── layout.css         Page grid, weeks, days, items, tables
+        └── components.css     Cards, notes, revision tracker, dialogs, sign-in slot
 ```
+
+## Script load order
+
+`index.html` loads scripts in this order. Each module attaches to the shared `window.TG` namespace, so the order matters:
+
+1. Firebase app, auth, and database SDKs (CDN)
+2. `firebase-config.js`
+3. `data.js`: sets `window.CUDATA`
+4. `store.js`: sets `TG.store`
+5. `ui.js`, `editor.js`, `pen.js`, `events.js`, `cursor.js`, `notes.js`: set their own `TG` members
+6. `sync.js`: sets `TG.sync`
+7. `main.js`: renders the page and calls `TG.sync.connect()`
+
+## Modules
+
+| Module | Responsibility | Public surface |
+| --- | --- | --- |
+| `store.js` | Owns the plan (`db`) and progress (`state`). Persists both to localStorage. Calls `TG.sync.changed()` after each save. | `TG.store.db`, `state`, `saveDB`, `saveState`, `setAll`, `exportDB`, `importDB`, `restoreDB` |
+| `ui.js` | Builds the HTML for the page and re-renders it. Re-attaches notes after each render. | `TG.ui.render` |
+| `events.js` | Handles clicks, drag and drop, the revision panel, and the P / E / Esc shortcuts. | none |
+| `editor.js` | Edit-mode controls and the dialogs that change the plan. | `TG.editor` |
+| `notes.js` | Creates and renders sticky notes. Saves them and calls `TG.sync.changed()`. | `TG.notes.create`, `renderAll`, `getNotes`, `setNotes` |
+| `sync.js` | Connects to Firebase after sign-in. Pushes local changes and applies remote ones. | `TG.sync.connect`, `changed` |
+| `main.js` | Defines `TG.toast`, performs the first render, and starts sync. | `TG.toast` |
 
 ## Data flow
 
 ```
-data.js (seed)  ──first load──▶  localStorage["the-grind-db-v1"]   plan database
-localStorage["the-grind-v1"]    progress (ticked tasks)
-localStorage["the-grind-notes-v1"]  sticky notes
-
-Every change saves to localStorage, then sync.js (if signed in) pushes
-the plan, progress and notes to Firebase, and other signed-in browsers
-receive the update.
+data.js ──(first load)──▶ localStorage ◀── every edit writes here first
+                              │
+                              ▼
+                        sync.js (signed in only)
+                              │  debounced push (600 ms)
+                              ▼
+                  Firebase Realtime Database  /plan
+                              │  live "value" listener
+                              ▼
+                  other signed-in browsers ──▶ store.setAll + notes.setNotes + ui.render
 ```
 
-## Sign-in and sharing
+Local storage is always the first copy. The shared document is a mirror that lets two browsers see the same state.
 
-- `sync.js` does nothing until `firebase-config.js` has a config.
-- The top bar shows **Sign in with Google**. After sign-in, changes are saved to Firebase under `plan`.
-- `database.rules.json` allows read and write only for the two listed accounts, with a verified email. Anyone else gets "Not allowed" and can't see the plan.
-- Sign-in needs the site to be served over `https://` or `http://localhost`. It won't work from `file://`.
-- Sync uses last-write-wins for the whole plan. A change from one browser replaces the copy in the other.
+## Sync behaviour
 
-## Why no framework
+- **Starting up.** `main.js` renders from local storage first, so the page works offline. Then `sync.connect()` signs the user in and subscribes to `/plan`.
+- **Pushing.** Any save call schedules a push 600 ms later. The push writes the plan, progress, notes, and a timestamp `updated`.
+- **Receiving.** A remote update is applied only if its `updated` value differs from the last one this browser pushed. This prevents an echo loop.
+- **Conflicts.** The most recent write replaces the whole document. Two people editing at the same moment can overwrite each other's changes.
+- **Active notes.** If a note is being typed in, an incoming update waits 1.5 seconds before it is applied.
+- **Empty room.** If `/plan` is empty when first read, the browser that connects first seeds it with its local data.
 
-The app renders the plan once and mutates it in place. A framework would add a build step and runtime without a benefit here.
+## Rendering model
 
-## Deploy
+The plan renders as HTML once, and later changes update that HTML in place. No virtual DOM is used. Week and day state are kept in the DOM (for example, which weeks are open).
 
-GitHub Pages serves `main`:
+## Styling
 
-```
-git push origin main   # live in about a minute
-```
+Design tokens (colours, type, radii) are CSS custom properties in `theme.css`. Component styles are grouped by area. Text sizes use a single scale, with a minimum of 13px for labels and 18px for body text.
 
-Database rules are separate from the site. Publish them with `npx firebase-tools deploy --only database`.
+## Design decisions
 
-Also runs locally with `npm start`.
-
----
-Built by Anjul Sati.
+- **No framework.** The page is rendered once and mutated locally. A framework would add a build step and a runtime without a clear benefit.
+- **Single shared document.** The data is small (a few hundred kilobytes), and two users need the same view. A single document keeps sync simple.
+- **Last-write-wins.** Field-level merging would add complexity for little gain with two users.
+- **Public config, private rules.** The Firebase config is embedded in the page. Access control is enforced by the database rules on Firebase's servers.
