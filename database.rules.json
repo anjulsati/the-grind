@@ -3,8 +3,8 @@
     ".read": false,
     ".write": false,
     "plan": {
-      ".read": "auth != null && auth.token.email_verified === true && (auth.token.email === 'YOUR_EMAIL' || auth.token.email === 'ANURAG_EMAIL')",
-      ".write": "auth != null && auth.token.email_verified === true && (auth.token.email === 'YOUR_EMAIL' || auth.token.email === 'ANURAG_EMAIL')"
+      ".read": "auth != null && auth.token.email_verified === true && (auth.token.email === 'anjulsati147@gmail.com' || auth.token.email === 'anrgsati@amazon.com')",
+      ".write": "auth != null && auth.token.email_verified === true && (auth.token.email === 'anjulsati147@gmail.com' || auth.token.email === 'anrgsati@amazon.com')"
     }
   }
 }
