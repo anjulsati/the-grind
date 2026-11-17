@@ -24,6 +24,7 @@
   var HIST_KEY = "the-grind-hist-at";
   var HIST_GAP = 5 * 60 * 1000;
   var HIST_KEEP = 30;
+  var HIST_MIGRATED = "the-grind-hist-v2";
 
   function config() { return window.GRIND_FIREBASE || null; }
 
@@ -42,9 +43,15 @@
     return b;
   }
 
+  function saveVersion(v) {
+    return db.ref("history/" + v.updated).set(v)
+      .then(function () { return db.ref("historyIndex/" + v.updated).set(true); })
+      .catch(function () {});
+  }
+
   function keepVersion(v) {
     localStorage.setItem(HIST_KEY, String(Date.now()));
-    return db.ref("history/" + v.updated).set(v).catch(function () {});
+    return saveVersion(v);
   }
 
   function push() {
@@ -152,20 +159,35 @@
   function onSignedIn(user) {
     if (user.email === ADMIN_EMAIL) {
       db.ref("allowed/" + user.uid).set({ email: user.email, at: Date.now() }).catch(function () {});
+      migrateHistory().then(pruneHistory).catch(function () {});
     }
     watchAccess(user);
   }
 
-  function pruneHistory() {
-    return db.ref("history").orderByKey().limitToLast(HIST_KEEP).once("value").then(function (snap) {
-      var keys = [];
-      snap.forEach(function (c) { keys.push(c.key); });
-      if (keys.length < HIST_KEEP) return;
-      return db.ref("history").orderByKey().endBefore(keys[0]).once("value").then(function (old) {
-        var jobs = [];
+  function migrateHistory() {
+    if (localStorage.getItem(HIST_MIGRATED)) return Promise.resolve();
+    return db.ref("history").orderByKey().limitToLast(HIST_KEEP).once("value").then(function (kept) {
+      var keep = [];
+      kept.forEach(function (c) { keep.push(c.key); });
+      var jobs = keep.map(function (k) { return db.ref("historyIndex/" + k).set(true); });
+      if (!keep.length) return Promise.all(jobs);
+      return db.ref("history").orderByKey().endBefore(keep[0]).once("value").then(function (old) {
         old.forEach(function (c) { jobs.push(db.ref("history/" + c.key).remove()); });
         return Promise.all(jobs);
       });
+    }).then(function () { localStorage.setItem(HIST_MIGRATED, "1"); });
+  }
+
+  function pruneHistory() {
+    return db.ref("historyIndex").once("value").then(function (snap) {
+      var keys = [];
+      snap.forEach(function (c) { keys.push(c.key); });
+      var jobs = [];
+      keys.slice(0, Math.max(0, keys.length - HIST_KEEP)).forEach(function (k) {
+        jobs.push(db.ref("historyIndex/" + k).remove());
+        jobs.push(db.ref("history/" + k).remove());
+      });
+      return Promise.all(jobs);
     });
   }
 
@@ -173,7 +195,7 @@
     var when = new Date(Number(key)).toLocaleString("en-IN");
     if (!confirm("Restore the plan from " + when + "? The current version is saved to history first.")) return;
     var current = lastSeen;
-    var saveCurrent = current ? db.ref("history/" + current.updated).set(current) : Promise.resolve();
+    var saveCurrent = current ? saveVersion(current) : Promise.resolve();
     saveCurrent
       .then(function () { return db.ref("history/" + key).once("value"); })
       .then(function (snap) {
@@ -191,9 +213,7 @@
     body.appendChild(el("div", "sync-sec", "Version history"));
     var list = el("div", null, "Loading…");
     body.appendChild(list);
-    pruneHistory().then(function () {
-      return db.ref("history").orderByKey().limitToLast(HIST_KEEP).once("value");
-    }).then(function (snap) {
+    db.ref("historyIndex").once("value").then(function (snap) {
       list.textContent = "";
       var keys = [];
       snap.forEach(function (c) { keys.push(c.key); });

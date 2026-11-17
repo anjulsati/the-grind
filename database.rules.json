@@ -25,6 +25,12 @@
       "$stamp": {
         ".write": "auth != null && auth.token.email_verified === true && (auth.token.email === 'anjulsati147@gmail.com' || (root.child('allowed').child(auth.uid).exists() && newData.exists() && !data.exists()))"
       }
+    },
+    "historyIndex": {
+      ".read": "auth != null && auth.token.email_verified === true && auth.token.email === 'anjulsati147@gmail.com'",
+      "$stamp": {
+        ".write": "auth != null && auth.token.email_verified === true && (auth.token.email === 'anjulsati147@gmail.com' || (root.child('allowed').child(auth.uid).exists() && newData.exists() && !data.exists()))"
+      }
     }
   }
 }

@@ -41,7 +41,7 @@ Use **Edit plan → Export plan** to download a JSON copy of the plan. Keep it o
 
 ## Version history and restore
 
-The shared plan keeps up to 30 saved versions, at most one every 5 minutes. The admin can restore one from the **People** panel:
+The shared plan keeps up to 30 saved versions, at most one every 5 minutes. Older versions are removed automatically each time the admin signs in. The admin can restore one from the **People** panel:
 
 1. Click **People** in the top bar.
 2. Under **Version history**, find the time you want and click **Restore**.
