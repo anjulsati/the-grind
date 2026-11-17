@@ -121,18 +121,41 @@
     seeded = false;
   }
 
+  function menuItem(label, fn) {
+    var b = el("button", "acct-item", label);
+    b.addEventListener("click", function (e) { e.stopPropagation(); closeAccountMenus(); fn(); });
+    return b;
+  }
+
+  function closeAccountMenus() {
+    document.querySelectorAll(".acct-menu.open").forEach(function (m) { m.classList.remove("open"); });
+  }
+
   function showBar(user, state) {
     var bar = document.getElementById("syncSlot");
     if (!bar) return;
     bar.textContent = "";
     if (!user) {
-      bar.appendChild(btn("Sign in with Google", "btn solid", signIn));
+      bar.appendChild(btn("Sign in", "btn solid", signIn));
       return;
     }
-    bar.appendChild(el("span", "sync-who", user.email));
-    if (state === "waiting") bar.appendChild(el("span", "sync-state", "Waiting for approval"));
-    if (user.email === ADMIN_EMAIL) bar.appendChild(btn("People", "btn", openPeople));
-    bar.appendChild(btn("Sign out", "btn", function () { firebase.auth().signOut(); }));
+    var wrap = el("div", "acct");
+    var toggle = el("button", "acct-btn", (user.email || "?").charAt(0).toUpperCase());
+    toggle.setAttribute("aria-label", "Account menu");
+    var menu = el("div", "acct-menu");
+    menu.appendChild(el("div", "acct-email", user.email));
+    if (state === "waiting") menu.appendChild(el("div", "acct-state", "Waiting for approval"));
+    if (user.email === ADMIN_EMAIL) menu.appendChild(menuItem("People", openPeople));
+    menu.appendChild(menuItem("Sign out", function () { firebase.auth().signOut(); }));
+    toggle.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var open = menu.classList.contains("open");
+      closeAccountMenus();
+      if (!open) menu.classList.add("open");
+    });
+    wrap.appendChild(toggle);
+    wrap.appendChild(menu);
+    bar.appendChild(wrap);
   }
 
   function signIn() {
@@ -306,6 +329,7 @@
   function connect() {
     var cfg = config();
     if (!cfg || !cfg.databaseURL || !window.firebase) return;
+    document.addEventListener("click", closeAccountMenus);
     if (!firebase.apps.length) firebase.initializeApp(cfg);
     db = firebase.database();
     firebase.auth().onAuthStateChanged(function (user) {

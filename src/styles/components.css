@@ -392,9 +392,30 @@ body.pen-on .penbar{display:flex}
 .wk-body{border-radius:0 0 var(--r) var(--r)}
 .sticky-note.pinned{box-shadow:0 8px 30px rgba(0,0,0,.55), 0 0 0 1px rgba(255,184,77,.25)}
 
-/* ---------------- shared plan sign-in bar ---------------- */
-.sync-slot{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--ink2)}
-.sync-who{font:500 13px var(--sans);color:var(--ink3);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* ---------------- account and header groups ---------------- */
+.seg{display:inline-flex;border:1px solid var(--line2);border-radius:6px;overflow:hidden}
+.seg .btn{border:none;border-radius:0;height:34px}
+.seg .btn+.btn{border-left:1px solid var(--line2)}
+.topbar .btn:not(.solid){background:transparent;border-color:transparent}
+.topbar .seg .btn{background:transparent}
+.acct{position:relative}
+.acct-btn{
+  width:36px;height:36px;border-radius:50%;border:1px solid var(--line2);
+  background:var(--panel3);color:var(--green);font:600 15px var(--sans);cursor:pointer;
+}
+.acct-btn:hover{border-color:var(--green)}
+.acct-menu{
+  display:none;position:absolute;right:0;top:44px;min-width:250px;padding:8px;z-index:70;
+  background:var(--panel);border:1px solid var(--line2);border-radius:8px;box-shadow:0 12px 40px rgba(0,0,0,.5);
+}
+.acct-menu.open{display:block}
+.acct-email{padding:8px 10px;font:500 14px var(--sans);color:var(--ink2);border-bottom:1px solid var(--line);margin-bottom:6px;word-break:break-all}
+.acct-state{padding:4px 10px 6px;font:500 13px var(--sans);color:var(--amber)}
+.acct-item{
+  display:block;width:100%;text-align:left;background:none;border:none;cursor:pointer;
+  font:500 15px var(--sans);color:var(--ink);padding:9px 10px;border-radius:6px;
+}
+.acct-item:hover{background:var(--panel3)}
 
 /* ---------------- people panel (admin) ---------------- */
 .sync-sec{font:700 12px var(--mono);color:var(--green);letter-spacing:.4px;margin-top:6px}
@@ -402,3 +423,6 @@ body.pen-on .penbar{display:flex}
 .sync-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 10px;border:1px solid var(--line);border-radius:var(--r2);background:var(--panel2)}
 .sync-row .sync-who{flex:1;min-width:0}
 .sync-state{font-size:13px;color:var(--amber);font-family:var(--mono)}
+
+.sync-slot{display:flex;align-items:center}
+.sync-who{font:500 13px var(--sans);color:var(--ink3);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

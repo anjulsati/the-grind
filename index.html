@@ -11,9 +11,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <meta name="theme-color" content="#0a0e14">
-<link rel="stylesheet" href="src/styles/theme.css?v=68">
-<link rel="stylesheet" href="src/styles/layout.css?v=68">
-<link rel="stylesheet" href="src/styles/components.css?v=68">
+<link rel="stylesheet" href="src/styles/theme.css?v=69">
+<link rel="stylesheet" href="src/styles/layout.css?v=69">
+<link rel="stylesheet" href="src/styles/components.css?v=69">
 </head>
 <body>
 
@@ -28,11 +28,13 @@
     <div class="tb-line tiny"><span id="overallcount">0 / 0</span><span class="sep">·</span><span id="countdown">—</span></div>
   </div>
   <div class="actions">
-    <span id="syncSlot" class="sync-slot"></span>
     <button id="jumpToday" class="btn">Jump to today</button>
-    <button id="penToggle" class="btn" title="Pen mode (P)">Pen</button>
-    <button id="noteBtn" class="btn" title="Sticky notes (N)">Note</button>
+    <div class="seg">
+      <button id="noteBtn" class="btn" title="Sticky notes (N)">Note</button>
+      <button id="penToggle" class="btn" title="Pen mode (P)">Pen</button>
+    </div>
     <button id="editBtn" class="btn" title="Edit the plan (E)">Edit plan</button>
+    <span id="syncSlot" class="sync-slot"></span>
   </div>
 </header>
 
@@ -83,16 +85,16 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-<script src="src/js/firebase-config.js?v=68"></script>
-<script src="src/js/data.js?v=68"></script>
-<script src="src/js/store.js?v=68"></script>
-<script src="src/js/ui.js?v=68"></script>
-<script src="src/js/editor.js?v=68"></script>
-<script src="src/js/pen.js?v=68"></script>
-<script src="src/js/events.js?v=68"></script>
-<script src="src/js/cursor.js?v=68"></script>
-<script src="src/js/notes.js?v=68"></script>
-<script src="src/js/sync.js?v=68"></script>
-<script src="src/js/main.js?v=68"></script>
+<script src="src/js/firebase-config.js?v=69"></script>
+<script src="src/js/data.js?v=69"></script>
+<script src="src/js/store.js?v=69"></script>
+<script src="src/js/ui.js?v=69"></script>
+<script src="src/js/editor.js?v=69"></script>
+<script src="src/js/pen.js?v=69"></script>
+<script src="src/js/events.js?v=69"></script>
+<script src="src/js/cursor.js?v=69"></script>
+<script src="src/js/notes.js?v=69"></script>
+<script src="src/js/sync.js?v=69"></script>
+<script src="src/js/main.js?v=69"></script>
 </body>
 </html>
