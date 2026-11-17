@@ -41,7 +41,12 @@
   function dayDone(day) { return day.items.filter(function (i) { return store.state.done[i.id]; }).length; }
   function weekStats(w) {
     var t = 0, d = 0;
-    w.days.forEach(function (x) { t += x.items.length; d += dayDone(x); });
+    w.days.forEach(function (day) {
+      day.items.forEach(function (i) {
+        if (!store.isProblemLink(i.url)) return;
+        t++; if (store.state.done[i.id]) d++;
+      });
+    });
     return { total: t, done: d, pct: t ? Math.round((d / t) * 100) : 0 };
   }
   function overall() {
@@ -53,7 +58,7 @@
     var t = 0, d = 0;
     store.allDays().forEach(function (day) {
       day.items.forEach(function (i) {
-        if (i.type !== "dsa" && i.type !== "stretch") return;
+        if (!store.isProblemLink(i.url)) return;
         t++; if (store.state.done[i.id]) d++;
       });
     });

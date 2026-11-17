@@ -315,5 +315,15 @@
     var ef = ce.getAttribute("data-ef");
     if (!ef) return;
     editor.commit(ef, ce.textContent || "");
+    /* refresh the counts without re-rendering (that would kill focus) */
+    ui.refreshHeader();
+    var wk = ce.closest && ce.closest(".wk");
+    if (wk) {
+      var st = ui.weekStats(store.weekByN(Number(wk.getAttribute("data-week"))));
+      var wcnt = wk.querySelector(".wk-head .day-count");
+      var bar = wk.querySelector(".mini-bar > div");
+      if (wcnt) wcnt.textContent = st.done + "/" + st.total;
+      if (bar) bar.style.width = st.pct + "%";
+    }
   });
 })();

@@ -167,6 +167,28 @@
     });
     return n;
   }
+  /* A link counts as a DSA question only when it points at a judge's problem
+     page. Video and documentation links never count. */
+  var JUDGE_HOSTS = [
+    "leetcode", "codeforces", "codechef", "atcoder", "hackerrank", "hackerearth",
+    "spoj", "cses.fi", "topcoder", "interviewbit", "codewars", "workat.tech",
+    "binarysearch.com", "tlx.toki.id", "beecrowd", "lightoj", "dmoj", "oj.uz", "kattis"
+  ];
+  function isProblemLink(url) {
+    if (!url) return false;
+    var u = String(url).toLowerCase().trim();
+    if (!u) return false;
+    if (u.indexOf("http") !== 0 && u.indexOf(".") === -1) return false;
+    for (var i = 0; i < JUDGE_HOSTS.length; i++) {
+      if (u.indexOf(JUDGE_HOSTS[i]) !== -1) return true;
+    }
+    /* these sites also host articles, so only their problem pages count */
+    if (u.indexOf("geeksforgeeks") !== -1 && u.indexOf("problems") !== -1) return true;
+    if (u.indexOf("codingninjas") !== -1 && u.indexOf("problems") !== -1) return true;
+    if (u.indexOf("code360") !== -1 && u.indexOf("problems") !== -1) return true;
+    return false;
+  }
+
   function dedupe(list) {
     var seen = {}, out = [];
     list.forEach(function (x) { if (!seen[x]) { seen[x] = 1; out.push(x); } });
@@ -182,6 +204,6 @@
     state: state, saveState: saveState, resetState: resetState,
     today: today, allDays: allDays, weekByN: weekByN,
     findItem: findItem, dayByDate: dayByDate, uid: uid,
-    problemCount: problemCount, dedupe: dedupe
+    problemCount: problemCount, dedupe: dedupe, isProblemLink: isProblemLink,
   };
 })();

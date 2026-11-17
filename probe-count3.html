@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Grind — DSA till mastery</title>
+<meta name="description" content="A personal 23-week DSA plan by Anjul Sati, from the first study day to April 2027.">
+<meta name="author" content="Anjul Sati">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#0a0e14">
+<link rel="stylesheet" href="src/styles/theme.css?v=85">
+<link rel="stylesheet" href="src/styles/layout.css?v=85">
+<link rel="stylesheet" href="src/styles/components.css?v=85">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <strong>The Grind</strong>
+    <span class="sub">DSA only · 23 weeks</span>
+  </div>
+  <div class="todaybox">
+    <div class="tb-line"><span id="todayLabel">—</span></div>
+    <div class="bar"><div id="overallbar"></div></div>
+    <div class="tb-line tiny"><span id="overallcount">0 / 0 DSA</span></div>
+  </div>
+  <div class="actions">
+    <button id="jumpToday" class="btn">Jump to today</button>
+    <div class="seg">
+      <button id="noteBtn" class="btn" title="Sticky notes (N)">Note</button>
+      <button id="penToggle" class="btn" title="Pen mode (P)">Pen</button>
+    </div>
+    <span id="syncSlot" class="sync-slot"></span>
+  </div>
+</header>
+
+<input type="file" id="importFile" accept="application/json" style="display:none">
+
+<div class="navwrap">
+  <nav id="navchips" class="navchips"></nav>
+</div>
+
+<main id="app"></main>
+
+<button id="topBtn" class="btn fab" title="Back to top">↑</button>
+
+<canvas id="penCanvas"></canvas>
+<div class="penbar" id="penbar">
+  <span class="penlbl">Pen</span>
+  <div class="swatches">
+    <button class="sw on" data-color="#1E56C8" style="background:#1E56C8"></button>
+    <button class="sw" data-color="#E4572E" style="background:#E4572E"></button>
+    <button class="sw" data-color="#2E7D4F" style="background:#2E7D4F"></button>
+    <button class="sw" data-color="#1B2530" style="background:#1B2530"></button>
+    <button class="sw" data-color="#9A6B00" style="background:#9A6B00"></button>
+  </div>
+  <select id="penSize">
+    <option value="2">thin</option><option value="4" selected>medium</option>
+    <option value="8">thick</option><option value="14">marker</option>
+  </select>
+  <select id="penFade">
+    <option value="10">fade 10s</option><option value="30" selected>fade 30s</option>
+    <option value="60">fade 60s</option><option value="0">keep forever</option>
+  </select>
+  <button id="penClear" class="btn">Clear</button>
+  <button id="penExit" class="btn solid">Done</button>
+</div>
+
+<div class="modal-wrap" id="modal"></div>
+<div class="toast" id="toast"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="src/js/firebase-config.js?v=85"></script>
+<script src="src/js/data.js?v=85"></script>
+<script src="src/js/store.js?v=85"></script>
+<script src="src/js/ui.js?v=85"></script>
+<script src="src/js/editor.js?v=85"></script>
+<script src="src/js/pen.js?v=85"></script>
+<script src="src/js/events.js?v=85"></script>
+<script src="src/js/cursor.js?v=85"></script>
+<script src="src/js/notes.js?v=85"></script>
+<script src="src/js/sync.js?v=85"></script>
+<script src="src/js/main.js?v=85"></script>
+<script>
+setTimeout(function(){
+  function W(){return document.getElementById("w1");}
+  function type(el,txt){el.focus();el.textContent=txt;el.blur();}
+  function top(){return document.getElementById("overallcount").textContent;}
+  function wk(){return W().querySelector(".wk-head .day-count").textContent;}
+  var r=[];
+  try{
+    var w1=W();
+    w1.classList.add("open");
+    r.push("start top="+top()+" week="+wk());
+    w1.querySelector("[data-wedit]").click(); w1=W();
+    w1.querySelector("[data-add]").click(); w1=W();
+    var newLi=null;
+    w1.querySelectorAll(".item").forEach(function(li){ if(!newLi && li.querySelector(".t") && li.querySelector(".t").textContent==="New task") newLi=li; });
+    r.push("foundNew="+(!!newLi));
+    type(newLi.querySelector(".eurl"),"https://www.codechef.com/problems/XYZ1");
+    type(newLi.querySelector('[data-ef$="|title"]'),"Chef and Squares");
+    r.push("afterCodechef top="+top()+" week="+wk());
+    w1=W().querySelector("[data-add]").click(); w1=W();
+    var newLi2=null;
+    w1.querySelectorAll(".item").forEach(function(li){ var t=li.querySelector(".t"); if(t && t.textContent==="New task") newLi2=li; });
+    r.push("foundNew2="+(!!newLi2));
+    type(newLi2.querySelector(".eurl"),"https://www.youtube.com/watch?v=abc");
+    type(newLi2.querySelector('[data-ef$="|title"]'),"Some video");
+    r.push("afterYoutube top="+top()+" week="+wk());
+    var cc=null;
+    w1=W();
+    w1.querySelectorAll(".item").forEach(function(li){ var e=li.querySelector(".eurl"); if(e && e.textContent.indexOf("codechef")!==-1) cc=li; });
+    if(cc) cc.querySelector("input").click();
+    r.push("ticked top="+top()+" week="+wk());
+    w1=W(); w1.querySelector("[data-wedit]").click(); w1=W();
+    r.push("done top="+top()+" week="+wk()+" items="+JSON.parse(localStorage.getItem("the-grind-db-v1")).weeks[0].days[0].items.length);
+  }catch(err){ r.push("CAUGHT="+err.message); }
+  var o=document.createElement("pre");o.id="probeOut";o.textContent=r.join(" | ");document.body.appendChild(o);
+},5000);
+</script>
+</body>
+</html>
