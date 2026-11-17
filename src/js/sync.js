@@ -1,23 +1,42 @@
 /* ============================================================
    The Grind — sync.js
-   Shares the plan, progress and notes between the two allowed
-   Google accounts through Firebase Realtime Database.
-   Access is enforced by database.rules.json, not by this file.
+   Shares the plan, progress and notes through Firebase Realtime
+   Database. Access is enforced by database.rules.json. This file
+   only shows the People panel to the admin; the rules decide what
+   anyone can actually read or write.
    Does nothing until firebase-config.js is filled in.
    ============================================================ */
 (function () {
   "use strict";
   window.TG = window.TG || {};
 
+  var ADMIN_EMAIL = "anjulsati147@gmail.com";
+
+  var db = null;
   var ref = null;
+  var accessRef = null;
   var timer = null;
   var lastStamp = 0;
   var applying = false;
   var seeded = false;
+  var modal = null;
 
   function config() { return window.GRIND_FIREBASE || null; }
 
   function clean(v) { return JSON.parse(JSON.stringify(v)); }
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function btn(label, cls, fn) {
+    var b = el("button", cls || "btn", label);
+    b.addEventListener("click", fn);
+    return b;
+  }
 
   function push() {
     if (!ref || applying) return;
@@ -69,7 +88,7 @@
 
   function startListening() {
     if (ref) return;
-    ref = firebase.database().ref("plan");
+    ref = db.ref("plan");
     ref.on("value", onRemote, function () {
       TG.toast("Not allowed to read the shared plan");
     });
@@ -81,31 +100,134 @@
     seeded = false;
   }
 
-  function showBar(user) {
+  function showBar(user, state) {
     var bar = document.getElementById("syncSlot");
     if (!bar) return;
-    if (user) {
-      bar.innerHTML = '<span class="sync-who">' + user.email + '</span><button class="btn" id="syncOut">Sign out</button>';
-      document.getElementById("syncOut").addEventListener("click", function () { firebase.auth().signOut(); });
-    } else {
-      bar.innerHTML = '<button class="btn solid" id="syncIn">Sign in with Google</button>';
-      document.getElementById("syncIn").addEventListener("click", function () {
-        firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(function (err) {
-          TG.toast("Sign-in failed: " + err.message);
-        });
-      });
+    bar.textContent = "";
+    if (!user) {
+      bar.appendChild(btn("Sign in with Google", "btn solid", signIn));
+      return;
     }
+    bar.appendChild(el("span", "sync-who", user.email));
+    if (state === "waiting") bar.appendChild(el("span", "sync-state", "Waiting for approval"));
+    if (user.email === ADMIN_EMAIL) bar.appendChild(btn("People", "btn", openPeople));
+    bar.appendChild(btn("Sign out", "btn", function () { firebase.auth().signOut(); }));
+  }
+
+  function signIn() {
+    firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(function (err) {
+      TG.toast("Sign-in failed: " + err.message);
+    });
+  }
+
+  function watchAccess(user) {
+    if (accessRef) accessRef.off();
+    accessRef = db.ref("allowed/" + user.uid);
+    accessRef.on("value", function (snap) {
+      if (snap.exists()) {
+        showBar(user, "ok");
+        startListening();
+      } else {
+        stopListening();
+        showBar(user, "waiting");
+        db.ref("requests/" + user.uid).set({ email: user.email, at: Date.now() }).catch(function () {});
+      }
+    });
+  }
+
+  function onSignedIn(user) {
+    if (user.email === ADMIN_EMAIL) {
+      db.ref("allowed/" + user.uid).set({ email: user.email, at: Date.now() }).catch(function () {});
+    }
+    watchAccess(user);
+  }
+
+  function openPeople() {
+    if (!modal) {
+      modal = el("div", "modal-wrap");
+      modal.id = "peopleModal";
+      modal.addEventListener("click", function (e) { if (e.target === modal) closePeople(); });
+      document.body.appendChild(modal);
+    }
+    modal.style.display = "grid";
+    renderPeople();
+  }
+
+  function closePeople() {
+    if (modal) modal.style.display = "none";
+  }
+
+  function fail() { TG.toast("That change is not allowed"); }
+
+  function renderPeople() {
+    Promise.all([db.ref("requests").once("value"), db.ref("allowed").once("value")]).then(function (res) {
+      var reqs = res[0].val() || {};
+      var allowed = res[1].val() || {};
+      modal.textContent = "";
+
+      var box = el("div", "modal");
+      var head = el("div", "modal-h");
+      head.appendChild(el("b", null, "People who can change the plan"));
+      head.appendChild(btn("✕", "tbtn", closePeople));
+      var body = el("div", "modal-b");
+
+      body.appendChild(el("div", "sync-sec", "Waiting for approval"));
+      var rkeys = Object.keys(reqs);
+      if (!rkeys.length) body.appendChild(el("div", "sync-empty", "No one is waiting."));
+      rkeys.forEach(function (uid) {
+        var row = el("div", "sync-row");
+        row.appendChild(el("span", "sync-who", reqs[uid].email));
+        row.appendChild(btn("Approve", "btn solid", function () { approve(uid, reqs[uid].email); }));
+        row.appendChild(btn("Reject", "btn danger", function () { reject(uid); }));
+        body.appendChild(row);
+      });
+
+      body.appendChild(el("div", "sync-sec", "Allowed"));
+      Object.keys(allowed).forEach(function (uid) {
+        var row = el("div", "sync-row");
+        row.appendChild(el("span", "sync-who", allowed[uid].email));
+        if (allowed[uid].email !== ADMIN_EMAIL) {
+          row.appendChild(btn("Remove", "btn danger", function () { remove(uid); }));
+        }
+        body.appendChild(row);
+      });
+
+      box.appendChild(head);
+      box.appendChild(body);
+      modal.appendChild(box);
+    }).catch(fail);
+  }
+
+  function approve(uid, email) {
+    db.ref("allowed/" + uid).set({ email: email, at: Date.now() })
+      .then(function () { return db.ref("requests/" + uid).remove(); })
+      .then(function () { TG.toast("Approved " + email); renderPeople(); })
+      .catch(fail);
+  }
+
+  function reject(uid) {
+    db.ref("requests/" + uid).remove().then(renderPeople).catch(fail);
+  }
+
+  function remove(uid) {
+    db.ref("allowed/" + uid).remove()
+      .then(function () { TG.toast("Removed access"); renderPeople(); })
+      .catch(fail);
   }
 
   function connect() {
     var cfg = config();
     if (!cfg || !cfg.databaseURL || !window.firebase) return;
-
     if (!firebase.apps.length) firebase.initializeApp(cfg);
+    db = firebase.database();
     firebase.auth().onAuthStateChanged(function (user) {
-      showBar(user);
-      if (user) startListening();
-      else stopListening();
+      showBar(user, null);
+      if (user) onSignedIn(user);
+      else {
+        if (accessRef) accessRef.off();
+        accessRef = null;
+        stopListening();
+      }
     });
   }
 

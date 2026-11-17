@@ -3,8 +3,22 @@
     ".read": false,
     ".write": false,
     "plan": {
-      ".read": "auth != null && auth.token.email_verified === true && (auth.token.email === 'anjulsati147@gmail.com' || auth.token.email === 'anrgsati@amazon.com')",
-      ".write": "auth != null && auth.token.email_verified === true && (auth.token.email === 'anjulsati147@gmail.com' || auth.token.email === 'anrgsati@amazon.com')"
+      ".read": "auth != null && auth.token.email_verified === true && (auth.token.email === 'anjulsati147@gmail.com' || root.child('allowed').child(auth.uid).exists())",
+      ".write": "auth != null && auth.token.email_verified === true && (auth.token.email === 'anjulsati147@gmail.com' || root.child('allowed').child(auth.uid).exists())"
+    },
+    "allowed": {
+      ".read": "auth != null && auth.token.email_verified === true && auth.token.email === 'anjulsati147@gmail.com'",
+      ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'anjulsati147@gmail.com'",
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid"
+      }
+    },
+    "requests": {
+      ".read": "auth != null && auth.token.email_verified === true && auth.token.email === 'anjulsati147@gmail.com'",
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && (auth.uid === $uid || (auth.token.email_verified === true && auth.token.email === 'anjulsati147@gmail.com'))"
+      }
     }
   }
 }
