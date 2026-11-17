@@ -13,4 +13,12 @@
      appId: "..."
    };
    ============================================================ */
-window.GRIND_FIREBASE = null;
+window.GRIND_FIREBASE = {
+  apiKey: "AIzaSyDY3tQ75trEXMiQS2qra7cWJlANoXYa_HI",
+  authDomain: "the-grind-anjul-2026.firebaseapp.com",
+  databaseURL: "https://the-grind-anjul-2026-default-rtdb.firebaseio.com",
+  projectId: "the-grind-anjul-2026",
+  storageBucket: "the-grind-anjul-2026.firebasestorage.app",
+  messagingSenderId: "147888523409",
+  appId: "1:147888523409:web:3d12900d2af22092d81730"
+};
