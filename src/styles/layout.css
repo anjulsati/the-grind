@@ -223,7 +223,7 @@ td.num{font-family:var(--mono);font-weight:600;color:var(--green);text-align:rig
 .prio.P2{color:var(--amber);border-color:rgba(255,184,77,.35);background:var(--amber-dim)}
 .prio.P3{color:var(--ink3);border-color:var(--line2)}
 
-/* ---------------- steps (FAANG loop) ---------------- */
+/* ---------------- steps (interview loop) ---------------- */
 .steps{display:flex;flex-direction:column;gap:8px}
 .step{
   display:grid;grid-template-columns:34px 1fr;gap:13px;align-items:start;

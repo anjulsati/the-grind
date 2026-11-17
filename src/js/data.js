@@ -946,9 +946,9 @@
       project: "PORTFOLIO — READMEs with numbers, demo video, GitHub profile updated."
     },
     {
-      n: 20, mode: "normal", theme: "FAANG hard — arrays & strings",
+      n: 20, mode: "normal", theme: "Hard — arrays & strings",
       goal: "The follow-up questions, not the intros.",
-      pattern: "FAANG hard — arrays & strings",
+      pattern: "Hard — arrays & strings",
       cs: "DSA",
       learn: [
         { t: "Learn first — Longest valid parentheses", v: "D190eYUIpUU", a: "codestorywithMIK", h: "Watch this first, then the problems below." },
@@ -974,9 +974,9 @@
       ]
     },
     {
-      n: 21, mode: "normal", theme: "FAANG hard — graphs & design",
+      n: 21, mode: "normal", theme: "Hard — graphs & design",
       goal: "Bitmask BFS, weighted union find, design classics.",
-      pattern: "FAANG hard — graphs & design",
+      pattern: "Hard — graphs & design",
       cs: "DSA",
       learn: [
         { t: "Learn first — Open the lock", v: "vtxETRvR9JY", a: "Coding Decoded", h: "Watch this first, then the problems below." },
@@ -1002,9 +1002,9 @@
       ]
     },
     {
-      n: 22, mode: "normal", theme: "FAANG hard — DP beyond the basics",
+      n: 22, mode: "normal", theme: "Hard — DP beyond the basics",
       goal: "Interval DP, state machines, knapsack variants.",
-      pattern: "FAANG hard — DP beyond the basics",
+      pattern: "Hard — DP beyond the basics",
       cs: "DSA",
       learn: [
         { t: "Learn first — Burst balloons", v: "VFskby7lUbw", a: "NeetCode", h: "Watch this first, then the problems below." },
@@ -1030,9 +1030,9 @@
       ]
     },
     {
-      n: 23, mode: "normal", theme: "FAANG mixed — timed, cold, out loud",
+      n: 23, mode: "normal", theme: "Mixed — timed, cold, out loud",
       goal: "The last week: everything, under time.",
-      pattern: "FAANG mixed — timed, cold, out loud",
+      pattern: "Mixed — timed, cold, out loud",
       cs: "DSA",
       learn: [
         { t: "Learn first — Integer to English words", v: "9FLpWWJ987w", a: "codestorywithMIK", h: "Watch this first, then the problems below." },
@@ -1151,7 +1151,7 @@
       else if (w.mode === "transition") {
         if (d === 0) {
           items.push({ id: date + "-exam", type: "review", track: "dev", title: "Last exam today — nothing else is required",
-            hint: "Come back tomorrow. The FAANG block starts Dec 8." });
+            hint: "Come back tomorrow. The timed block starts Dec 8." });
           items.push(prob(0, "Only if you have the energy. 10 minutes."));
           meta.title = "Last exam · optional"; meta.time = "10 min"; meta.light = true;
         } else if (d < 6) {
@@ -1180,12 +1180,12 @@
             id: date + "-r1", type: "review", track: "dsa",
             title: timedWeek ? "OA simulation — 2 unseen mediums, 60 min, no help" : "Re-solve 3 problems from this week — cold, no hints",
             hint: timedWeek
-              ? "This is the FAANG online-assessment format. Timer on, editor bare, talk out loud. Then re-solve 2 old ones."
+              ? "This is the online-assessment format. Timer on, editor bare, talk out loud. Then re-solve 2 old ones."
               : w.problems.slice(0, 3).map(function (x) { return x.title; }).join(" · ")
           });
           (w.stretch || []).forEach(function (sp, k) {
             items.push({ id: date + "-st" + k, type: "stretch", track: "dsa", title: sp.title, url: sp.url, diff: sp.diff,
-              hint: k === 0 ? "Optional FAANG-level stretch." : "Optional. Attempt, don't solve." });
+              hint: k === 0 ? "Optional hard stretch." : "Optional. Attempt, don't solve." });
           });
           items.push({ id: date + "-r2", type: "review", track: "dsa", title: "Weekly review: 3 lines in plan.md — what clicked, what didn't, what I redo" });
           meta.title = timedWeek ? "Revision + timed set" : "Revision day";
@@ -1220,13 +1220,13 @@
 
 
   /* ============================================================
-     THE FAANG BAR
+     THE INTERVIEW BAR
      ============================================================ */
 
 
   var RULES = [
     "45 min alone → 20 min learning → rewrite from scratch. Every problem.",
-    "FAANG bar: easy under 15 min, medium under 30 min — cold, out loud.",
+    "Interview bar: easy under 15 min, medium under 30 min — cold, out loud.",
     "Attempt 2 hards a week. Not solve. Attempt.",
     "From week 10, every week ends with a timed set. It is the OA, rehearsed.",
     "Revision beats new problems after week 8. 244 revised beats 400 forgotten.",
