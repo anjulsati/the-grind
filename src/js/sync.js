@@ -1,35 +1,24 @@
 /* ============================================================
    The Grind — sync.js
-   Shares the plan, progress and notes between browsers through
-   Firebase Realtime Database. Does nothing until firebase-config.js
-   is filled in.
-
-   The shared code picks a hidden room in the database (its SHA-256
-   hash), so the code itself is never stored in the database.
+   Shares the plan, progress and notes between the two allowed
+   Google accounts through Firebase Realtime Database.
+   Access is enforced by database.rules.json, not by this file.
+   Does nothing until firebase-config.js is filled in.
    ============================================================ */
 (function () {
   "use strict";
   window.TG = window.TG || {};
 
-  var CODE_KEY = "the-grind-code";
   var ref = null;
   var timer = null;
   var lastStamp = 0;
   var applying = false;
   var seeded = false;
+  var bar = null;
 
   function config() { return window.GRIND_FIREBASE || null; }
 
   function clean(v) { return JSON.parse(JSON.stringify(v)); }
-
-  function hashCode(text) {
-    var bytes = new TextEncoder().encode(text);
-    return crypto.subtle.digest("SHA-256", bytes).then(function (buf) {
-      return Array.from(new Uint8Array(buf)).map(function (b) {
-        return b.toString(16).padStart(2, "0");
-      }).join("");
-    });
-  }
 
   function push() {
     if (!ref || applying) return;
@@ -39,7 +28,9 @@
       progress: TG.store.state,
       notes: TG.notes.getNotes(),
       updated: lastStamp
-    }));
+    })).catch(function () {
+      TG.toast("Not allowed to change the shared plan");
+    });
   }
 
   function changed() {
@@ -77,23 +68,49 @@
     apply(v);
   }
 
+  function startListening() {
+    if (ref) return;
+    ref = firebase.database().ref("plan");
+    ref.on("value", onRemote, function () {
+      TG.toast("Not allowed to read the shared plan");
+    });
+  }
+
+  function stopListening() {
+    if (ref) ref.off();
+    ref = null;
+    seeded = false;
+  }
+
+  function showBar(user) {
+    if (!bar) {
+      bar = document.createElement("div");
+      bar.id = "syncBar";
+      bar.className = "sync-bar";
+      document.body.appendChild(bar);
+    }
+    if (user) {
+      bar.innerHTML = '<span>Signed in as ' + user.email + '</span><button class="btn" id="syncOut">Sign out</button>';
+      document.getElementById("syncOut").addEventListener("click", function () { firebase.auth().signOut(); });
+    } else {
+      bar.innerHTML = '<button class="btn solid" id="syncIn">Sign in with Google to share the plan</button>';
+      document.getElementById("syncIn").addEventListener("click", function () {
+        firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(function (err) {
+          TG.toast("Sign-in failed: " + err.message);
+        });
+      });
+    }
+  }
+
   function connect() {
     var cfg = config();
     if (!cfg || !cfg.databaseURL || !window.firebase) return;
 
-    var code = localStorage.getItem(CODE_KEY);
-    if (!code) {
-      code = (window.prompt("Shared code for you and Anurag (at least 6 characters). Use the same code on both browsers.") || "").trim();
-      if (code.length < 6) return;
-      localStorage.setItem(CODE_KEY, code);
-    }
-
     if (!firebase.apps.length) firebase.initializeApp(cfg);
-    hashCode("the-grind:" + code).then(function (h) {
-      ref = firebase.database().ref("rooms/" + h);
-      ref.on("value", onRemote, function (err) {
-        TG.toast("Sync failed: " + err.message);
-      });
+    firebase.auth().onAuthStateChanged(function (user) {
+      showBar(user);
+      if (user) startListening();
+      else stopListening();
     });
   }
 
