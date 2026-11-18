@@ -229,6 +229,8 @@
     return n + (s[(v - 20) % 10] || s[v] || s[0]);
   }
 
+  TG.revision = { open: openRevisionPanel };
+
   /* ============================================================
      CLICKS
      ============================================================ */
@@ -346,7 +348,10 @@
     editor.commit(ef, val);
     /* a fresh link gets verified (and titled) in the background */
     if (ef.split("|")[2] === "url") {
-      if (val.trim() && TG.verify) TG.verify.check(val.trim());
+      if (val.trim()) {
+        store.noteFirstAdded(val.trim());
+        if (TG.verify) TG.verify.check(val.trim());
+      }
       /* refresh the classification chip in place — no re-render, focus is safe here */
       var li = ce.closest(".item");
       if (li) {

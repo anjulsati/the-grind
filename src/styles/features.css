@@ -124,30 +124,32 @@
 .dseg .dir{font-size:11px;opacity:.8}
 
 .dsa-tablewrap{max-width:1240px;margin:0 auto;background:var(--panel);border:1px solid var(--line2);border-radius:10px;overflow:auto}
-.dsa-table{width:100%;border-collapse:collapse;min-width:880px}
+.dsa-table{width:100%;border-collapse:collapse;min-width:760px}
 .dsa-table th{
   position:sticky;top:0;text-align:left;padding:12px 14px;
   font:700 12px var(--mono);letter-spacing:.6px;text-transform:uppercase;
   color:var(--ink3);background:var(--panel3);border-bottom:1px solid var(--line2);
   white-space:nowrap;
 }
-.dsa-table td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;font:500 14px var(--sans);color:var(--ink2)}
+.dsa-table td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top;font:500 14px var(--sans);color:var(--ink2)}
 .dsa-table tbody tr:hover{background:rgba(0,229,160,.035)}
 .dsa-table .num{font:600 14px var(--mono);color:var(--ink3);white-space:nowrap}
 .dname{color:var(--ink);font-weight:600;text-decoration:none;border-bottom:1px solid transparent}
 .dname:hover{color:var(--cyan);border-bottom-color:rgba(34,211,238,.4)}
-.dtag{
-  display:inline-block;margin-left:8px;padding:1px 8px;border-radius:10px;
-  font:600 11px var(--mono);letter-spacing:.4px;vertical-align:middle;
-}
-.dtag.ok{color:var(--green);background:var(--green-dim);border:1px solid rgba(0,229,160,.35)}
-.dtag.pend{color:var(--amber);background:var(--amber-dim);border:1px solid rgba(255,184,77,.3)}
 .dtitle-edit{
   margin-left:6px;border:none;background:none;color:var(--ink3);cursor:pointer;
   font-size:12px;opacity:0;transition:.12s;
 }
 tr:hover .dtitle-edit{opacity:.9}
 .dtitle-edit:hover{color:var(--green)}
+.drev-btn{
+  margin-left:8px;padding:1px 7px;border-radius:10px;cursor:pointer;
+  font:600 12px var(--mono);color:var(--ink3);
+  background:transparent;border:1px solid var(--line2);transition:.12s;
+}
+.drev-btn.has-revs{color:var(--green);border-color:rgba(0,229,160,.4);background:var(--green-dim)}
+.drev-btn:hover{color:var(--green);border-color:var(--green)}
+.dplat{font:500 13px var(--mono);color:var(--ink2);white-space:nowrap}
 .dname-input{
   width:100%;max-width:340px;height:30px;padding:0 8px;border-radius:5px;
   color:var(--ink);background:var(--panel2);border:1px solid var(--green);

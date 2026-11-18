@@ -76,7 +76,20 @@
   function normalizeDB(x) {
     if (!x) return x;
     if (!x.verified || typeof x.verified !== "object") x.verified = {};
+    if (!x.firstAdded || typeof x.firstAdded !== "object") x.firstAdded = {};
     return x;
+  }
+  /* merge link metadata we already resolved locally into an incoming
+     (possibly older) plan, so a sync can never lose verdicts */
+  function mergeLinkMeta(from, into) {
+    if (!from) return;
+    ["verified", "firstAdded"].forEach(function (k) {
+      var src = from[k], dst = into[k];
+      if (!src || !dst) return;
+      Object.keys(src).forEach(function (key) {
+        if (!dst[key]) dst[key] = src[key];
+      });
+    });
   }
   function loadDB() {
     try {
@@ -129,7 +142,9 @@
     if (window.TG && TG.sync) TG.sync.changed();
   }
   function setAll(plan, progress) {
+    var old = db;
     db = normalizeDB(plan);
+    mergeLinkMeta(old, db);
     state = progress;
     state.done = state.done || {};
     if (!state.doneAt || typeof state.doneAt !== "object") state.doneAt = {};
@@ -298,6 +313,15 @@
   function isGenericTitle(t) {
     return !t || !String(t).trim() || /^new task$/i.test(String(t).trim());
   }
+  /* record the moment a link first enters the plan (called on url commit) */
+  function noteFirstAdded(url) {
+    var k = urlKey(url);
+    if (!k) return;
+    if (!db.firstAdded) db.firstAdded = {};
+    if (db.firstAdded[k]) return;
+    db.firstAdded[k] = new Date().toISOString();
+    saveDB();
+  }
   function slugTitle(url) {
     var u = String(url || "").replace(/^https?:\/\//, "").replace(/\/+$/, "");
     var seg = u.split("/").pop() || "";
@@ -309,7 +333,43 @@
   }
 
   /* ---------- unique DSA question index ----------
-     One record per unique problem link, no matter how many days hold it. */
+     One record per unique problem link, no matter how many days hold it.
+     Everything is derived live from the task list — deleting the last
+     task that references a question removes it from here, and the
+     counter with it. */
+  var PLATFORM_NAMES = [
+    ["leetcode", "LeetCode"], ["codeforces", "Codeforces"], ["codechef", "CodeChef"],
+    ["atcoder", "AtCoder"], ["hackerrank", "HackerRank"], ["hackerearth", "HackerEarth"],
+    ["geeksforgeeks", "GeeksforGeeks"], ["codingninjas", "Coding Ninjas"],
+    ["code360", "Coding Ninjas"], ["interviewbit", "InterviewBit"], ["codewars", "CodeWars"],
+    ["workat.tech", "Work@Tech"], ["topcoder", "TopCoder"], ["spoj", "SPOJ"],
+    ["cses.fi", "CSES"], ["binarysearch.com", "Binary Search"], ["tlx.toki.id", "TLX"],
+    ["beecrowd", "Beecrowd"], ["lightoj", "LightOJ"], ["dmoj", "DMOJ"],
+    ["oj.uz", "OJ.uz"], ["kattis", "Kattis"], ["projecteuler", "Project Euler"],
+    ["urionlinejudge", "URI OJ"], ["eolymp", "Eolymp"], ["e-olymp", "Eolymp"],
+    ["timus", "Timus"], ["acmp.ru", "ACMP"]
+  ];
+  function platformName(url) {
+    var u = String(url || "").toLowerCase();
+    for (var i = 0; i < PLATFORM_NAMES.length; i++) {
+      if (u.indexOf(PLATFORM_NAMES[i][0]) !== -1) return PLATFORM_NAMES[i][1];
+    }
+    var m = urlKey(url).split("/")[0].match(/([a-z0-9-]+\.(com|in|org|net|fi|ru|tech|id|uz|ml|jp|vn|kz))$/);
+    return m ? m[1] : "";
+  }
+  /* when this link first appeared in the plan: a real timestamp if we saw
+     it being added, otherwise the earliest day it is scheduled on */
+  function firstAddedOf(e) {
+    var rec = db.firstAdded ? db.firstAdded[e.key] : null;
+    if (rec) return rec;
+    var best = null;
+    allDays().forEach(function (day) {
+      day.items.forEach(function (it) {
+        if (urlKey(it.url) === e.key && day.date && (!best || day.date < best)) best = day.date;
+      });
+    });
+    return best || null;
+  }
   function problemIndex() {
     var map = {}, out = [];
     allDays().forEach(function (day) {
@@ -336,6 +396,8 @@
       e.revs = uniq.map(parseStamp).filter(Boolean).sort(function (a, b) { return a.t - b.t; });
       e.lastRev = e.revs.length ? e.revs[e.revs.length - 1] : null;
       if (e.title === null) e.title = verifiedTitle(e.key) || slugTitle(e.url) || "";
+      e.platform = platformName(e.url);
+      e.firstAdded = firstAddedOf(e);
     });
     return out;
   }
@@ -385,5 +447,6 @@
     classifyInfo: classifyInfo, setVerified: setVerified, toggleDSA: toggleDSA,
     setTitle: setTitle, urlKey: urlKey, verifiedTitle: verifiedTitle,
     problemIndex: problemIndex, dsaStats: dsaStats, slugTitle: slugTitle, isGenericTitle: isGenericTitle,
+    noteFirstAdded: noteFirstAdded, platformName: platformName,
   };
 })();

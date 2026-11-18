@@ -139,6 +139,24 @@
     });
     return !fromItems;
   }
+  /* write the fetched name straight into the task, so the user never
+     has to type a question name (only when the task is still untitled
+     and its title field isn't being edited right now) */
+  function autoNameTasks(k, title) {
+    var changed = false;
+    store.allDays().forEach(function (day) {
+      day.items.forEach(function (it) {
+        if (changed || store.urlKey(it.url) !== k || !store.isGenericTitle(it.title)) return;
+        var ae = document.activeElement;
+        if (ae && ae.getAttribute && ae.getAttribute("data-ef") === "task|" + it.id + "|title") return;
+        it.title = title;
+        changed = true;
+      });
+    });
+    if (changed) store.saveDB();
+    return changed;
+  }
+
   function fetchTitle(rawUrl) {
     var k = store.urlKey(rawUrl);
     if (!k || inflight[k]) return Promise.resolve();
@@ -149,8 +167,9 @@
     return fetchPage(url).then(function (page) {
       var title = String(page.title || "").trim();
       if (title) {
-        title = title.replace(/\s*[-|·]\s*(LeetCode|Codeforces|CodeChef|GeeksforGeeks|HackerRank|AtCoder|Coding Ninjas|InterviewBit)\s*$/i, "").trim();
+        title = title.replace(/\s*[-|·–—]\s*(LeetCode|Codeforces|CodeChef|GeeksforGeeks|HackerRank|AtCoder|Coding Ninjas|InterviewBit|Eolymp|SPOJ|CSES|Timus)\s*$/i, "").trim();
         store.setVerified(rawUrl, store.classifyInfo(rawUrl).dsa, store.classifyInfo(rawUrl).src, title);
+        autoNameTasks(k, title);
         announce(k);
       }
     }).catch(function () {
@@ -163,8 +182,11 @@
   function announce(k) {
     if (TG.ui) TG.ui.refreshHeader();
     if (TG.dashboard && TG.dashboard.isOpen()) TG.dashboard.render();
-    var editing = TG.editor && document.querySelector(".wk.editing");
-    if (!editing && TG.ui) TG.ui.render();
+    /* never yank focus out of a field the user is typing in */
+    var ae = document.activeElement;
+    var typing = ae && ae.getAttribute && ae.getAttribute("data-ef");
+    var editing = document.querySelector(".wk.editing");
+    if (!typing && !editing && TG.ui) TG.ui.render();
     void k;
   }
 
