@@ -93,7 +93,16 @@
     var cb = e.target;
     if (!cb.matches || !cb.matches('input[type="checkbox"][data-id]')) return;
     var id = cb.getAttribute("data-id");
-    if (cb.checked) store.state.done[id] = true; else delete store.state.done[id];
+    if (cb.checked) {
+      store.state.done[id] = true;
+      /* first attempt date for the Completed Questions dashboard */
+      var f = store.findItem(id);
+      if (f && store.isDSA(f.item.url) && !store.state.doneAt[id]) {
+        store.state.doneAt[id] = new Date().toISOString();
+      }
+    } else {
+      delete store.state.done[id];
+    }
     store.saveState();
 
     var li = cb.closest(".item");
@@ -115,6 +124,7 @@
       if (bar) bar.style.width = st.pct + "%";
     }
     ui.refreshHeader();
+    if (TG.dashboard && TG.dashboard.isOpen()) TG.dashboard.refresh();
   });
 
   /* ============================================================
@@ -194,7 +204,7 @@
     });
     document.getElementById("rpAdd").addEventListener("click", function () {
       var d = new Date();
-      var stamp = d.toLocaleDateString("en-IN", { day: "numeric", month: "short" }) +
+      var stamp = d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }) +
         " · " + d.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
       item.revisions.push(stamp);
       store.saveDB();
@@ -246,6 +256,9 @@
       return;
     }
     if (t.id === "topBtn") { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+
+    /* the top DSA counter opens the Completed Questions page */
+    if (t.id === "overallcount" || (t.closest && t.closest("#overallcount"))) { TG.dashboard.open(); return; }
     if (t.id === "restoreBtn") {
       if (confirm("Restore the original plan? Everything you added, edited or deleted goes back to factory state. Checkmarks stay.")) {
         store.restoreDB(); ui.render(); TG.toast("Plan restored to the original");
@@ -265,10 +278,24 @@
       if (fi && confirm('Delete "' + fi.item.title + '"?')) {
         fi.day.items = fi.day.items.filter(function (x) { return x.id !== fi.item.id; });
         delete store.state.done[fi.item.id];
+        delete store.state.doneAt[fi.item.id];
         store.saveState(); store.saveDB(); ui.render(); TG.toast("Item deleted");
       }
       return;
     }
+
+    /* link classification chip (edit mode) */
+    var cl = t.closest("[data-clstoggle]");
+    if (cl) {
+      var nowDsa = store.toggleDSA(cl.getAttribute("data-clstoggle"));
+      ui.render();
+      TG.toast(nowDsa ? "Counted as a DSA question" : "Removed from the DSA count");
+      return;
+    }
+
+    /* daily motivation */
+    var mot = t.closest("[data-mot]");
+    if (mot) { TG.quotes.open(); return; }
 
     var add = t.closest("[data-add]");
     if (add) { editor.addTask(add.getAttribute("data-add"), add.getAttribute("data-track")); return; }
@@ -296,7 +323,8 @@
   document.addEventListener("keydown", function (e) {
     var ce = e.target.closest && e.target.closest("[contenteditable][data-ef]");
     if (ce && e.key === "Enter") { e.preventDefault(); ce.blur(); return; }
-    if (e.target.matches("input, textarea, select, [contenteditable]")) return;
+    if (e.key === "Escape" && TG.dashboard.isOpen()) { TG.dashboard.close(); return; }
+    if (e.target.matches && e.target.matches("input, textarea, select, [contenteditable]")) return;
     if (e.key === "p" || e.key === "P") TG.pen.setPen(!TG.pen.isOn());
     else if (e.key === "Escape") { if (TG.pen.isOn()) TG.pen.setPen(false); }
   });
@@ -314,7 +342,23 @@
     if (!ce.getAttribute) return;
     var ef = ce.getAttribute("data-ef");
     if (!ef) return;
-    editor.commit(ef, ce.textContent || "");
+    var val = ce.textContent || "";
+    editor.commit(ef, val);
+    /* a fresh link gets verified (and titled) in the background */
+    if (ef.split("|")[2] === "url") {
+      if (val.trim() && TG.verify) TG.verify.check(val.trim());
+      /* refresh the classification chip in place — no re-render, focus is safe here */
+      var li = ce.closest(".item");
+      if (li) {
+        var oldChip = li.querySelector(".cls-chip");
+        if (oldChip) oldChip.remove();
+        if (val.trim() && TG.ui.clsChip) {
+          var holder = document.createElement("div");
+          holder.innerHTML = TG.ui.clsChip({ url: val.trim() });
+          if (holder.firstElementChild) li.querySelector(".body").appendChild(holder.firstElementChild);
+        }
+      }
+    }
     /* refresh the counts without re-rendering (that would kill focus) */
     ui.refreshHeader();
     var wk = ce.closest && ce.closest(".wk");

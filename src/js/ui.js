@@ -55,14 +55,8 @@
     return { total: t, done: d, pct: t ? (d / t) * 100 : 0 };
   }
   function dsaOverall() {
-    var t = 0, d = 0;
-    store.allDays().forEach(function (day) {
-      day.items.forEach(function (i) {
-        if (!store.isProblemLink(i.url)) return;
-        t++; if (store.state.done[i.id]) d++;
-      });
-    });
-    return { total: t, done: d, pct: t ? (d / t) * 100 : 0 };
+    /* unique DSA questions: one record per unique problem link */
+    return store.dsaStats();
   }
   var LAST_DATE = store.allDays()[store.allDays().length - 1].date;
   var TODAY_DAY = store.allDays().filter(function (d) { return d.date === TODAY; })[0] || null;
@@ -115,13 +109,24 @@
     }
     var inline = editing
       ? '<div class="eurl" data-ef="task|' + item.id + '|url" contenteditable="true" data-ph="link">' + esc(item.url || "") + "</div>" +
-        '<p class="hint" data-ef="task|' + item.id + '|hint" contenteditable="true" data-ph="how to do it">' + esc(item.hint || "") + "</p>"
+        '<p class="hint" data-ef="task|' + item.id + '|hint" contenteditable="true" data-ph="how to do it">' + esc(item.hint || "") + "</p>" +
+        clsChip(item)
       : "";
     return '<li class="item' + (done ? " done" : "") + '" draggable="' + (editing ? "false" : "true") + '" data-dragid="' + item.id + '">' +
       '<span class="grip" title="Drag to reorder or move to another day">⠿</span>' +
       '<input type="checkbox" data-id="' + item.id + '"' + (done ? " checked" : "") + ' aria-label="' + esc(item.title) + '">' +
       '<div class="body"><div class="title"><span class="badge ' + item.type + '">' + typeLabel(item.type) + "</span>" + title + diff + prio + "</div>" + vid + inline + hint + "</div>" +
       '<div class="row-end">' + revBtn + actions + "</div></li>";
+  }
+
+  /* classification chip: shows how the link was judged, click to override */
+  function clsChip(item) {
+    if (!item.url) return "";
+    var c = store.classifyInfo(item.url);
+    var lbl = c.dsa ? "DSA question ✓" : (c.src === "unknown" ? "unverified" : "not DSA");
+    return '<button class="cls-chip ' + (c.dsa ? "on" : "") + " src-" + esc(c.src) +
+      '" data-clstoggle="' + esc(item.url) + '" title="Count this link as a DSA question? Click to toggle.">' +
+      esc(lbl) + "</button>";
   }
 
   function dayHTML(day, editing) {
@@ -229,6 +234,15 @@
   }
 
   /* ============================================================
+     DAILY MOTIVATION — one button above Week 1
+     ============================================================ */
+  function motHTML() {
+    return '<div class="mot-bar"><button id="motBtn" class="mot-btn" data-mot="1">' +
+      '<span class="mot-ico">⚡</span><span class="mot-txt"><b>Daily Motivation</b>' +
+      '<i>today\'s quote — same all day, new at midnight</i></span></button></div>';
+  }
+
+  /* ============================================================
      RENDER
      ============================================================ */
   function render() {
@@ -237,6 +251,7 @@
     html += '<section id="plan"><div class="plan-head">' +
       '<div class="plan-tools"><button id="expandAll" class="btn">Expand all</button>' +
       '<button id="collapseAll" class="btn">Collapse all</button></div></div>' +
+      motHTML() +
       store.db.weeks.map(weekHTML).join("") + "</section>";
 
 
@@ -245,6 +260,8 @@
     refreshHeader();
     window.scrollTo(0, y);
     if (window.TG && TG.notes) TG.notes.renderAll();
+    if (window.TG && TG.dashboard) TG.dashboard.refresh();
+    if (window.TG && TG.verify) TG.verify.sweep();
   }
 
   function refreshHeader() {
@@ -266,6 +283,7 @@
     dayDone: dayDone, weekStats: weekStats, overall: overall, dsaOverall: dsaOverall,
     LAST_DATE: LAST_DATE, TODAY_DAY: TODAY_DAY, FIRST_DATE: FIRST_DATE, ACTIVE_WEEK: ACTIVE_WEEK,
     itemHTML: itemHTML, dayHTML: dayHTML, weekHTML: weekHTML, weekSummaryHTML: weekSummaryHTML,
+    clsChip: clsChip,
     navHTML: navHTML, render: render, refreshHeader: refreshHeader
   };
 })();

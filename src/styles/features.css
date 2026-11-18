@@ -1,0 +1,173 @@
+/* ============================================================
+   The Grind — features.css
+   Clickable DSA counter + Completed Questions page + Daily
+   Motivation. Same midnight-terminal language as the rest.
+   ============================================================ */
+
+/* ---------------- clickable top counter ---------------- */
+.count-btn{
+  font:600 13px var(--mono);color:var(--ink2);letter-spacing:.3px;
+  background:transparent;border:1px solid transparent;border-radius:5px;
+  padding:2px 8px;cursor:pointer;transition:.12s;
+}
+.count-btn:hover{color:var(--green);border-color:var(--line2);background:var(--green-dim)}
+
+/* ---------------- classification chip (edit mode) ---------------- */
+.cls-chip{
+  margin-top:4px;height:24px;padding:0 10px;border-radius:12px;
+  font:600 12px var(--mono);letter-spacing:.3px;cursor:pointer;
+  color:var(--ink3);background:var(--panel2);border:1px dashed var(--line2);
+  transition:.12s;
+}
+.cls-chip.src-unknown{border-style:dashed;color:var(--amber);border-color:rgba(255,184,77,.4)}
+.cls-chip.on{
+  color:var(--green);border:1px solid rgba(0,229,160,.45);background:var(--green-dim);
+  border-style:solid;
+}
+.cls-chip:hover{border-color:var(--green);color:var(--green)}
+.cls-chip.on:hover{color:var(--red);border-color:var(--red);background:var(--red-dim)}
+
+/* ---------------- daily motivation ---------------- */
+.mot-bar{max-width:1240px;margin:22px auto 6px;padding:0 20px}
+.mot-btn{
+  display:flex;align-items:center;gap:14px;width:100%;height:auto;
+  padding:14px 20px;text-align:left;cursor:pointer;
+  color:var(--ink);background:linear-gradient(120deg,var(--panel3),var(--panel));
+  border:1px solid var(--line2);border-radius:10px;transition:.18s;
+}
+.mot-btn:hover{
+  border-color:rgba(0,229,160,.55);transform:translateY(-1px);
+  box-shadow:0 6px 24px -8px rgba(0,229,160,.35), 0 0 18px -6px rgba(77,184,255,.25);
+}
+.mot-ico{
+  flex:none;width:40px;height:40px;border-radius:9px;display:grid;place-items:center;
+  font-size:19px;background:linear-gradient(135deg,rgba(0,229,160,.16),rgba(77,184,255,.12));
+  border:1px solid rgba(0,229,160,.3);
+}
+.mot-txt{display:flex;flex-direction:column;gap:2px}
+.mot-txt b{font:700 17px var(--sans);letter-spacing:-.2px}
+.mot-txt i{font:500 13px var(--sans);color:var(--ink3);font-style:normal}
+.mot-btn:hover .mot-txt b{color:var(--green)}
+
+.mot-view{
+  position:fixed;inset:0;z-index:120;display:grid;place-items:center;padding:20px;
+  background:rgba(4,7,11,.82);backdrop-filter:blur(8px);
+  opacity:0;transition:opacity .25s ease;
+}
+.mot-view.show{opacity:1}
+.mot-card{
+  position:relative;width:min(760px,94vw);border-radius:16px;overflow:hidden;
+  background:var(--panel);border:1px solid var(--line2);
+  box-shadow:0 30px 90px rgba(0,0,0,.6);
+  transform:scale(.94) translateY(10px);transition:transform .25s ease;
+}
+.mot-view.show .mot-card{transform:scale(1) translateY(0)}
+.mot-close{
+  position:absolute;top:12px;right:12px;z-index:3;width:34px;height:34px;
+  border-radius:50%;cursor:pointer;font-size:14px;color:#fff;
+  background:rgba(4,7,11,.55);border:1px solid rgba(255,255,255,.25);transition:.12s;
+}
+.mot-close:hover{background:rgba(4,7,11,.85);border-color:var(--green);color:var(--green)}
+.mot-media{position:relative;aspect-ratio:16/8.4;background:
+  linear-gradient(135deg,#132744,#0d3b34 55%,#1c2f4a)}
+.mot-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mot-shade{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(5,8,12,.18) 0%,rgba(5,8,12,.62) 62%,rgba(5,8,12,.9) 100%);
+}
+.mot-quotebox{
+  position:absolute;left:0;right:0;bottom:0;padding:26px 34px 22px;
+}
+.mot-quote{
+  margin:0;font:600 clamp(19px,2.6vw,26px)/1.45 var(--sans);
+  color:#fff;letter-spacing:-.3px;text-shadow:0 2px 14px rgba(0,0,0,.55);
+}
+.mot-author{
+  margin:10px 0 0;font:600 14px var(--mono);color:var(--green);letter-spacing:.4px;
+}
+.mot-foot{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:12px 20px;background:var(--panel2);border-top:1px solid var(--line);
+}
+.mot-day{font:600 13px var(--sans);color:var(--ink2)}
+.mot-tag{font:500 12px var(--mono);color:var(--ink3);letter-spacing:.4px}
+
+/* ---------------- completed DSA questions page ---------------- */
+.dsa-view{
+  position:fixed;inset:0;z-index:110;overflow-y:auto;
+  background:var(--bg);padding:26px 22px 60px;
+  animation:dsv .18s ease;
+}
+@keyframes dsv{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.dsa-top{max-width:1240px;margin:0 auto 14px;display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap}
+.dsa-headline{display:flex;flex-direction:column;gap:2px}
+.dsa-headline h2{margin:0;font:800 24px/1.2 var(--sans);letter-spacing:-.5px;color:var(--ink)}
+.dsa-stat{font:500 14px var(--sans);color:var(--ink3)}
+.dsa-stat b{font-family:var(--mono);color:var(--green)}
+.dsa-tools{
+  max-width:1240px;margin:0 auto 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+}
+#dsaSearch{
+  flex:1;min-width:220px;height:36px;padding:0 12px;border-radius:6px;
+  color:var(--ink);background:var(--panel);border:1px solid var(--line2);
+  font:500 14px var(--sans);
+}
+#dsaSearch:focus{outline:none;border-color:var(--green)}
+.dseg{display:flex;gap:0;border:1px solid var(--line2);border-radius:6px;overflow:hidden}
+.dseg button{
+  height:36px;padding:0 12px;font:500 13px var(--sans);cursor:pointer;
+  color:var(--ink3);background:var(--panel);border:none;transition:.12s;
+}
+.dseg button:hover{color:var(--ink)}
+.dseg button.on{color:var(--green);background:var(--green-dim);box-shadow:inset 0 -2px 0 var(--green)}
+.dseg .dsort{display:inline-flex;align-items:center;gap:6px}
+.dseg .dir{font-size:11px;opacity:.8}
+
+.dsa-tablewrap{max-width:1240px;margin:0 auto;background:var(--panel);border:1px solid var(--line2);border-radius:10px;overflow:auto}
+.dsa-table{width:100%;border-collapse:collapse;min-width:880px}
+.dsa-table th{
+  position:sticky;top:0;text-align:left;padding:12px 14px;
+  font:700 12px var(--mono);letter-spacing:.6px;text-transform:uppercase;
+  color:var(--ink3);background:var(--panel3);border-bottom:1px solid var(--line2);
+  white-space:nowrap;
+}
+.dsa-table td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;font:500 14px var(--sans);color:var(--ink2)}
+.dsa-table tbody tr:hover{background:rgba(0,229,160,.035)}
+.dsa-table .num{font:600 14px var(--mono);color:var(--ink3);white-space:nowrap}
+.dname{color:var(--ink);font-weight:600;text-decoration:none;border-bottom:1px solid transparent}
+.dname:hover{color:var(--cyan);border-bottom-color:rgba(34,211,238,.4)}
+.dtag{
+  display:inline-block;margin-left:8px;padding:1px 8px;border-radius:10px;
+  font:600 11px var(--mono);letter-spacing:.4px;vertical-align:middle;
+}
+.dtag.ok{color:var(--green);background:var(--green-dim);border:1px solid rgba(0,229,160,.35)}
+.dtag.pend{color:var(--amber);background:var(--amber-dim);border:1px solid rgba(255,184,77,.3)}
+.dtitle-edit{
+  margin-left:6px;border:none;background:none;color:var(--ink3);cursor:pointer;
+  font-size:12px;opacity:0;transition:.12s;
+}
+tr:hover .dtitle-edit{opacity:.9}
+.dtitle-edit:hover{color:var(--green)}
+.dname-input{
+  width:100%;max-width:340px;height:30px;padding:0 8px;border-radius:5px;
+  color:var(--ink);background:var(--panel2);border:1px solid var(--green);
+  font:600 14px var(--sans);
+}
+.dname-input:focus{outline:none}
+.dlink a{
+  font:500 12.5px var(--mono);color:var(--blue);text-decoration:none;
+  word-break:break-all;
+}
+.dlink a:hover{color:var(--cyan);text-decoration:underline}
+.drevs{max-width:280px}
+.drev{display:flex;gap:8px;font:500 12.5px var(--mono);color:var(--ink2);padding:1px 0}
+.drev .n{color:var(--green);font-weight:700;min-width:18px}
+.dim{color:var(--ink3)}
+.dnone{text-align:center;color:var(--ink3);padding:26px !important;font-style:italic}
+
+@media (max-width:720px){
+  .dsa-view{padding:16px 10px 40px}
+  .mot-quotebox{padding:18px 20px 16px}
+  .mot-foot{flex-direction:column;gap:4px;align-items:flex-start}
+  .dsa-table{min-width:760px}
+}

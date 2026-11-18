@@ -11,9 +11,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <meta name="theme-color" content="#0a0e14">
-<link rel="stylesheet" href="src/styles/theme.css?v=85">
-<link rel="stylesheet" href="src/styles/layout.css?v=85">
-<link rel="stylesheet" href="src/styles/components.css?v=85">
+<link rel="stylesheet" href="src/styles/theme.css?v=86">
+<link rel="stylesheet" href="src/styles/layout.css?v=86">
+<link rel="stylesheet" href="src/styles/components.css?v=86">
+<link rel="stylesheet" href="src/styles/features.css?v=86">
 </head>
 <body>
 
@@ -25,7 +26,7 @@
   <div class="todaybox">
     <div class="tb-line"><span id="todayLabel">—</span></div>
     <div class="bar"><div id="overallbar"></div></div>
-    <div class="tb-line tiny"><span id="overallcount">0 / 0 DSA</span></div>
+    <div class="tb-line tiny"><button id="overallcount" class="count-btn" title="Open the completed DSA questions page">0 / 0 DSA</button></div>
   </div>
   <div class="actions">
     <button id="jumpToday" class="btn">Jump to today</button>
@@ -75,16 +76,19 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-<script src="src/js/firebase-config.js?v=85"></script>
-<script src="src/js/data.js?v=85"></script>
-<script src="src/js/store.js?v=85"></script>
-<script src="src/js/ui.js?v=85"></script>
-<script src="src/js/editor.js?v=85"></script>
-<script src="src/js/pen.js?v=85"></script>
-<script src="src/js/events.js?v=85"></script>
-<script src="src/js/cursor.js?v=85"></script>
-<script src="src/js/notes.js?v=85"></script>
-<script src="src/js/sync.js?v=85"></script>
-<script src="src/js/main.js?v=85"></script>
+<script src="src/js/firebase-config.js?v=86"></script>
+<script src="src/js/data.js?v=86"></script>
+<script src="src/js/store.js?v=86"></script>
+<script src="src/js/ui.js?v=86"></script>
+<script src="src/js/editor.js?v=86"></script>
+<script src="src/js/verify.js?v=86"></script>
+<script src="src/js/dashboard.js?v=86"></script>
+<script src="src/js/quotes.js?v=86"></script>
+<script src="src/js/pen.js?v=86"></script>
+<script src="src/js/events.js?v=86"></script>
+<script src="src/js/cursor.js?v=86"></script>
+<script src="src/js/notes.js?v=86"></script>
+<script src="src/js/sync.js?v=86"></script>
+<script src="src/js/main.js?v=86"></script>
 </body>
 </html>
